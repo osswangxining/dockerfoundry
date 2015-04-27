@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            name="Docker Explorer"
+            icon="icons/releng_gears.gif"
+            class="cn.dockerfoundry.ide.eclipse.explorer.ui.perspectives.DockerExplorerPerspective"
+            id="cn.dockerfoundry.ide.eclipse.explorer.ui.perspectives.DockerExplorerPerspective">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.propertyPages">
+      <page
+            name="Docker Info Page"
+            nameFilter="*.*"
+            class="cn.dockerfoundry.ide.eclipse.explorer.ui.properties.DockerPropertyPage"
+            id="cn.dockerfoundry.ide.eclipse.explorer.ui.properties.samplePropertyPage">
+         <enabledWhen>
+            <instanceof
+                  value="org.eclipse.core.resources.IFile">
+            </instanceof>
+         </enabledWhen>
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="Docker Foundry"
+            id="cn.dockerfoundry.ide.eclipse.explorer.ui.views">
+      </category>
+      <view
+            name="Docker Images"
+            icon="icons/images.gif"
+            category="cn.dockerfoundry.ide.eclipse.explorer.ui"
+            class="cn.dockerfoundry.ide.eclipse.explorer.ui.views.DockerImagesView"
+            id="cn.dockerfoundry.ide.eclipse.explorer.ui.views.DockerImagesView">
+      </view>
+      <view
+            category="cn.dockerfoundry.ide.eclipse.explorer.ui"
+            class="cn.dockerfoundry.ide.eclipse.explorer.ui.views.DockerContainersView"
+            icon="icons/containers.gif"
+            id="cn.dockerfoundry.ide.eclipse.explorer.ui.views.DockerContainersView"
+            name="Docker Containers">
+      </view>
+      <view
+            category="cn.dockerfoundry.ide.eclipse.explorer.ui.views"
+            class="cn.dockerfoundry.ide.eclipse.explorer.ui.views.DockerExplorerView"
+            icon="icons/server.gif"
+            id="cn.dockerfoundry.ide.eclipse.explorer.ui.views.DockerExplorerView"
+            name="Docker Explorer">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="cn.dockerfoundry.ide.eclipse.explorer.ui.perspectives.DockerExplorerPerspective">
+         <view
+               id="cn.dockerfoundry.ide.eclipse.explorer.ui.views.DockerExplorerView"
+               relationship="stack"
+               relative="topLeft">
+         </view>
+         <view
+               relative="right"
+               relationship="stack"
+               id="cn.dockerfoundry.ide.eclipse.explorer.ui.views.DockerContainersView">
+         </view>
+         <view
+               relative="cn.dockerfoundry.ide.eclipse.explorer.ui.views.DockerContainersView"
+               relationship="stack"
+               id="cn.dockerfoundry.ide.eclipse.explorer.ui.views.DockerImagesView">
+         </view>
+         <view
+               relative="bottomLeft"
+               relationship="stack"
+               id="org.eclipse.ui.views.PropertySheet">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="contexts.xml">
+      </contexts>
+   </extension>
+   <extension
+         point="org.eclipse.ui.importWizards">
+      <category
+            id="cn.dockerfoundry.ide.eclipse.explorer.ui.importWizards.sampleCategory"
+            name="Docker Foundry">
+      </category>
+      <wizard
+            category="cn.dockerfoundry.ide.eclipse.explorer.ui.importWizards.sampleCategory"
+            class="cn.dockerfoundry.ide.eclipse.explorer.ui.importWizards.DockerConnectionNewWizard"
+            icon="icons/sample.gif"
+            id="cn.dockerfoundry.ide.eclipse.explorer.ui.importWizards.DockerConnectionNewWizard"
+            name="Docker Connection">
+         <description>
+            Import a file from the local file system into the workspace.
+         </description>
+      </wizard>
+   </extension>
+
+</plugin>
