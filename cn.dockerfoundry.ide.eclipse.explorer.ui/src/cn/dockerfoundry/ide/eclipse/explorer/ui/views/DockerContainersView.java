@@ -56,6 +56,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -296,7 +297,7 @@ public class DockerContainersView extends ViewPart {
 		stopAction.setEnabled(status != null && status.startsWith("Up"));
 		unpauseAction.setEnabled(status != null && status.startsWith("Paused"));
 		pauseAction.setEnabled(status != null && status.startsWith("Up"));
-	
+		showConsoleAction.setEnabled(status != null && status.startsWith("Up"));
 		manager.add(startAction);
 		manager.add(stopAction);
 		manager.add(unpauseAction);
@@ -316,7 +317,7 @@ public class DockerContainersView extends ViewPart {
 		stopAction.setEnabled(status != null && status.startsWith("Up"));
 		unpauseAction.setEnabled(status != null && status.startsWith("Paused"));
 		pauseAction.setEnabled(status != null && status.startsWith("Up"));
-	
+		showConsoleAction.setEnabled(status != null && status.startsWith("Up"));
 		manager.add(startAction);
 		manager.add(stopAction);
 		manager.add(unpauseAction);
@@ -339,7 +340,7 @@ public class DockerContainersView extends ViewPart {
 		stopAction.setEnabled(status != null && status.startsWith("Up"));
 		unpauseAction.setEnabled(status != null && status.startsWith("Paused"));
 		pauseAction.setEnabled(status != null && status.startsWith("Up"));
-	
+		showConsoleAction.setEnabled(status != null && status.startsWith("Up"));
 		manager.add(startAction);
 		manager.add(stopAction);
 		manager.add(unpauseAction);
@@ -549,18 +550,33 @@ public class DockerContainersView extends ViewPart {
 
 		showConsoleAction = new Action() {
 			public void run() {
-				MessageConsole console = ConsoleHelper
-						.findConsole("Docker Container");
-				MessageConsoleStream out = console.newMessageStream();
+				
 				DockerContainerElement elem = getSelectedElement();
 				if (elem != null & getClient() != null) {
+					IWorkbenchPage page = PlatformUI.getWorkbench()
+							.getActiveWorkbenchWindow().getActivePage();
+					MessageConsole console = ConsoleHelper
+							.findConsole("Docker Container - " + elem.getNames().get(0));
+					MessageConsoleStream out = console.newMessageStream();
 					LogStream logStream = null;
 					try {
 						logStream = getClient().logs(elem.getId(),
-								/*LogsParameter.FOLLOW, */LogsParameter.STDERR,
+						/* LogsParameter.FOLLOW, */LogsParameter.STDERR,
 								LogsParameter.STDOUT, LogsParameter.TIMESTAMPS);
+
+						/*StringBuilder stringBuilder = new StringBuilder();
+						int index = 0;
+						while (logStream.hasNext()) {
+							stringBuilder.append(UTF_8.decode(logStream.next()
+									.content()));
+							index++;
+							if(index > 100)
+								break;
+						}						
+						out.print(stringBuilder.toString());*/
 						out.println(logStream.readFully());
 						out.setActivateOnWrite(true);
+						out.setColor(Display.getDefault().getSystemColor(SWT.COLOR_BLUE));
 						out.close();
 					} catch (DockerException e) {
 						// TODO Auto-generated catch block
@@ -576,19 +592,14 @@ public class DockerContainersView extends ViewPart {
 							logStream.close();
 						}
 					}
+					
+					try {
+						IConsoleView view = (IConsoleView) page.showView(IConsoleConstants.ID_CONSOLE_VIEW);
+						view.display(console);
+					} catch (PartInitException e) {
+						e.printStackTrace();
+					}
 				}
-				
-				IWorkbenchPage page = PlatformUI.getWorkbench()
-						.getActiveWorkbenchWindow().getActivePage();
-				String id = IConsoleConstants.ID_CONSOLE_VIEW;
-
-				try {
-					IConsoleView view = (IConsoleView) page.showView(id);
-					view.display(console);
-				} catch (PartInitException e) {
-					e.printStackTrace();
-				}
-
 			}
 		};
 		showConsoleAction.setText("Show Console");
@@ -668,6 +679,7 @@ public class DockerContainersView extends ViewPart {
 				stopAction.setEnabled(status != null && status.startsWith("Up"));
 				unpauseAction.setEnabled(status != null && status.startsWith("Paused"));
 				pauseAction.setEnabled(status != null && status.startsWith("Up"));
+				showConsoleAction.setEnabled(status != null && status.startsWith("Up"));
 			}
 		});
 	}

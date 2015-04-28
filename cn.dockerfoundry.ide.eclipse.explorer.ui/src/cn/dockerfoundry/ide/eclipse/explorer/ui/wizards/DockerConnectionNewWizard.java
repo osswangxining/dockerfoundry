@@ -20,15 +20,12 @@
 
 package cn.dockerfoundry.ide.eclipse.explorer.ui.wizards;
 
-import java.util.Iterator;
-import java.util.List;
-
 import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.internal.ViewSite;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
@@ -36,17 +33,8 @@ import cn.dockerfoundry.ide.eclipse.explorer.ui.Activator;
 import cn.dockerfoundry.ide.eclipse.explorer.ui.domain.DockerConnectionContainersTreeParent;
 import cn.dockerfoundry.ide.eclipse.explorer.ui.domain.DockerConnectionElement;
 import cn.dockerfoundry.ide.eclipse.explorer.ui.domain.DockerConnectionImagesTreeParent;
-import cn.dockerfoundry.ide.eclipse.explorer.ui.domain.DockerConnectionTreeObject;
-import cn.dockerfoundry.ide.eclipse.explorer.ui.domain.DockerConnectionTreeObject.DockerConnectionContainerTreeObject;
-import cn.dockerfoundry.ide.eclipse.explorer.ui.domain.DockerConnectionTreeObject.DockerConnectionImageTreeObject;
 import cn.dockerfoundry.ide.eclipse.explorer.ui.domain.DockerConnectionTreeParent;
-
-import com.spotify.docker.client.DockerCertificateException;
-import com.spotify.docker.client.DockerClient;
-import com.spotify.docker.client.DockerClient.ListContainersParam;
-import com.spotify.docker.client.DockerException;
-import com.spotify.docker.client.messages.Container;
-import com.spotify.docker.client.messages.Image;
+import cn.dockerfoundry.ide.eclipse.explorer.ui.views.DockerExplorerView;
 
 public class DockerConnectionNewWizard extends Wizard {
 
@@ -147,12 +135,18 @@ public class DockerConnectionNewWizard extends Wizard {
 //		}
 
 		Object input = this.viewer.getInput();
+		System.out.println(input instanceof DockerExplorerView);
 		if (input == null || !(input instanceof DockerConnectionTreeParent)) {
 			DockerConnectionTreeParent root = new DockerConnectionTreeParent(
 					"Root", connElem);
 			root.addChild(conn);
 			this.viewer.setInput(root);
-		} else {
+//		} else if(input instanceof ViewSite){
+//			if(((ViewSite)input).getPart() != null && ((ViewSite)input).getPart() instanceof DockerExplorerView){
+//				DockerExplorerView view = (DockerExplorerView) ((ViewSite)input).getPart();
+//				view.get
+//			}
+		}else {
 			DockerConnectionTreeParent parent = (DockerConnectionTreeParent) input;
 			parent.addChild(conn);
 		}

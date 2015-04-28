@@ -184,52 +184,7 @@ public class DockerExplorerView extends ViewPart {
 //			
 //			invisibleRoot = new DockerConnectionTreeParent("");
 //			invisibleRoot.addChild(root);
-			invisibleRoot = new DockerConnectionTreeParent(
-					"invisibleRoot", null);			
-			
-			Preferences preferences = InstanceScope.INSTANCE
-					.getNode(Activator.PLUGIN_ID);
-			try {
-				String[] childrenNames = preferences.childrenNames();
-				if(childrenNames != null){
-					for (int i = 0; i < childrenNames.length; i++) {
-						Preferences sub1 = preferences.node(childrenNames[i]);
-						String name = sub1.get("name", "");
-						boolean isUseDefault = sub1.getBoolean("isUseDefault", true);
-						boolean isUseUnixSocket = sub1.getBoolean("isUseUnixSocket", false);
-						String socketPath = sub1.get("socketPath", "");
-						boolean isUseHTTPS = sub1.getBoolean("isUseHTTPS", false);
-						String host = sub1.get("host", "");
-						boolean isEnableAuth = sub1.getBoolean("isEnableAuth", false);
-						String authPath = sub1.get("authPath", "");		
-						
-						DockerConnectionElement connElem = new DockerConnectionElement();
-						connElem.setAuthPath(authPath);
-						connElem.setEnableAuth(isEnableAuth);
-						connElem.setHost(host);
-						connElem.setName(name);
-						connElem.setSocketPath(socketPath);
-						connElem.setUseDefault(isUseDefault);
-						connElem.setUseHTTPS(isUseHTTPS);
-						connElem.setUseUnixSocket(isUseUnixSocket);
-						
-						DockerConnectionTreeParent conn = new DockerConnectionTreeParent(
-								name, connElem);
-
-						DockerConnectionTreeParent containersTreeParent = new DockerConnectionContainersTreeParent(
-								"Containers", connElem);
-						conn.addChild(containersTreeParent);
-						DockerConnectionTreeParent imagesTreeParent = new DockerConnectionImagesTreeParent(
-								"Images", connElem);
-						conn.addChild(imagesTreeParent);
-						
-						invisibleRoot.addChild(conn);
-					}
-				}
-			} catch (BackingStoreException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			invisibleRoot = getInitInput();
 		}
 	}
 	class ViewLabelProvider extends LabelProvider {
@@ -273,7 +228,7 @@ public class DockerExplorerView extends ViewPart {
 		viewer.setContentProvider(new ViewContentProvider());
 		viewer.setLabelProvider(new ViewLabelProvider());
 		viewer.setSorter(new NameSorter());
-		viewer.setInput(getViewSite());
+		viewer.setInput(getInitInput());
 
 		// Create the help context id for the viewer's control
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), "cn.dockerfoundry.ide.eclipse.explorer.ui.viewer");
@@ -284,6 +239,61 @@ public class DockerExplorerView extends ViewPart {
 		contributeToActionBars();
 	}
 
+	private DockerConnectionTreeParent getInitInput(){
+		DockerConnectionTreeParent invisibleRoot = new DockerConnectionTreeParent(
+				"invisibleRoot", null);			
+		
+		Preferences preferences = InstanceScope.INSTANCE
+				.getNode(Activator.PLUGIN_ID);
+		try {
+			String[] childrenNames = preferences.childrenNames();
+			if(childrenNames != null){
+				for (int i = 0; i < childrenNames.length; i++) {
+					Preferences sub1 = preferences.node(childrenNames[i]);
+					String name = sub1.get("name", "");
+					boolean isUseDefault = sub1.getBoolean("isUseDefault", true);
+					boolean isUseUnixSocket = sub1.getBoolean("isUseUnixSocket", false);
+					String socketPath = sub1.get("socketPath", "");
+					boolean isUseHTTPS = sub1.getBoolean("isUseHTTPS", false);
+					String host = sub1.get("host", "");
+					boolean isEnableAuth = sub1.getBoolean("isEnableAuth", false);
+					String authPath = sub1.get("authPath", "");		
+					
+					DockerConnectionElement connElem = new DockerConnectionElement();
+					connElem.setAuthPath(authPath);
+					connElem.setEnableAuth(isEnableAuth);
+					connElem.setHost(host);
+					connElem.setName(name);
+					connElem.setSocketPath(socketPath);
+					connElem.setUseDefault(isUseDefault);
+					connElem.setUseHTTPS(isUseHTTPS);
+					connElem.setUseUnixSocket(isUseUnixSocket);
+					
+					String connName = name;
+					if (connElem.isUseDefault()) {
+						connName += "[Default]";
+					} else if (connElem.isUseHTTPS()) {
+						connName += "[" + connElem.getHost() + "]";
+					}
+					DockerConnectionTreeParent conn = new DockerConnectionTreeParent(
+							connName, connElem);
+
+					DockerConnectionTreeParent containersTreeParent = new DockerConnectionContainersTreeParent(
+							"Containers", connElem);
+					conn.addChild(containersTreeParent);
+					DockerConnectionTreeParent imagesTreeParent = new DockerConnectionImagesTreeParent(
+							"Images", connElem);
+					conn.addChild(imagesTreeParent);
+					
+					invisibleRoot.addChild(conn);
+				}
+			}
+		} catch (BackingStoreException e) {
+			 e.printStackTrace();
+		}
+		return invisibleRoot;
+	}
+	
 	private void hookContextMenu() {
 		MenuManager menuMgr = new MenuManager("#PopupMenu");
 		menuMgr.setRemoveAllWhenShown(true);
