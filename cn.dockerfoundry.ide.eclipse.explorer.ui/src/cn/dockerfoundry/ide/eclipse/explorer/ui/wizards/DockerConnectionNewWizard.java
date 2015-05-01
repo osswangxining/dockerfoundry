@@ -165,7 +165,7 @@ public class DockerConnectionNewWizard extends Wizard {
 	 * org.eclipse.jface.viewers.IStructuredSelection)
 	 */
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
-		setWindowTitle("File Import Wizard"); // NON-NLS-1
+		setWindowTitle("Docker Connection"); // NON-NLS-1
 		setNeedsProgressMonitor(true);
 
 	}

@@ -86,21 +86,18 @@
       </contexts>
    </extension>
    <extension
-         point="org.eclipse.ui.importWizards">
-      <category
-            id="cn.dockerfoundry.ide.eclipse.explorer.ui.importWizards.sampleCategory"
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="cn.dockerfoundry.ide.eclipse.explorer.ui.preferences.DockerFoundryPreferencePage"
+            id="cn.dockerfoundry.ide.eclipse.explorer.ui.preferences.DockerFoundryPreferencePage"
             name="Docker Foundry">
-      </category>
-      <wizard
-            category="cn.dockerfoundry.ide.eclipse.explorer.ui.importWizards.sampleCategory"
-            class="cn.dockerfoundry.ide.eclipse.explorer.ui.importWizards.DockerConnectionNewWizard"
-            icon="icons/sample.gif"
-            id="cn.dockerfoundry.ide.eclipse.explorer.ui.importWizards.DockerConnectionNewWizard"
-            name="Docker Connection">
-         <description>
-            Import a file from the local file system into the workspace.
-         </description>
-      </wizard>
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="cn.dockerfoundry.ide.eclipse.explorer.ui.preferences.PreferenceInitializer">
+      </initializer>
    </extension>
 
 </plugin>

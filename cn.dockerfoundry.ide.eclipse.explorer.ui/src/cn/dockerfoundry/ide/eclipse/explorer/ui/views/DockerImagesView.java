@@ -20,6 +20,7 @@
 
 package cn.dockerfoundry.ide.eclipse.explorer.ui.views;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -42,6 +43,7 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
@@ -66,10 +68,12 @@ import org.eclipse.ui.part.ViewPart;
 
 import cn.dockerfoundry.ide.eclipse.explorer.ui.Activator;
 import cn.dockerfoundry.ide.eclipse.explorer.ui.domain.DockerImageElement;
+import cn.dockerfoundry.ide.eclipse.explorer.ui.wizards.DockerSearchWizard;
 
 import com.spotify.docker.client.DefaultDockerClient;
 import com.spotify.docker.client.DockerClient;
 import com.spotify.docker.client.DockerException;
+import com.spotify.docker.client.messages.ImageInfo;
 import com.spotify.docker.client.messages.RemovedImage;
 
 /**
@@ -313,10 +317,10 @@ public class DockerImagesView extends ViewPart {
 	private void makeActions() {
 		pullImageAction = new Action() {
 			public void run() {
-				DefaultDockerClient client = DefaultDockerClient.builder()
-				        .uri(DefaultDockerClient.DEFAULT_UNIX_ENDPOINT).build();
-//				client.searchImages(term)
-				showMessage("Action 1 executed");
+				DockerSearchWizard wizard = new DockerSearchWizard(viewer, getClient());
+				WizardDialog dialog = new WizardDialog(viewer.getControl().getShell(), wizard);
+//				dialog.create();
+				dialog.open();
 				
 			}
 		};
@@ -326,7 +330,22 @@ public class DockerImagesView extends ViewPart {
 
 		pushmageAction = new Action() {
 			public void run() {
-				showMessage("Action 1 executed");
+				DockerImageElement imageElem = getSelection() ;
+				if(getClient() != null && imageElem!= null){
+					String image = imageElem.getRepository() +":" + imageElem.getTag();
+//					try {
+//						getClient().push(image);
+//						Thread.sleep(5000);//sleep 5s
+//					} catch (DockerException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					} catch (InterruptedException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+					
+					hookRefreshAction();
+				}
 			}
 		};
 		pushmageAction.setText("Push Image");
@@ -353,11 +372,10 @@ public class DockerImagesView extends ViewPart {
 		
 		deleteImageAction = new Action() {
 			public void run() {
-				DefaultDockerClient client = DefaultDockerClient.builder()
-				        .uri(DefaultDockerClient.DEFAULT_UNIX_ENDPOINT).build();
+				DockerClient client = getClient();
 				DockerImageElement elem = getSelection();
 				
-				if(elem != null){
+				if(elem != null && client != null){
 					try {
 						List<RemovedImage> removedImages = client.removeImage(elem.getId());
 						if(removedImages != null && removedImages.size() > 0){
@@ -373,6 +391,8 @@ public class DockerImagesView extends ViewPart {
 									sb.append(",");
 							}
 							showMessage("The following images have been removed:\n" + sb.toString());
+							
+							hookRefreshAction();
 						}
 						
 					} catch (DockerException e) {
@@ -386,7 +406,7 @@ public class DockerImagesView extends ViewPart {
 			}
 		};
 		deleteImageAction.setText("Remove Image");
-		deleteImageAction.setToolTipText("Pull an image or a repository from a Docker registry server");
+		deleteImageAction.setToolTipText("Remove one or more images");
 		deleteImageAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
 				.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
 		
@@ -417,7 +437,7 @@ public class DockerImagesView extends ViewPart {
 		
 		refreshAction = new Action() {
 			public void run() {
-				viewer.refresh(true);
+				hookRefreshAction();
 			}
 		};
 		refreshAction.setText("Refresh");
@@ -426,10 +446,23 @@ public class DockerImagesView extends ViewPart {
 		
 		doubleClickAction = new Action() {
 			public void run() {
-				ISelection selection = viewer.getSelection();
-				Object obj = ((IStructuredSelection) selection)
-						.getFirstElement();
-				showMessage("Double-click detected on " + obj.toString());
+				IViewPart propSheet = PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow().getActivePage()
+						.findView(IPageLayout.ID_PROP_SHEET);
+
+				if (propSheet != null) {
+					PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+							.getActivePage().bringToTop(propSheet);
+				}else{
+					try {
+						PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow().getActivePage().showView(IPageLayout.ID_PROP_SHEET);
+					} catch (PartInitException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
 			}
 		};
 	}
@@ -547,5 +580,72 @@ public class DockerImagesView extends ViewPart {
 
 	public void setClient(DockerClient client) {
 		this.client = client;
+	}
+	
+	private void hookRefreshAction(){
+		if (getClient() != null) {
+			List<com.spotify.docker.client.messages.Image> images = null;
+			try {
+				images = getClient().listImages();
+			} catch (DockerException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			} catch (InterruptedException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+
+			List<DockerImageElement> imageElements = new ArrayList<DockerImageElement>();
+			if (images != null) {
+				for (Iterator<com.spotify.docker.client.messages.Image> iterator = images
+						.iterator(); iterator.hasNext();) {
+					com.spotify.docker.client.messages.Image image = iterator
+							.next();
+					System.out.println(image.toString());
+					String created = image.created();
+					String id = image.id();
+					String parentId = image.parentId();
+					List<String> repoTags = image.repoTags();
+					Long size = image.size();
+					Long virtualSize = image.virtualSize();
+					if (repoTags != null) {
+						for (Iterator<String> iterator2 = repoTags
+								.iterator(); iterator2.hasNext();) {
+							String repoTag = (String) iterator2.next();
+							String repo = repoTag.substring(0,
+									repoTag.indexOf(":"));
+							String tag = repoTag.substring(repoTag
+									.indexOf(":") + 1);
+
+							DockerImageElement e = new DockerImageElement();
+							e.setCreated(created);
+							e.setId(id);
+							e.setRepository(repo);
+							e.setTag(tag);
+							e.setSize(size);
+							e.setVirtualSize(virtualSize);
+							ImageInfo imageInfo;
+							try {
+								imageInfo = getClient()
+										.inspectImage(id);
+								e.setImageInfo(imageInfo);
+							} catch (DockerException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (InterruptedException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+
+							imageElements.add(e);
+						}
+					}
+
+				}
+			}
+
+			viewer.setInput(imageElements);
+		}
+		viewer.refresh(true);
 	}
 }

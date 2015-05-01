@@ -603,7 +603,7 @@ public class DockerContainersView extends ViewPart {
 			}
 		};
 		showConsoleAction.setText("Show Console");
-		showConsoleAction.setToolTipText("Show the console for the docker container");
+		showConsoleAction.setToolTipText("Show the console for the docker container -  [logs -ft --tail 0]");
 		showConsoleAction.setImageDescriptor(Activator
 				.getImageDescriptor("icons/console.gif"));
 		

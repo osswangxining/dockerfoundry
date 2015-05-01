@@ -413,7 +413,7 @@ public class DockerExplorerView extends ViewPart {
 			}
 		};
 		dockerInfoAction.setText("Docker Info");
-		dockerInfoAction.setToolTipText("Display system-wide information");
+		dockerInfoAction.setToolTipText("Display system-wide information - [info]");
 		dockerInfoAction.setImageDescriptor(Activator.getImageDescriptor("icons/info.gif"));
 		
 		dockerVersionAction = new Action() {
@@ -443,7 +443,7 @@ public class DockerExplorerView extends ViewPart {
 			}
 		};
 		dockerVersionAction.setText("Docker Version");
-		dockerVersionAction.setToolTipText("Show the Docker version information");
+		dockerVersionAction.setToolTipText("Show the Docker version information - [version]");
 		dockerVersionAction.setImageDescriptor(Activator.getImageDescriptor("icons/version.gif"));
 		
 		doubleClickAction = new Action() {
