@@ -52,7 +52,7 @@ import com.spotify.docker.client.DockerException;
 import com.spotify.docker.client.messages.Info;
 
 
-public class DockerConnectionNewWizardPage extends WizardPage {
+public class DockerConnectionWizardPage extends WizardPage {
 	
 	protected StringFieldEditor editor;
 	protected Button connSetting;
@@ -64,7 +64,7 @@ public class DockerConnectionNewWizardPage extends WizardPage {
 	protected FileFieldEditor authenticationFileFieldEditor;
 	protected Button testConnection;
 
-	public DockerConnectionNewWizardPage(String pageName) {
+	public DockerConnectionWizardPage(String pageName) {
 		super(pageName);
 		setTitle(pageName); //NON-NLS-1
 		setDescription("Select the connection mode to talk with Docker"); //NON-NLS-1
@@ -120,7 +120,7 @@ public class DockerConnectionNewWizardPage extends WizardPage {
 		editor = new StringFieldEditor("connName","Docker Connection Name: ",composite); //NON-NLS-1 //NON-NLS-2
 		editor.getTextControl(composite).addModifyListener(new ModifyListener(){
 			public void modifyText(ModifyEvent e) {
-				String connName = DockerConnectionNewWizardPage.this.editor.getStringValue();
+				String connName = DockerConnectionWizardPage.this.editor.getStringValue();
 				System.out.println("connName:" + connName);
 			}
 		});
@@ -158,7 +158,7 @@ public class DockerConnectionNewWizardPage extends WizardPage {
 	    unixSocketFileFieldEditor = new FileFieldEditor("Location","      Location: ",group1); //NON-NLS-1 //NON-NLS-2
 	    unixSocketFileFieldEditor.getTextControl(group1).addModifyListener(new ModifyListener(){
 			public void modifyText(ModifyEvent e) {
-				String location = DockerConnectionNewWizardPage.this.unixSocketFileFieldEditor.getStringValue();
+				String location = DockerConnectionWizardPage.this.unixSocketFileFieldEditor.getStringValue();
 				System.out.println("Location:" + location);
 			}
 		});
@@ -171,7 +171,7 @@ public class DockerConnectionNewWizardPage extends WizardPage {
 	    hostEditor = new StringFieldEditor("host","      Host: ",group1); //NON-NLS-1 //NON-NLS-2
 	    hostEditor.getTextControl(group1).addModifyListener(new ModifyListener(){
 			public void modifyText(ModifyEvent e) {
-				String host = DockerConnectionNewWizardPage.this.hostEditor.getStringValue();
+				String host = DockerConnectionWizardPage.this.hostEditor.getStringValue();
 				System.out.println("host:" + host);
 			}
 		});
@@ -185,7 +185,7 @@ public class DockerConnectionNewWizardPage extends WizardPage {
 	    authenticationFileFieldEditor = new FileFieldEditor("Path","     Path: ",group1); //NON-NLS-1 //NON-NLS-2
 	    authenticationFileFieldEditor.getTextControl(group1).addModifyListener(new ModifyListener(){
 			public void modifyText(ModifyEvent e) {
-				String path = DockerConnectionNewWizardPage.this.authenticationFileFieldEditor.getStringValue();
+				String path = DockerConnectionWizardPage.this.authenticationFileFieldEditor.getStringValue();
 				System.out.println("Path:" + path);
 			}
 		});

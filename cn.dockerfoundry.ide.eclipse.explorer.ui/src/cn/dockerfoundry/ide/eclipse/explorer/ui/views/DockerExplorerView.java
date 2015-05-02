@@ -20,11 +20,6 @@
 
 package cn.dockerfoundry.ide.eclipse.explorer.ui.views;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
@@ -52,9 +47,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchActionConstants;
-import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
@@ -69,18 +62,12 @@ import cn.dockerfoundry.ide.eclipse.explorer.ui.domain.DockerConnectionTreeObjec
 import cn.dockerfoundry.ide.eclipse.explorer.ui.domain.DockerConnectionTreeObject.DockerConnectionContainerTreeObject;
 import cn.dockerfoundry.ide.eclipse.explorer.ui.domain.DockerConnectionTreeObject.DockerConnectionImageTreeObject;
 import cn.dockerfoundry.ide.eclipse.explorer.ui.domain.DockerConnectionTreeParent;
-import cn.dockerfoundry.ide.eclipse.explorer.ui.domain.DockerContainerElement;
-import cn.dockerfoundry.ide.eclipse.explorer.ui.domain.DockerImageElement;
-import cn.dockerfoundry.ide.eclipse.explorer.ui.utils.DomainHelper;
-import cn.dockerfoundry.ide.eclipse.explorer.ui.wizards.DockerConnectionNewWizard;
+import cn.dockerfoundry.ide.eclipse.explorer.ui.utils.ViewHelper;
+import cn.dockerfoundry.ide.eclipse.explorer.ui.wizards.DockerConnectionWizard;
 
 import com.spotify.docker.client.DockerCertificateException;
 import com.spotify.docker.client.DockerClient;
-import com.spotify.docker.client.DockerClient.ListContainersParam;
 import com.spotify.docker.client.DockerException;
-import com.spotify.docker.client.messages.Container;
-import com.spotify.docker.client.messages.Container.PortMapping;
-import com.spotify.docker.client.messages.ImageInfo;
 import com.spotify.docker.client.messages.Info;
 import com.spotify.docker.client.messages.Version;
 
@@ -354,7 +341,7 @@ public class DockerExplorerView extends ViewPart {
 		createDockerConnAction = new Action() {
 			public void run() {
 				//showMessage("Action 1 executed");
-				DockerConnectionNewWizard wizard = new DockerConnectionNewWizard(viewer);
+				DockerConnectionWizard wizard = new DockerConnectionWizard(viewer);
 				WizardDialog dialog = new WizardDialog(viewer.getControl().getShell(), wizard);
 //				dialog.create();
 				dialog.open();
@@ -456,7 +443,7 @@ public class DockerExplorerView extends ViewPart {
 					DockerConnectionImagesTreeParent elem = (DockerConnectionImagesTreeParent) obj;
 					if (elem != null && elem.getConn() != null)
 						try {
-							showDockerImages(elem.getConn().getDockerClient());
+							ViewHelper.showDockerImages(elem.getConn().getDockerClient());
 						} catch (DockerCertificateException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -465,7 +452,7 @@ public class DockerExplorerView extends ViewPart {
 					DockerConnectionContainersTreeParent elem = (DockerConnectionContainersTreeParent) obj;
 					if (elem != null && elem.getConn() != null)
 						try {
-							showDockerContainers(elem.getConn().getDockerClient());
+							ViewHelper.showDockerContainers(elem.getConn().getDockerClient());
 						} catch (DockerCertificateException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -488,110 +475,6 @@ public class DockerExplorerView extends ViewPart {
 		};
 	}
 
-	private void showDockerContainers(DockerClient client ){
-		try {
-			IViewPart propSheet = PlatformUI.getWorkbench()
-					.getActiveWorkbenchWindow().getActivePage()
-					.findView(DockerContainersView.ID);
-
-			if (propSheet != null) {
-				PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-						.getActivePage().bringToTop(propSheet);
-			}else{
-				try {
-					propSheet = PlatformUI.getWorkbench()
-					.getActiveWorkbenchWindow().getActivePage().showView(DockerContainersView.ID);
-				} catch (PartInitException e) {
-					e.printStackTrace();
-				}
-			}
-			
-			DockerContainersView viewer = (DockerContainersView)propSheet;
-			viewer.setClient(client);
-			
-			ListContainersParam params = ListContainersParam.allContainers(true);
-			List<Container> containers = client.listContainers(params);
-			
-			List<DockerContainerElement> containerElements = DomainHelper.convert(containers);
-			
-			viewer.getViewer().setInput(containerElements);
-			viewer.getViewer().refresh(true);
-		} catch (DockerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	private void showDockerImages(DockerClient client ){
-		try {
-			IViewPart propSheet = PlatformUI.getWorkbench()
-					.getActiveWorkbenchWindow().getActivePage()
-					.findView(DockerImagesView.ID);
-
-			if (propSheet != null) {
-				PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-						.getActivePage().bringToTop(propSheet);
-			}else{
-				try {
-					propSheet = PlatformUI.getWorkbench()
-					.getActiveWorkbenchWindow().getActivePage().showView(DockerImagesView.ID);
-				} catch (PartInitException e) {
-					e.printStackTrace();
-				}
-			}
-			
-			DockerImagesView viewer = (DockerImagesView)propSheet;
-			viewer.setClient(client);
-			List<com.spotify.docker.client.messages.Image> images = client.listImages();
-			
-			List<DockerImageElement> imageElements = new ArrayList<DockerImageElement>();
-			if(images != null){
-				for (Iterator<com.spotify.docker.client.messages.Image> iterator = images.iterator(); iterator.hasNext();) {
-					com.spotify.docker.client.messages.Image image = iterator.next();
-					System.out.println(image.toString());
-					String created = image.created();
-					String id = image.id();
-					String parentId = image.parentId();
-					List<String> repoTags = image.repoTags();
-					Long size = image.size();
-					Long virtualSize = image.virtualSize();
-					if(repoTags != null){
-						for (Iterator<String> iterator2 = repoTags.iterator(); iterator2
-								.hasNext();) {
-							String repoTag = (String) iterator2.next();
-							String repo = repoTag.substring(0, repoTag.indexOf(":"));
-							String tag = repoTag.substring(repoTag.indexOf(":")+1);
-							
-							DockerImageElement e = new DockerImageElement();
-							e.setCreated(created);
-							e.setId(id);
-							e.setRepository(repo);
-							e.setTag(tag);
-							e.setSize(size);
-							e.setVirtualSize(virtualSize);
-							ImageInfo imageInfo = client.inspectImage(id);
-							e.setImageInfo(imageInfo);
-							imageElements.add(e);
-						}
-					}
-					
-				}
-			}
-			
-			viewer.getViewer().setInput(imageElements);
-			viewer.getViewer().refresh(true);
-		} catch (DockerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
 	private void hookSingleClickAction() {
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			

@@ -36,13 +36,13 @@ import cn.dockerfoundry.ide.eclipse.explorer.ui.domain.DockerConnectionImagesTre
 import cn.dockerfoundry.ide.eclipse.explorer.ui.domain.DockerConnectionTreeParent;
 import cn.dockerfoundry.ide.eclipse.explorer.ui.views.DockerExplorerView;
 
-public class DockerConnectionNewWizard extends Wizard {
+public class DockerConnectionWizard extends Wizard {
 
-	DockerConnectionNewWizardPage mainPage;
+	DockerConnectionWizardPage mainPage;
 
 	TreeViewer viewer;
 
-	public DockerConnectionNewWizard(TreeViewer viewer) {
+	public DockerConnectionWizard(TreeViewer viewer) {
 		super();
 		this.viewer = viewer;
 	}
@@ -177,7 +177,7 @@ public class DockerConnectionNewWizard extends Wizard {
 	 */
 	public void addPages() {
 		super.addPages();
-		mainPage = new DockerConnectionNewWizardPage("Docker Connection"); // NON-NLS-1
+		mainPage = new DockerConnectionWizardPage("Docker Connection"); // NON-NLS-1
 		addPage(mainPage);
 	}
 

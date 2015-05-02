@@ -25,35 +25,35 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PartInitException;
-import org.osgi.service.prefs.BackingStoreException;
-import org.osgi.service.prefs.Preferences;
 
-import cn.dockerfoundry.ide.eclipse.explorer.ui.Activator;
-import cn.dockerfoundry.ide.eclipse.explorer.ui.domain.DockerConnectionElement;
+import cn.dockerfoundry.ide.eclipse.explorer.ui.domain.DockerContainerElement;
 import cn.dockerfoundry.ide.eclipse.explorer.ui.domain.DockerImageElement;
+import cn.dockerfoundry.ide.eclipse.explorer.ui.utils.DomainHelper;
 import cn.dockerfoundry.ide.eclipse.explorer.ui.utils.ViewHelper;
+import cn.dockerfoundry.ide.eclipse.explorer.ui.views.DockerContainersView;
 
 import com.spotify.docker.client.DockerClient;
 import com.spotify.docker.client.DockerException;
 import com.spotify.docker.client.ProgressHandler;
+import com.spotify.docker.client.DockerClient.ListContainersParam;
+import com.spotify.docker.client.messages.Container;
+import com.spotify.docker.client.messages.ContainerConfig;
+import com.spotify.docker.client.messages.ContainerCreation;
 import com.spotify.docker.client.messages.ImageInfo;
-import com.spotify.docker.client.messages.ImageSearchResult;
 import com.spotify.docker.client.messages.ProgressMessage;
 
-public class DockerSearchWizard extends Wizard {
-	DockerSearchWizardPage mainPage;
-	TableViewer viewer;
+public class DockerCreateContainerWizard extends Wizard {
+	DockerCreateContainerWizardPage mainPage;
+	DockerImageElement elem;
 	DockerClient client;
 
-	public DockerSearchWizard(TableViewer viewer, DockerClient client) {
+	public DockerCreateContainerWizard(DockerImageElement elem, DockerClient client) {
 		super();
-		this.viewer = viewer;
+		this.elem = elem;
 		this.client = client;
 	}
 
@@ -85,57 +85,35 @@ public class DockerSearchWizard extends Wizard {
 	 * @see org.eclipse.jface.wizard.Wizard#performFinish()
 	 */
 	public boolean performFinish() {
-		ImageSearchResult searchResult = this.mainPage.getSelectedImage();
-		if (searchResult == null || this.client == null)
+		String name = this.mainPage.getName();
+		if (this.client == null || elem == null)
 			return false;
 
-		try {
-			String ping = this.client.ping();
-			if (!ping.toLowerCase().equals("ok")) {
-				return false;
+	    final ContainerConfig config = ContainerConfig.builder()
+	            .image(elem.getId())
+	            .build();
+	    try {
+	    	name = (name == null || name.trim().length() == 0)? null : name;
+			ContainerCreation creation = this.client.createContainer(config, name);
+			try {
+				ViewHelper.showConsole("Docker Create Container", creation.toString());
+			} catch (PartInitException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		} catch (DockerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return false;
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return false;
-		}
+		}		
 
-		final List<ProgressMessage> messages = new ArrayList<ProgressMessage>();
-		try {
-			this.client.pull(searchResult.getName(), new ProgressHandler() {
-				@Override
-				public void progress(ProgressMessage message)
-						throws DockerException {
-					messages.add(message);
-					try {
-						ViewHelper.showConsole("Docker Pull", message.toString());
-					} catch (PartInitException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			});
-		} catch (DockerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-//		for (Iterator<ProgressMessage> iterator = messages.iterator(); iterator.hasNext();) {
-//			ProgressMessage progressMessage = (ProgressMessage) iterator.next();
-//			System.out.println(progressMessage);
-//		}
-		ViewHelper.showDockerImages(client);
-
+	    ViewHelper.showDockerContainers(client);
+	    
 		return true;
 	}
 
@@ -158,7 +136,7 @@ public class DockerSearchWizard extends Wizard {
 	 */
 	public void addPages() {
 		super.addPages();
-		mainPage = new DockerSearchWizardPage("Docker Search", client); // NON-NLS-1
+		mainPage = new DockerCreateContainerWizardPage("Docker Search", client); // NON-NLS-1
 		addPage(mainPage);
 	}
 }

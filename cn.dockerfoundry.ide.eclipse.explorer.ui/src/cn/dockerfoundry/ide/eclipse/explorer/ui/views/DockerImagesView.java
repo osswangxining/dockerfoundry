@@ -68,9 +68,10 @@ import org.eclipse.ui.part.ViewPart;
 
 import cn.dockerfoundry.ide.eclipse.explorer.ui.Activator;
 import cn.dockerfoundry.ide.eclipse.explorer.ui.domain.DockerImageElement;
+import cn.dockerfoundry.ide.eclipse.explorer.ui.wizards.DockerCreateContainerWizard;
 import cn.dockerfoundry.ide.eclipse.explorer.ui.wizards.DockerSearchWizard;
+import cn.dockerfoundry.ide.eclipse.explorer.ui.wizards.DockerfileWizard;
 
-import com.spotify.docker.client.DefaultDockerClient;
 import com.spotify.docker.client.DockerClient;
 import com.spotify.docker.client.DockerException;
 import com.spotify.docker.client.messages.ImageInfo;
@@ -319,9 +320,7 @@ public class DockerImagesView extends ViewPart {
 			public void run() {
 				DockerSearchWizard wizard = new DockerSearchWizard(viewer, getClient());
 				WizardDialog dialog = new WizardDialog(viewer.getControl().getShell(), wizard);
-//				dialog.create();
-				dialog.open();
-				
+				dialog.open();				
 			}
 		};
 		pullImageAction.setText("Pull Image");
@@ -354,7 +353,12 @@ public class DockerImagesView extends ViewPart {
 		
 		createImageAction = new Action() {
 			public void run() {
-				showMessage("Action 1 executed");
+				if (getClient() != null) {
+					DockerfileWizard wizard = new DockerfileWizard(getClient());
+					WizardDialog dialog = new WizardDialog(viewer.getControl()
+							.getShell(), wizard);
+					dialog.open();
+				}
 			}
 		};
 		createImageAction.setText("Build Image");
@@ -363,7 +367,14 @@ public class DockerImagesView extends ViewPart {
 		
 		createContainerAction = new Action() {
 			public void run() {
-				showMessage("Action 1 executed");
+				DockerImageElement imageElem = getSelection();
+				if (getClient() != null && imageElem != null) {
+					DockerCreateContainerWizard wizard = new DockerCreateContainerWizard(
+							imageElem, getClient());
+					WizardDialog dialog = new WizardDialog(viewer.getControl()
+							.getShell(), wizard);
+					dialog.open();
+				}
 			}
 		};
 		createContainerAction.setText("Create Container");

@@ -21,98 +21,58 @@
 package cn.dockerfoundry.ide.eclipse.explorer.ui.wizards;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PartInitException;
-import org.osgi.service.prefs.BackingStoreException;
-import org.osgi.service.prefs.Preferences;
 
-import cn.dockerfoundry.ide.eclipse.explorer.ui.Activator;
-import cn.dockerfoundry.ide.eclipse.explorer.ui.domain.DockerConnectionElement;
-import cn.dockerfoundry.ide.eclipse.explorer.ui.domain.DockerImageElement;
+import cn.dockerfoundry.ide.eclipse.explorer.ui.domain.DockerConnectionTreeParent;
 import cn.dockerfoundry.ide.eclipse.explorer.ui.utils.ViewHelper;
+import cn.dockerfoundry.ide.eclipse.explorer.ui.views.DockerExplorerView;
 
 import com.spotify.docker.client.DockerClient;
 import com.spotify.docker.client.DockerException;
 import com.spotify.docker.client.ProgressHandler;
-import com.spotify.docker.client.messages.ImageInfo;
-import com.spotify.docker.client.messages.ImageSearchResult;
 import com.spotify.docker.client.messages.ProgressMessage;
 
-public class DockerSearchWizard extends Wizard {
-	DockerSearchWizardPage mainPage;
-	TableViewer viewer;
+public class DockerfileWizard extends Wizard {
+
+	DockerfileWizardPage mainPage;
 	DockerClient client;
 
-	public DockerSearchWizard(TableViewer viewer, DockerClient client) {
+	public DockerfileWizard(DockerClient client) {
 		super();
-		this.viewer = viewer;
 		this.client = client;
 	}
 
-//	public boolean canFinish(){
-//		ImageSearchResult searchResult = this.mainPage.getSelectedImage();
-//		if (searchResult == null || this.client == null)
-//			return false;
-//
-//		try {
-//			String ping = this.client.ping();
-//			if (!ping.toLowerCase().equals("ok")) {
-//				return false;
-//			}
-//		} catch (DockerException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			return false;
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			return false;
-//		}
-//		
-//		return true;
-//	}
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see org.eclipse.jface.wizard.Wizard#performFinish()
 	 */
 	public boolean performFinish() {
-		ImageSearchResult searchResult = this.mainPage.getSelectedImage();
-		if (searchResult == null || this.client == null)
+		// IFile file = mainPage.createNewFile();
+		// if (file == null)
+		// return false;
+		String dockerDirectory = mainPage.getDockerfile();
+		if (dockerDirectory == null || this.client == null)
 			return false;
 
-		try {
-			String ping = this.client.ping();
-			if (!ping.toLowerCase().equals("ok")) {
-				return false;
-			}
-		} catch (DockerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-
+		String t = mainPage.getTargetImageName();
 		final List<ProgressMessage> messages = new ArrayList<ProgressMessage>();
 		try {
-			this.client.pull(searchResult.getName(), new ProgressHandler() {
+			String returnedImageId = this.client.build(Paths.get(dockerDirectory).getParent(), t, new ProgressHandler() {
 				@Override
 				public void progress(ProgressMessage message)
 						throws DockerException {
 					messages.add(message);
 					try {
-						ViewHelper.showConsole("Docker Pull", message.toString());
+						ViewHelper.showConsole("Dockerfile", message.toString());
 					} catch (PartInitException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -122,18 +82,21 @@ public class DockerSearchWizard extends Wizard {
 					}
 				}
 			});
+			
+			ViewHelper.showConsole("Dockerfile", "Image "+returnedImageId + " has been built successfully.");
 		} catch (DockerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PartInitException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-
-//		for (Iterator<ProgressMessage> iterator = messages.iterator(); iterator.hasNext();) {
-//			ProgressMessage progressMessage = (ProgressMessage) iterator.next();
-//			System.out.println(progressMessage);
-//		}
 		ViewHelper.showDockerImages(client);
 
 		return true;
@@ -158,7 +121,7 @@ public class DockerSearchWizard extends Wizard {
 	 */
 	public void addPages() {
 		super.addPages();
-		mainPage = new DockerSearchWizardPage("Docker Search", client); // NON-NLS-1
+		mainPage = new DockerfileWizardPage("Dockerfile"); // NON-NLS-1
 		addPage(mainPage);
 	}
 }
