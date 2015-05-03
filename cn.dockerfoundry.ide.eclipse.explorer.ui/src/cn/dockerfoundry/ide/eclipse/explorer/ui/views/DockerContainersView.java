@@ -21,6 +21,7 @@
 package cn.dockerfoundry.ide.eclipse.explorer.ui.views;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.jface.action.Action;
@@ -86,20 +87,12 @@ import com.spotify.docker.client.DockerClient.LogsParameter;
 import com.spotify.docker.client.DockerException;
 import com.spotify.docker.client.LogStream;
 import com.spotify.docker.client.messages.Container;
+import com.spotify.docker.client.messages.ContainerInfo;
+import com.spotify.docker.client.messages.HostConfig;
 
 /**
- * This sample class demonstrates how to plug-in a new workbench view. The view
- * shows data obtained from the model. The sample creates a dummy model on the
- * fly, but a real implementation would connect to the model available either in
- * this or another plug-in (e.g. the workspace). The view is connected to the
- * model using a content provider.
- * <p>
- * The view uses a label provider to define how model objects should be
- * presented in the view. Each view can present the same model objects using
- * different labels and icons, if needed. Alternatively, a single label provider
- * can be shared between views in order to ensure that objects of the same type
- * are presented in the same way everywhere.
- * <p>
+ * This view  shows the docker containers including all the running and stopped containers.
+ * 
  */
 
 public class DockerContainersView extends ViewPart {
@@ -122,6 +115,8 @@ public class DockerContainersView extends ViewPart {
 	private Action inspectAction;
 	private Action refreshAction;
 	private Action showConsoleAction;
+	private Action showEnvAction;
+	private Action showLinkAction;
 	private Action doubleClickAction;
 	private DockerClient client;
 	
@@ -298,6 +293,8 @@ public class DockerContainersView extends ViewPart {
 		unpauseAction.setEnabled(status != null && status.startsWith("Paused"));
 		pauseAction.setEnabled(status != null && status.startsWith("Up"));
 		showConsoleAction.setEnabled(status != null && status.startsWith("Up"));
+		showEnvAction.setEnabled(status != null && status.startsWith("Up"));
+		showLinkAction.setEnabled(status != null && status.startsWith("Up"));
 		manager.add(startAction);
 		manager.add(stopAction);
 		manager.add(unpauseAction);
@@ -305,6 +302,8 @@ public class DockerContainersView extends ViewPart {
 		manager.add(deleteAction);
 		manager.add(inspectAction);
 		manager.add(showConsoleAction);
+		manager.add(showEnvAction);
+		manager.add(showLinkAction);
 		manager.add(refreshAction);
 	}
 
@@ -318,6 +317,8 @@ public class DockerContainersView extends ViewPart {
 		unpauseAction.setEnabled(status != null && status.startsWith("Paused"));
 		pauseAction.setEnabled(status != null && status.startsWith("Up"));
 		showConsoleAction.setEnabled(status != null && status.startsWith("Up"));
+		showEnvAction.setEnabled(status != null && status.startsWith("Up"));
+		showLinkAction.setEnabled(status != null && status.startsWith("Up"));
 		manager.add(startAction);
 		manager.add(stopAction);
 		manager.add(unpauseAction);
@@ -325,6 +326,8 @@ public class DockerContainersView extends ViewPart {
 		manager.add(deleteAction);
 		manager.add(inspectAction);
 		manager.add(showConsoleAction);
+		manager.add(showEnvAction);
+		manager.add(showLinkAction);
 		manager.add(refreshAction);
 
 		// Other plug-ins can contribute there actions here
@@ -341,6 +344,8 @@ public class DockerContainersView extends ViewPart {
 		unpauseAction.setEnabled(status != null && status.startsWith("Paused"));
 		pauseAction.setEnabled(status != null && status.startsWith("Up"));
 		showConsoleAction.setEnabled(status != null && status.startsWith("Up"));
+		showEnvAction.setEnabled(status != null && status.startsWith("Up"));
+		showLinkAction.setEnabled(status != null && status.startsWith("Up"));
 		manager.add(startAction);
 		manager.add(stopAction);
 		manager.add(unpauseAction);
@@ -348,6 +353,8 @@ public class DockerContainersView extends ViewPart {
 		manager.add(deleteAction);
 		manager.add(inspectAction);
 		manager.add(showConsoleAction);
+		manager.add(showEnvAction);
+		manager.add(showLinkAction);
 		manager.add(refreshAction);
 	}
 
@@ -596,6 +603,7 @@ public class DockerContainersView extends ViewPart {
 					try {
 						IConsoleView view = (IConsoleView) page.showView(IConsoleConstants.ID_CONSOLE_VIEW);
 						view.display(console);
+						view.setFocus();
 					} catch (PartInitException e) {
 						e.printStackTrace();
 					}
@@ -606,6 +614,131 @@ public class DockerContainersView extends ViewPart {
 		showConsoleAction.setToolTipText("Show the console for the docker container -  [logs -ft --tail 0]");
 		showConsoleAction.setImageDescriptor(Activator
 				.getImageDescriptor("icons/console.gif"));
+		
+		showEnvAction = new Action() {
+			public void run() {
+
+				DockerContainerElement elem = getSelectedElement();
+				if (elem != null & getClient() != null) {
+					IWorkbenchPage page = PlatformUI.getWorkbench()
+							.getActiveWorkbenchWindow().getActivePage();
+					MessageConsole console = ConsoleHelper
+							.findConsole("Docker Container - "
+									+ elem.getNames().get(0));
+					MessageConsoleStream out = console.newMessageStream();
+					LogStream logStream = null;
+					try {
+						String execId = getClient().execCreate(elem.getId(),
+								new String[] { "env" },
+								DockerClient.ExecParameter.STDOUT,
+								DockerClient.ExecParameter.STDERR);
+
+						out.println("execId = " + execId);
+
+						logStream = getClient().execStart(execId);
+						String output = logStream.readFully();
+						out.println("Result:\n" + output);
+
+						out.setActivateOnWrite(true);
+						out.setColor(Display.getDefault().getSystemColor(
+								SWT.COLOR_BLUE));
+						out.close();
+					} catch (DockerException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} finally {
+						if (logStream != null) {
+							logStream.close();
+						}
+					}
+
+					try {
+						IConsoleView view = (IConsoleView) page
+								.showView(IConsoleConstants.ID_CONSOLE_VIEW);
+						view.display(console);
+						view.setFocus();
+					} catch (PartInitException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+		showEnvAction.setText("Show Env in Console");
+		showEnvAction
+				.setToolTipText("Show the environment variables in the console");
+		showEnvAction.setImageDescriptor(Activator
+				.getImageDescriptor("icons/env.gif"));
+		
+		showLinkAction = new Action() {
+			public void run() {
+
+				DockerContainerElement elem = getSelectedElement();
+				if (elem != null & getClient() != null) {
+					IWorkbenchPage page = PlatformUI.getWorkbench()
+							.getActiveWorkbenchWindow().getActivePage();
+					MessageConsole console = ConsoleHelper
+							.findConsole("Docker Container - "
+									+ elem.getNames().get(0));
+					MessageConsoleStream out = console.newMessageStream();
+					LogStream logStream = null;
+					try {
+						ContainerInfo info = getClient().inspectContainer(elem.getId());
+						HostConfig hostConfig = info.hostConfig();
+						List<String> links;
+						if(hostConfig != null && (links = hostConfig.links()) != null && links.size() > 0){
+							out.setColor(Display.getDefault().getSystemColor(
+									SWT.COLOR_BLUE));
+							out.println("Container [" + elem.getName() +"] has the following links:");
+							for (Iterator<String>  iterator = links.iterator(); iterator
+									.hasNext();) {
+								String link = (String) iterator.next();
+								out.println(link);
+							}
+						}else{
+							out.setColor(Display.getDefault().getSystemColor(
+									SWT.COLOR_RED));
+							out.println("Container [" + elem.getName() +"] has not any links.");							
+						}
+			
+						out.setActivateOnWrite(true);						
+						out.close();
+					} catch (DockerException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} finally {
+						if (logStream != null) {
+							logStream.close();
+						}
+					}
+
+					try {
+						IConsoleView view = (IConsoleView) page
+								.showView(IConsoleConstants.ID_CONSOLE_VIEW);
+						view.display(console);
+						view.setFocus();
+					} catch (PartInitException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+		showLinkAction.setText("Show Docker Links in Console");
+		showLinkAction
+				.setToolTipText("Show the docker links in the console");
+		showLinkAction.setImageDescriptor(Activator
+				.getImageDescriptor("icons/link.gif"));
 		
 		refreshAction = new Action() {
 			public void run() {
@@ -680,6 +813,8 @@ public class DockerContainersView extends ViewPart {
 				unpauseAction.setEnabled(status != null && status.startsWith("Paused"));
 				pauseAction.setEnabled(status != null && status.startsWith("Up"));
 				showConsoleAction.setEnabled(status != null && status.startsWith("Up"));
+				showEnvAction.setEnabled(status != null && status.startsWith("Up"));
+				showLinkAction.setEnabled(status != null && status.startsWith("Up"));
 			}
 		});
 	}
@@ -709,8 +844,8 @@ public class DockerContainersView extends ViewPart {
 	}
 
 	private void createColumns(final Composite parent, final TableViewer viewer) {
-		String[] titles = { "CONTAINER ID", "IMAGE", "COMMAND", "CREATED",
-				"STATUS", "PORTS", "NAMES" };
+		String[] titles = { "CONTAINER ID", "NAMES", "IMAGE", "COMMAND", "CREATED",
+				"STATUS", "PORTS", };
 		int[] bounds = { 150, 200, 200, 150, 200, 200, 200 };
 		TableViewerColumn col = createTableViewerColumn(titles[0], bounds[0], 0);
 		col.setLabelProvider(new ColumnLabelProvider() {
@@ -725,7 +860,7 @@ public class DockerContainersView extends ViewPart {
 			@Override
 			public String getText(Object element) {
 				DockerContainerElement elem = (DockerContainerElement) element;
-				return elem.getImage();
+				return elem.getNamesAsString();
 			}
 		});
 		col = createTableViewerColumn(titles[2], bounds[2], 2);
@@ -733,7 +868,7 @@ public class DockerContainersView extends ViewPart {
 			@Override
 			public String getText(Object element) {
 				DockerContainerElement elem = (DockerContainerElement) element;
-				return elem.getCommand();
+				return elem.getImage();
 			}
 		});
 		col = createTableViewerColumn(titles[3], bounds[3], 3);
@@ -741,7 +876,7 @@ public class DockerContainersView extends ViewPart {
 			@Override
 			public String getText(Object element) {
 				DockerContainerElement elem = (DockerContainerElement) element;
-				return elem.getCreated();
+				return elem.getCommand();
 			}
 		});
 		col = createTableViewerColumn(titles[4], bounds[4], 4);
@@ -749,7 +884,7 @@ public class DockerContainersView extends ViewPart {
 			@Override
 			public String getText(Object element) {
 				DockerContainerElement elem = (DockerContainerElement) element;
-				return elem.getStatus();
+				return elem.getCreated();
 			}
 		});
 		col = createTableViewerColumn(titles[5], bounds[5], 5);
@@ -757,7 +892,7 @@ public class DockerContainersView extends ViewPart {
 			@Override
 			public String getText(Object element) {
 				DockerContainerElement elem = (DockerContainerElement) element;
-				return elem.getPortsAsString();
+				return elem.getStatus();
 			}
 		});
 		col = createTableViewerColumn(titles[6], bounds[6], 6);
@@ -765,9 +900,10 @@ public class DockerContainersView extends ViewPart {
 			@Override
 			public String getText(Object element) {
 				DockerContainerElement elem = (DockerContainerElement) element;
-				return elem.getNamesAsString();
+				return elem.getPortsAsString();
 			}
 		});
+		
 	}
 
 	private TableViewerColumn createTableViewerColumn(String title, int bound,

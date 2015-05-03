@@ -82,6 +82,12 @@ public class DockerExplorerPerspective implements IPerspectiveFactory {
 					IPageLayout.RIGHT,
 					0.0f,
 					IPageLayout.ID_EDITOR_AREA);
+		IFolderLayout bottomRight =
+				factory.createFolder(
+					"bottomRight", //NON-NLS-1
+					IPageLayout.BOTTOM,
+					0.5f,
+					"right");
 //		topLeft.addView(IPageLayout.ID_RES_NAV);
 //		topLeft.addView("org.eclipse.jdt.junit.ResultView"); //NON-NLS-1
 		

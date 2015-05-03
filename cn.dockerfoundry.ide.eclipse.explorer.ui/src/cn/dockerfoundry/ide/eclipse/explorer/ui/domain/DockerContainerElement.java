@@ -92,6 +92,7 @@ public class DockerContainerElement implements IAdaptable {
 	}
 
 	public String getName() {
+		name = names.size() > 0 ? names.get(0) : name;
 		return name;
 	}
 
