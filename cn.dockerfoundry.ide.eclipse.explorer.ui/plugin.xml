@@ -73,6 +73,11 @@
                id="cn.dockerfoundry.ide.eclipse.explorer.ui.views.DockerImagesView">
          </view>
          <view
+               relative="bottomRight"
+               relationship="stack"
+               id="org.eclipse.ui.console.ConsoleView">
+         </view>
+         <view
                relative="bottomLeft"
                relationship="stack"
                id="org.eclipse.ui.views.PropertySheet">
