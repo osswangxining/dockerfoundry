@@ -136,7 +136,7 @@ public class DockerCreateContainerWizard extends Wizard {
 	 */
 	public void addPages() {
 		super.addPages();
-		mainPage = new DockerCreateContainerWizardPage("Docker Search", client); // NON-NLS-1
+		mainPage = new DockerCreateContainerWizardPage("Docker Search", client, elem); // NON-NLS-1
 		addPage(mainPage);
 	}
 }

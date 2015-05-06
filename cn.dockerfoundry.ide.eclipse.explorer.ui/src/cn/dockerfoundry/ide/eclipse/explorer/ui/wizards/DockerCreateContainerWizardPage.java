@@ -30,18 +30,23 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import cn.dockerfoundry.ide.eclipse.explorer.ui.domain.DockerImageElement;
+
 import com.spotify.docker.client.DockerClient;
 
 public class DockerCreateContainerWizardPage extends WizardPage {
 
 	private Text txtName;
 	private DockerClient client;
+	private DockerImageElement elem;
 
-	public DockerCreateContainerWizardPage(String pageName, DockerClient client) {
+	public DockerCreateContainerWizardPage(String pageName,
+			DockerClient client, DockerImageElement elem) {
 		super(pageName);
 		setTitle(pageName); // NON-NLS-1
 		setDescription("Search the Docker Hub for images"); // NON-NLS-1
 		this.client = client;
+		this.elem = elem;
 	}
 
 	/*
@@ -98,6 +103,18 @@ public class DockerCreateContainerWizardPage extends WizardPage {
 		txtName.setLayoutData(layoutData);
 		composite.moveAbove(null);
 
+		Label label2 = new Label(composite, SWT.NONE);
+		label2.setText("or run the following command:");
+
+		Text commandText = new Text(composite, SWT.SINGLE | SWT.BORDER);
+		layoutData = new GridData(GridData.GRAB_HORIZONTAL
+				| GridData.FILL_HORIZONTAL);
+		layoutData.horizontalSpan = 1;
+		commandText.setLayoutData(layoutData);
+		commandText
+				.setText("docker run --name tomcat7-volume -v /home/wangxn/Docker/volume/tomcat:/usr/local/tomcat/webapps --rm -P --link wangxn-mysql:db "
+						+ elem.getId());
+		
 		addListener();
 	}
 

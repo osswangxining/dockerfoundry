@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="Dockerfile Editor"
+            icon="icons/dockerfile.png"
+            filenames="Dockerfile"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            class="cn.dockerfoundry.ide.eclipse.dockerfile.editor.editors.DockerfileEditor"
+            id="cn.dockerfoundry.ide.eclipse.dockerfile.editor.editors.DockerfileEditor">
+      </editor>
+   </extension>
+	   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="Dockerfile Wizards"
+            id="cn.dockerfoundry.ide.eclipse.dockerfile.editor">
+      </category>
+      <wizard
+            name="Dockerfile Editor"
+            icon="icons/dockerfile.png"
+            category="cn.dockerfoundry.ide.eclipse.dockerfile.editor"
+            class="cn.dockerfoundry.ide.eclipse.dockerfile.editor.wizards.DockerfileNewWizard"
+            id="cn.dockerfoundry.ide.eclipse.dockerfile.editor.wizards.DockerfileNewWizard">
+      </wizard>
+   </extension>
+    <extension
+          id="DockerfileValidator"
+          name="DockerfileValidator"
+          point="org.eclipse.wst.validation.validatorV2">
+       <validator
+             class="cn.dockerfoundry.ide.eclipse.dockerfile.validator.DockerfileValidator">
+          <include>
+             <rules>
+                <file
+                      caseSensitive="false"
+                      name="Dockerfile"
+                      type="file">
+                </file>
+             </rules>
+          </include>
+       </validator>
+    </extension>
+</plugin>
