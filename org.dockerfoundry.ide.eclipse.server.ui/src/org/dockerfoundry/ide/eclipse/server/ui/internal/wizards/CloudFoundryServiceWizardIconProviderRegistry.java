@@ -34,7 +34,7 @@ public class CloudFoundryServiceWizardIconProviderRegistry {
 
 	private static final String ELEMENT = "serviceIconProvider"; //$NON-NLS-1$
 
-	public static final String EXTENSION_POINT = "org.cloudfoundry.ide.eclipse.server.ui.serviceWizardIconProvider"; //$NON-NLS-1$
+	public static final String EXTENSION_POINT = "org.dockerfoundry.ide.eclipse.server.ui.serviceWizardIconProvider"; //$NON-NLS-1$
 
 	// Static variables
 	private static CloudFoundryServiceWizardIconProviderRegistry instance = new CloudFoundryServiceWizardIconProviderRegistry();

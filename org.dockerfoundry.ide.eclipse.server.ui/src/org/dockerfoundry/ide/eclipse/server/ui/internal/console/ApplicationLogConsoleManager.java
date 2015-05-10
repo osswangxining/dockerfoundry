@@ -119,7 +119,7 @@ public class ApplicationLogConsoleManager extends CloudConsoleManager {
 //		if (!appModule.isDeployed()) {
 //			throw CloudErrorUtil
 //					.toCoreException(NLS
-//							.bind(org.cloudfoundry.ide.eclipse.server.ui.internal.Messages.ApplicationLogConsoleManager_APPLICATION_NOT_PUBLISHED,
+//							.bind(org.dockerfoundry.ide.eclipse.server.ui.internal.Messages.ApplicationLogConsoleManager_APPLICATION_NOT_PUBLISHED,
 //									appModule.getDeployedApplicationName()));
 //		}
 		// As of 1.7.2, instances are not used for loggregator. Loggregator

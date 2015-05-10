@@ -58,9 +58,9 @@ public abstract class ModuleResourceApplicationDelegate extends AbstractApplicat
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.cloudfoundry.ide.eclipse.server.core.internal.application.
+	 * @see org.dockerfoundry.ide.eclipse.server.core.internal.application.
 	 * AbstractApplicationDelegate
-	 * #getApplicationArchive(org.cloudfoundry.ide.eclipse.internal
+	 * #getApplicationArchive(org.dockerfoundry.ide.eclipse.internal
 	 * .server.core.client.CloudFoundryApplicationModule,
 	 * org.eclipse.wst.server.core.model.IModuleResource[])
 	 */

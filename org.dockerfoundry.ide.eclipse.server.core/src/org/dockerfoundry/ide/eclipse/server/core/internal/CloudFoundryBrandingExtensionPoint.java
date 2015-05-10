@@ -64,7 +64,7 @@ public class CloudFoundryBrandingExtensionPoint {
 
 	public static String ATTR_SIGNUP_URL = "signupURL"; //$NON-NLS-1$
 
-	public static String POINT_ID = "org.cloudfoundry.ide.eclipse.server.core.branding"; //$NON-NLS-1$
+	public static String POINT_ID = "org.dockerfoundry.ide.eclipse.server.core.branding"; //$NON-NLS-1$
 
 	private static Map<String, IConfigurationElement> brandingDefinitions = new HashMap<String, IConfigurationElement>();
 

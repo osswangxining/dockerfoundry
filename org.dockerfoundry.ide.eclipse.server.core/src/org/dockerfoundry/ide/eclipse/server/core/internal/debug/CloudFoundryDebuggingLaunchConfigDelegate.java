@@ -39,9 +39,9 @@ import org.eclipse.jdt.launching.JavaRuntime;
 
 public class CloudFoundryDebuggingLaunchConfigDelegate extends AbstractJavaLaunchConfigurationDelegate {
 
-	public static final String SOURCE_LOCATOR = "org.cloudfoundry.ide.eclipse.debug.sourcepathcomputer"; //$NON-NLS-1$
+	public static final String SOURCE_LOCATOR = "org.dockerfoundry.ide.eclipse.debug.sourcepathcomputer"; //$NON-NLS-1$
 
-	public static final String LAUNCH_CONFIGURATION_ID = "org.cloudfoundry.ide.eclipse.launchconfig.debug"; //$NON-NLS-1$
+	public static final String LAUNCH_CONFIGURATION_ID = "org.dockerfoundry.ide.eclipse.launchconfig.debug"; //$NON-NLS-1$
 
 	public static final String TIME_OUT = "timeout"; //$NON-NLS-1$
 

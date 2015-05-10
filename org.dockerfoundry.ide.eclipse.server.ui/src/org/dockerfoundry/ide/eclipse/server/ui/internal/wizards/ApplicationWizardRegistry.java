@@ -37,7 +37,7 @@ public class ApplicationWizardRegistry {
 
 	private static final String APPLICATION_DELEGATE_EXT_ELEMENT = "applicationWizardDelegate"; //$NON-NLS-1$
 
-	public static String EXTENSION_POINT = "org.cloudfoundry.ide.eclipse.server.ui.applicationWizard"; //$NON-NLS-1$
+	public static String EXTENSION_POINT = "org.dockerfoundry.ide.eclipse.server.ui.applicationWizard"; //$NON-NLS-1$
 
 	public static ApplicationWizardDelegate getWizardProvider(IModule module) {
 		// See if there is a corresponding application delegate

@@ -82,6 +82,7 @@
 			typeIds="cn.dockerfoundry.appcloudserver.10"
 			class="org.dockerfoundry.ide.eclipse.server.ui.internal.wizards.CloudFoundryServerWizardFragment"/>
 	</extension>
+	<!--
 	 <extension
        point="org.dockerfoundry.ide.eclipse.server.core.branding">
 	    <service
@@ -95,16 +96,18 @@
 
     </service>
      </extension>
+     -->
+     <!--
     <extension
        point="org.eclipse.rse.core.systemTypes">
     <systemType
           icon="icons/obj16/cloud_obj.png"
           iconLive="icons/obj16/cloud_obj.png"
-          id="org.cloudfoundry.cloudfoundryserver"
+          id="org.dockerfoundry.cloudfoundryserver"
           label="Docker Foundry"
           name="Docker Foundry"
           subsystemConfigurationIds="cloudserver.applications">
     </systemType>
  </extension>
-
+-->
 </plugin>

@@ -316,9 +316,9 @@ public class CloudFoundryDeploymentWizardPage extends AbstractURLWizardPage {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.cloudfoundry.ide.eclipse.server.ui.internal.wizards.PartsWizardPage
+	 * org.dockerfoundry.ide.eclipse.server.ui.internal.wizards.PartsWizardPage
 	 * #handleChange
-	 * (org.cloudfoundry.ide.eclipse.server.ui.internal.PartChangeEvent)
+	 * (org.dockerfoundry.ide.eclipse.server.ui.internal.PartChangeEvent)
 	 */
 	public void handleChange(PartChangeEvent event) {
 		Object eventData = event.getData();

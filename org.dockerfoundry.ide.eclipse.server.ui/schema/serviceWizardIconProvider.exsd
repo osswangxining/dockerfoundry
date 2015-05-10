@@ -55,7 +55,7 @@
                   
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":org.cloudfoundry.ide.eclipse.server.ui.ICloudFoundryServiceIconProvider"/>
+                  <meta.attribute kind="java" basedOn=":org.dockerfoundry.ide.eclipse.server.ui.ICloudFoundryServiceIconProvider"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -86,7 +86,7 @@
          The following is an example of an extension point:
 
 &lt;pre&gt;
-  &lt;extension point=&quot;org.cloudfoundry.ide.eclipse.server.ui.serviceWizardIconProvider&quot;&gt;
+  &lt;extension point=&quot;org.dockerfoundry.ide.eclipse.server.ui.serviceWizardIconProvider&quot;&gt;
      &lt;serviceIconProvider runtimeTypeId=&quot;com.my.server.runtimetype.id&quot;
            providerClass=&quot;com.my.MyServiceWizardIconProvider&quot;/&gt;
 

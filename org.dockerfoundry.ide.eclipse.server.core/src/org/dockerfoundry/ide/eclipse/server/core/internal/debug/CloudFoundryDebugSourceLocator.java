@@ -73,7 +73,7 @@ public class CloudFoundryDebugSourceLocator implements ISourcePathComputer {
 	}
 
 	public String getId() {
-		return "org.cloudfoundry.ide.eclipse.debug.sourcepathcomputer"; //$NON-NLS-1$
+		return "org.dockerfoundry.ide.eclipse.debug.sourcepathcomputer"; //$NON-NLS-1$
 	}
 
 }

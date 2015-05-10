@@ -87,7 +87,7 @@ public class CloudUiUtil {
 
 	public static final String SERVERS_VIEW_ID = "org.eclipse.wst.server.ui.ServersView"; //$NON-NLS-1$
 
-	public static String ATTR_USER_DEFINED_URLS = "org.cloudfoundry.ide.eclipse.server.user.defined.urls"; //$NON-NLS-1$
+	public static String ATTR_USER_DEFINED_URLS = "org.dockerfoundry.ide.eclipse.server.user.defined.urls"; //$NON-NLS-1$
 
 	public static IStatus runForked(final ICoreRunnable coreRunner, IWizard wizard) {
 		try {
@@ -131,7 +131,7 @@ public class CloudUiUtil {
 
 	public static List<CloudServerURL> getAllUrls(String serverTypeId) {
 		List<CloudServerURL> urls = new ArrayList<CloudFoundryBrandingExtensionPoint.CloudServerURL>();
-		urls.add(getDefaultUrl(serverTypeId));
+//		urls.add(getDefaultUrl(serverTypeId));
 		urls.addAll(getUrls(serverTypeId));
 		return urls;
 	}

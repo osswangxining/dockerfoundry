@@ -177,11 +177,11 @@ public class JavaWebApplicationDelegate extends AbstractApplicationDelegate {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.cloudfoundry.ide.eclipse.server.core.internal.application.
+	 * @see org.dockerfoundry.ide.eclipse.server.core.internal.application.
 	 * AbstractApplicationDelegate
-	 * #getApplicationArchive(org.cloudfoundry.ide.eclipse.internal
+	 * #getApplicationArchive(org.dockerfoundry.ide.eclipse.internal
 	 * .server.core.client.CloudFoundryApplicationModule,
-	 * org.cloudfoundry.ide.eclipse.server.core.internal.CloudFoundryServer,
+	 * org.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer,
 	 * org.eclipse.wst.server.core.model.IModuleResource[],
 	 * org.eclipse.core.runtime.IProgressMonitor)
 	 */
@@ -209,11 +209,11 @@ public class JavaWebApplicationDelegate extends AbstractApplicationDelegate {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.cloudfoundry.ide.eclipse.server.core.internal.application.
+	 * @see org.dockerfoundry.ide.eclipse.server.core.internal.application.
 	 * ApplicationDelegate
 	 * #getDefaultApplicationDeploymentInfo(org.cloudfoundry.ide
 	 * .eclipse.internal.server.core.client.CloudFoundryApplicationModule,
-	 * org.cloudfoundry.ide.eclipse.server.core.internal.CloudFoundryServer,
+	 * org.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer,
 	 * org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
