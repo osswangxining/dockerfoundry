@@ -20,6 +20,11 @@
 
 package cn.dockerfoundry.ide.eclipse.explorer.ui.utils;
 
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
+
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.IConsoleManager;
@@ -41,5 +46,20 @@ public class ConsoleHelper {
 		MessageConsole myConsole = new MessageConsole(name, null);
 		conMan.addConsoles(new IConsole[] { myConsole });
 		return myConsole;
+	}
+
+	public static String getString(ByteBuffer buffer) {
+		Charset charset = null;
+		CharsetDecoder decoder = null;
+		CharBuffer charBuffer = null;
+		try {
+			charset = Charset.forName("UTF-8");
+			decoder = charset.newDecoder();
+			charBuffer = decoder.decode(buffer.asReadOnlyBuffer());
+			return charBuffer.toString();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return "";
+		}
 	}
 }

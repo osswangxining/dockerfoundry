@@ -20,11 +20,18 @@
 
 package cn.dockerfoundry.ide.eclipse.explorer.ui.domain;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
 
 import org.eclipse.core.runtime.IAdaptable;
 
+import com.fasterxml.jackson.core.JsonEncoding;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonObjectFormatVisitor;
 import com.spotify.docker.client.DefaultDockerClient;
 import com.spotify.docker.client.DockerCertificateException;
 import com.spotify.docker.client.DockerCertificates;
@@ -174,6 +181,43 @@ public class DockerConnectionElement implements IAdaptable {
 
 	public void setImages(List<DockerImageElement> images) {
 		this.images = images;
+	}
+	
+//	public String toJSONString(){
+//		ObjectMapper objectMapper = new ObjectMapper();
+//        try {
+//        	ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//        	JsonGenerator jsonGenerator = objectMapper.getFactory().createGenerator(bos, JsonEncoding.UTF8);
+//        	jsonGenerator.writeObject(this);
+//        	
+//        	return bos.toString();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//	}
+//	
+	
+	
+//	public static void main(String[] args) {
+//		DockerConnectionElement e = new DockerConnectionElement();
+//		System.out.println(e.toJSONString());
+//		
+//		String s = "{\"name\":null,\"useDefault\":false,\"useUnixSocket\":false,\"useHTTPS\":false,\"enableAuth\":false,\"socketPath\":null,\"host\":null,\"authPath\":null}";
+//		System.out.println(e.fromJSONString(s));
+//	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "DockerConnectionElement [name=" + name + ", useDefault="
+				+ useDefault + ", useUnixSocket=" + useUnixSocket
+				+ ", useHTTPS=" + useHTTPS + ", enableAuth=" + enableAuth
+				+ ", socketPath=" + socketPath + ", host=" + host
+				+ ", authPath=" + authPath + ", containers=" + containers
+				+ ", images=" + images + "]";
 	}
 }
 
