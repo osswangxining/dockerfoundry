@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+	<extension point="org.eclipse.wst.server.core.runtimeTypes">
+		<runtimeType id="cn.dockerfoundry.appcloudserver.runtime.10"
+			version="1.0" 
+			name="Docker Foundry (Runtime) v1.0" 
+			description="Docker Foundry supports J2EE 1.2, 1.3, 1.4 and Java EE 5 Web modules."
+			vendor="Docker Foundry" 
+			class="org.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServerRuntime">
+			<moduleType types="wst.web" versions="1.0" />
+			<moduleType types="jst.web" versions="2.2,2.3,2.4,2.5,3.0,3.1" />
+			<moduleType types="jst.utility" versions="1.0"/>
+			<moduleType types="grails.app" versions="1.0"/>
+		</runtimeType>
+	</extension>
+
+	<extension point="org.eclipse.wst.server.core.serverTypes">
+		<serverType
+	        behaviourClass="org.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryServerBehaviour"
+	        class="org.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer"
+	        description="Publishes and runs J2EE Web projects to Docker Foundry."
+	        hasConfiguration="false"
+	        id="cn.dockerfoundry.appcloudserver.10"
+	        initialState="stopped"
+	        name="Docker Foundry"
+	        runtime="true"
+	        supportsRemoteHosts="true"
+	        runtimeTypeId="cn.dockerfoundry.appcloudserver.runtime.10"
+	        startTimeout="600000"
+	        stopTimeout="60000">
+		</serverType>
+	</extension>
+	<extension point="org.eclipse.wst.common.project.facet.core.defaultFacets">
+    	<default-facets>
+      		<runtime-component id="cn.dockerfoundry.appcloudserver"/>
+        	<facet id="wst.jsdt.web" version="1.0"/>
+    	</default-facets>
+  	</extension>
+  	<extension point="org.eclipse.wst.common.project.facet.core.runtimes">
+		<runtime-component-type id="cn.dockerfoundry.appcloudserver" />
+		<runtime-component-version type="cn.dockerfoundry.appcloudserver" version="1.0" />
+		
+		<adapter>
+			<runtime-component id="cn.dockerfoundry.appcloudserver" />
+			<factory class="org.eclipse.jst.server.core.internal.RuntimeClasspathProvider$Factory" />
+			<type class="org.eclipse.jst.common.project.facet.core.IClasspathProvider" />
+		</adapter>
+		<adapter>
+	      <runtime-component id="cn.dockerfoundry.appcloudserver"/>
+	      <factory class="org.eclipse.wst.server.ui.FacetRuntimeComponentLabelProvider"/>
+	      <type class="org.eclipse.wst.common.project.facet.ui.IRuntimeComponentLabelProvider"/>
+	    </adapter>
+		<supported>
+			<runtime-component id="cn.dockerfoundry.appcloudserver" version="1.0" />
+			<facet id="jst.web" version="2.2,2.3,2.4,2.5,3.0,3.1" />
+			<facet id="jst.utility" version="1.0"/>
+			<facet id="grails.app" version="1.0"/>
+			<facet id="cloudfoundry.standalone.app" version="1.0"/>
+    	</supported>
+	</extension>
+	<extension point="org.eclipse.jst.server.core.runtimeFacetMappings">
+		<runtimeFacetMapping 
+			runtimeTypeId="cn.dockerfoundry.appcloudserver.runtime.10"
+			runtime-component="cn.dockerfoundry.appcloudserver" version="1.0" />
+	</extension>
+	<extension point="org.eclipse.jst.server.core.runtimeClasspathProviders">
+	     <runtimeClasspathProvider
+	        id="cn.dockerfoundry.appcloudserver.classPathProvider"
+	        runtimeTypeIds="cn.dockerfoundry.appcloudserver.runtime.10"
+	        class="org.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryRuntimeClasspathProvider"/>
+     </extension>
+     <extension point="org.eclipse.wst.server.ui.serverImages">
+		<image 
+			id="cn.dockerfoundry.appcloudserver" 
+			icon="icons/obj16/cloud_obj.png"
+			typeIds="cloudfoundry.standalone.app, cn.dockerfoundry.appcloudserver.10, cn.dockerfoundry.appcloudserver.runtime.10" />
+	</extension>
+	<extension point="org.eclipse.wst.server.ui.wizardFragments">
+		<fragment
+			id="cn.dockerfoundry.appcloudserver.10"
+			typeIds="cn.dockerfoundry.appcloudserver.10"
+			class="org.dockerfoundry.ide.eclipse.server.ui.internal.wizards.CloudFoundryServerWizardFragment"/>
+	</extension>
+	 <extension
+       point="org.dockerfoundry.ide.eclipse.server.core.branding">
+	    <service
+           name="Docker Foundry"
+           provideServices="true"
+           remoteSystemTypeId="org.cloudfoundry.cloudfoundryserver"
+           serverDisplayName="Docker Foundry"
+           serverTypeId="cn.dockerfoundry.appcloudserver.10"
+           wizardBanner="icons/wizban/wizban_dockerfoundry.png">
+      
+
+    </service>
+     </extension>
+    <extension
+       point="org.eclipse.rse.core.systemTypes">
+    <systemType
+          icon="icons/obj16/cloud_obj.png"
+          iconLive="icons/obj16/cloud_obj.png"
+          id="org.cloudfoundry.cloudfoundryserver"
+          label="Docker Foundry"
+          name="Docker Foundry"
+          subsystemConfigurationIds="cloudserver.applications">
+    </systemType>
+ </extension>
+
+</plugin>
