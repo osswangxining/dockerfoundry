@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
-Bundle-SymbolicName: org.dockerfoundry.ide.eclipse.server.ui;singleton:=true
+Bundle-SymbolicName: cn.dockerfoundry.ide.eclipse.server.ui;singleton:=true
 Bundle-Version: 1.8.1.qualifier
-Bundle-Activator: org.dockerfoundry.ide.eclipse.server.ui.internal.CloudFoundryServerUiPlugin
+Bundle-Activator: cn.dockerfoundry.ide.eclipse.server.ui.internal.CloudFoundryServerUiPlugin
 Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.wst.common.project.facet.ui,
  org.eclipse.wst.server.core,
@@ -16,7 +16,7 @@ Require-Bundle: org.eclipse.wst.common.project.facet.ui,
  org.eclipse.ui.console,
  org.eclipse.ui.forms,
  org.eclipse.ui.navigator,
- org.dockerfoundry.ide.eclipse.server.core,
+ cn.dockerfoundry.ide.eclipse.server.core,
  org.eclipse.jdt.core,
  org.eclipse.core.expressions,
  org.eclipse.jdt.debug.ui,
@@ -28,9 +28,9 @@ Require-Bundle: org.eclipse.wst.common.project.facet.ui,
  cn.dockerfoundry.ide.eclipse.explorer.ui;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
-Export-Package: org.dockerfoundry.ide.eclipse.server.ui,
- org.dockerfoundry.ide.eclipse.server.ui.internal,
- org.dockerfoundry.ide.eclipse.server.ui.internal.actions,
- org.dockerfoundry.ide.eclipse.server.ui.internal.console,
- org.dockerfoundry.ide.eclipse.server.ui.internal.editor,
- org.dockerfoundry.ide.eclipse.server.ui.internal.wizards
+Export-Package: cn.dockerfoundry.ide.eclipse.server.ui,
+ cn.dockerfoundry.ide.eclipse.server.ui.internal,
+ cn.dockerfoundry.ide.eclipse.server.ui.internal.actions,
+ cn.dockerfoundry.ide.eclipse.server.ui.internal.console,
+ cn.dockerfoundry.ide.eclipse.server.ui.internal.editor,
+ cn.dockerfoundry.ide.eclipse.server.ui.internal.wizards

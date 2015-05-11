@@ -13,5 +13,5 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.wst.common.project.facet.core,
  org.eclipse.jst.server.core,
  org.eclipse.jst.common.project.facet.core,
- org.dockerfoundry.ide.eclipse.server.core,
- org.dockerfoundry.ide.eclipse.server.ui
+ cn.dockerfoundry.ide.eclipse.server.core,
+ cn.dockerfoundry.ide.eclipse.server.ui

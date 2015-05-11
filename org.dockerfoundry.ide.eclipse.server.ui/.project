@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>org.dockerfoundry.ide.eclipse.server.ui</name>
+	<name>cn.dockerfoundry.ide.eclipse.server.ui</name>
 	<comment></comment>
 	<projects>
 	</projects>

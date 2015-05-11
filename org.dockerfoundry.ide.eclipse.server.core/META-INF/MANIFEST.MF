@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
-Bundle-SymbolicName: org.dockerfoundry.ide.eclipse.server.core;singleton:=true
+Bundle-SymbolicName: cn.dockerfoundry.ide.eclipse.server.core;singleton:=true
 Bundle-Version: 1.8.1.qualifier
 Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.core.runtime,
@@ -36,18 +36,18 @@ Bundle-ClassPath: .,
  lib/commons-logging-1.1.3.jar,
  lib/cloudfoundry-client-lib-1.1.1-20150318.jar,
  lib/spring-web-4.0.5.RELEASE.jar
-Bundle-Activator: org.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin
-Export-Package: org.cloudfoundry.client.lib,
+Bundle-Activator: cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin
+Export-Package: cn.dockerfoundry.ide.eclipse.server.core,
+ cn.dockerfoundry.ide.eclipse.server.core.internal,
+ cn.dockerfoundry.ide.eclipse.server.core.internal.application,
+ cn.dockerfoundry.ide.eclipse.server.core.internal.client,
+ cn.dockerfoundry.ide.eclipse.server.core.internal.debug,
+ cn.dockerfoundry.ide.eclipse.server.core.internal.log,
+ org.cloudfoundry.client.lib,
  org.cloudfoundry.client.lib.archive,
  org.cloudfoundry.client.lib.domain,
  org.cloudfoundry.client.lib.rest,
  org.cloudfoundry.client.lib.util,
- org.dockerfoundry.ide.eclipse.server.core,
- org.dockerfoundry.ide.eclipse.server.core.internal,
- org.dockerfoundry.ide.eclipse.server.core.internal.application,
- org.dockerfoundry.ide.eclipse.server.core.internal.client,
- org.dockerfoundry.ide.eclipse.server.core.internal.debug,
- org.dockerfoundry.ide.eclipse.server.core.internal.log,
  org.springframework.web.client
 Import-Package: com.spotify.docker.client,
  com.sun.jdi.connect,
