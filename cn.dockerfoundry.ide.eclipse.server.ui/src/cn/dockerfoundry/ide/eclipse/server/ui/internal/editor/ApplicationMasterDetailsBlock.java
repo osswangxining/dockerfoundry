@@ -31,7 +31,7 @@ import org.eclipse.ui.forms.MasterDetailsBlock;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.wst.server.core.IModule;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.actions.EditorAction.RefreshArea;
 
 /**
@@ -43,15 +43,15 @@ import cn.dockerfoundry.ide.eclipse.server.ui.internal.actions.EditorAction.Refr
  */
 public class ApplicationMasterDetailsBlock extends MasterDetailsBlock implements IDetailsPageProvider {
 
-	private final CloudFoundryServer cloudServer;
+	private final DockerFoundryServer cloudServer;
 
 	private ApplicationDetailsPart detailsPart;
 
-	private final CloudFoundryApplicationsEditorPage editorPage;
+	private final DockerFoundryApplicationsEditorPage editorPage;
 
 	private ApplicationMasterPart masterPart;
 
-	public ApplicationMasterDetailsBlock(CloudFoundryApplicationsEditorPage editorPage, CloudFoundryServer cloudServer) {
+	public ApplicationMasterDetailsBlock(DockerFoundryApplicationsEditorPage editorPage, DockerFoundryServer cloudServer) {
 		this.editorPage = editorPage;
 		this.cloudServer = cloudServer;
 	}

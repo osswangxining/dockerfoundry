@@ -28,14 +28,14 @@ import cn.dockerfoundry.ide.eclipse.explorer.ui.domain.DockerConnectionElement;
 import cn.dockerfoundry.ide.eclipse.explorer.ui.utils.DockerContainerInfo;
 import cn.dockerfoundry.ide.eclipse.explorer.ui.utils.DockerDomainHelper;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.ApplicationUrlLookupService;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.wizards.ApplicationWizardDelegate;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.wizards.ApplicationWizardDescriptor;
-import cn.dockerfoundry.ide.eclipse.server.ui.internal.wizards.CloudFoundryApplicationEnvVarWizardPage;
-import cn.dockerfoundry.ide.eclipse.server.ui.internal.wizards.CloudFoundryApplicationServicesWizardPage;
-import cn.dockerfoundry.ide.eclipse.server.ui.internal.wizards.CloudFoundryApplicationWizardPage;
-import cn.dockerfoundry.ide.eclipse.server.ui.internal.wizards.CloudFoundryDeploymentWizardPage;
+import cn.dockerfoundry.ide.eclipse.server.ui.internal.wizards.DockerFoundryApplicationEnvVarWizardPage;
+import cn.dockerfoundry.ide.eclipse.server.ui.internal.wizards.DockerFoundryApplicationServicesWizardPage;
+import cn.dockerfoundry.ide.eclipse.server.ui.internal.wizards.DockerFoundryApplicationWizardPage;
+import cn.dockerfoundry.ide.eclipse.server.ui.internal.wizards.DockerFoundryDeploymentWizardPage;
 
 import com.spotify.docker.client.DockerCertificateException;
 import com.spotify.docker.client.DockerClient;
@@ -53,22 +53,22 @@ import com.spotify.docker.client.messages.ContainerInfo;
 public class DefaultApplicationWizardDelegate extends ApplicationWizardDelegate {
 
 	public List<IWizardPage> getWizardPages(ApplicationWizardDescriptor applicationDescriptor,
-			CloudFoundryServer cloudServer, CloudFoundryApplicationModule applicationModule) {
+			DockerFoundryServer cloudServer, DockerFoundryApplicationModule applicationModule) {
 		List<IWizardPage> defaultPages = new ArrayList<IWizardPage>();
 		
 		ApplicationUrlLookupService urllookup = ApplicationUrlLookupService.getCurrentLookup(cloudServer);
 
-		CloudFoundryDeploymentWizardPage deploymentPage = new CloudFoundryDeploymentWizardPage(cloudServer,
+		DockerFoundryDeploymentWizardPage deploymentPage = new DockerFoundryDeploymentWizardPage(cloudServer,
 				applicationModule, applicationDescriptor, urllookup, this);
 
-		CloudFoundryApplicationWizardPage applicationNamePage = new CloudFoundryApplicationWizardPage(cloudServer,
+		DockerFoundryApplicationWizardPage applicationNamePage = new DockerFoundryApplicationWizardPage(cloudServer,
 				deploymentPage, applicationModule, applicationDescriptor);
 
 //		defaultPages.add(applicationNamePage);
 
 //		defaultPages.add(deploymentPage);
 
-		CloudFoundryApplicationServicesWizardPage servicesPage = new CloudFoundryApplicationServicesWizardPage(
+		DockerFoundryApplicationServicesWizardPage servicesPage = new DockerFoundryApplicationServicesWizardPage(
 				cloudServer, applicationModule, applicationDescriptor);
 
 		defaultPages.add(servicesPage);
@@ -100,7 +100,7 @@ public class DefaultApplicationWizardDelegate extends ApplicationWizardDelegate 
 		}
 			
 			
-		defaultPages.add(new CloudFoundryApplicationEnvVarWizardPage(cloudServer, applicationDescriptor
+		defaultPages.add(new DockerFoundryApplicationEnvVarWizardPage(cloudServer, applicationDescriptor
 				.getDeploymentInfo(), dockerContainerInfo ));
 		return defaultPages;
 	}

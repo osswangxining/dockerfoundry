@@ -22,8 +22,8 @@ package cn.dockerfoundry.ide.eclipse.server.ui.internal.wizards;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.osgi.util.NLS;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.ValidationEvents;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.Messages;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.ServerWizardValidator;
@@ -38,7 +38,7 @@ import cn.dockerfoundry.ide.eclipse.server.ui.internal.ValidationStatus;
  */
 public class CredentialsWizardValidator extends ServerWizardValidator {
 
-	public CredentialsWizardValidator(CloudFoundryServer cloudServer) {
+	public CredentialsWizardValidator(DockerFoundryServer cloudServer) {
 		super(cloudServer);
 	}
 
@@ -73,7 +73,7 @@ public class CredentialsWizardValidator extends ServerWizardValidator {
 		// wizard buttons disabled until an OK status is sent.
 		int statusType = valuesFilled ? IStatus.OK : IStatus.INFO;
 
-		IStatus status = CloudFoundryPlugin.getStatus(message, statusType);
+		IStatus status = DockerFoundryPlugin.getStatus(message, statusType);
 		return getValidationStatus(status, validationEventType);
 	}
 

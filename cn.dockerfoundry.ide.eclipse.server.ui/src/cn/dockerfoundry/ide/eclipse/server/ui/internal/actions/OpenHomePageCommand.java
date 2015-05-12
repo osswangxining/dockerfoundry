@@ -35,9 +35,9 @@ import org.eclipse.wst.server.core.IModule;
 import org.eclipse.wst.server.core.IServer;
 import org.eclipse.wst.server.core.model.IURLProvider;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.CloudUiUtil;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.Messages;
 
@@ -50,14 +50,14 @@ public class OpenHomePageCommand extends BaseCommandHandler {
 		initializeSelection(event);
 
 		if (selectedServer != null) {
-			CloudFoundryApplicationModule cloudModule = getSelectedCloudAppModule();
+			DockerFoundryApplicationModule cloudModule = getSelectedCloudAppModule();
 			if (cloudModule != null) {
 				int state = cloudModule.getState();
 				// Based on property testers, this should already be started
 				if (state == IServer.STATE_STARTED) {
 					IURLProvider cloudServer = (IURLProvider)selectedServer.loadAdapter(IURLProvider.class, null);
 
-					CloudFoundryServer cfs = (CloudFoundryServer)selectedServer.loadAdapter(CloudFoundryServer.class, null);
+					DockerFoundryServer cfs = (DockerFoundryServer)selectedServer.loadAdapter(DockerFoundryServer.class, null);
 					
 					String contextRoot = null;
 					if (cfs != null){
@@ -92,10 +92,10 @@ public class OpenHomePageCommand extends BaseCommandHandler {
 
 								if (dialog.open() != Window.OK) { 	
 									if (dialog.getReturnCode() == Window.CANCEL){
-										CloudFoundryPlugin.logWarning("User pressed cancel on selection dialog"); //$NON-NLS-1$
+										DockerFoundryPlugin.logWarning("User pressed cancel on selection dialog"); //$NON-NLS-1$
 										return null;
 									}
-									CloudFoundryPlugin.logError(("Failed to open the Open Home Page selection dialog")); //$NON-NLS-1$
+									DockerFoundryPlugin.logError(("Failed to open the Open Home Page selection dialog")); //$NON-NLS-1$
 									return null;
 								}
 
@@ -115,12 +115,12 @@ public class OpenHomePageCommand extends BaseCommandHandler {
 							CloudUiUtil.openUrl(homePageUrl.toExternalForm());
 						}
 						else {
-							CloudFoundryPlugin.logError("homePageUrl is null, unable to launch the Home Page URL"); //$NON-NLS-1$
+							DockerFoundryPlugin.logError("homePageUrl is null, unable to launch the Home Page URL"); //$NON-NLS-1$
 							return null;
 						}
 					}
 					catch (Exception e) {
-						CloudFoundryPlugin.logError("Cannot launch the home page URL", e); //$NON-NLS-1$
+						DockerFoundryPlugin.logError("Cannot launch the home page URL", e); //$NON-NLS-1$
 						return null;
 					}					
 				}
@@ -129,9 +129,9 @@ public class OpenHomePageCommand extends BaseCommandHandler {
 		return null;
 	}
 	
-	private CloudFoundryApplicationModule getSelectedCloudAppModule() {
-		CloudFoundryServer cloudServer = (CloudFoundryServer) selectedServer
-				.loadAdapter(CloudFoundryServer.class, null);
+	private DockerFoundryApplicationModule getSelectedCloudAppModule() {
+		DockerFoundryServer cloudServer = (DockerFoundryServer) selectedServer
+				.loadAdapter(DockerFoundryServer.class, null);
 		return cloudServer.getExistingCloudModule(selectedModule);
 	}
 

@@ -28,9 +28,9 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
 import cn.dockerfoundry.ide.eclipse.server.core.internal.ApplicationUrlLookupService;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.CloudApplicationUrlPart;
-import cn.dockerfoundry.ide.eclipse.server.ui.internal.CloudFoundryImages;
+import cn.dockerfoundry.ide.eclipse.server.ui.internal.DockerFoundryImages;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.Messages;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.PartChangeEvent;
 
@@ -41,7 +41,7 @@ import cn.dockerfoundry.ide.eclipse.server.ui.internal.PartChangeEvent;
  */
 public class ApplicationURLWizard extends Wizard {
 
-	private final CloudFoundryServer cloudServer;
+	private final DockerFoundryServer cloudServer;
 
 	private final String initialUrl;
 
@@ -51,7 +51,7 @@ public class ApplicationURLWizard extends Wizard {
 
 	private static final String title = Messages.ApplicationURLWizard_TITLE_MOD_APP_URL;
 
-	public ApplicationURLWizard(CloudFoundryServer cloudServer, String initialUrl) {
+	public ApplicationURLWizard(DockerFoundryServer cloudServer, String initialUrl) {
 		this.cloudServer = cloudServer;
 		this.initialUrl = initialUrl;
 		setWindowTitle(title);
@@ -67,7 +67,7 @@ public class ApplicationURLWizard extends Wizard {
 	public void addPages() {
 		String serverTypeId = cloudServer.getServer().getServerType().getId();
 
-		ImageDescriptor imageDescriptor = CloudFoundryImages.getWizardBanner(serverTypeId);
+		ImageDescriptor imageDescriptor = DockerFoundryImages.getWizardBanner(serverTypeId);
 		// Use the cached version if possible.
 		ApplicationUrlLookupService urlLookup = ApplicationUrlLookupService.getCurrentLookup(cloudServer);
 		urlPage = createPage(imageDescriptor, urlLookup);

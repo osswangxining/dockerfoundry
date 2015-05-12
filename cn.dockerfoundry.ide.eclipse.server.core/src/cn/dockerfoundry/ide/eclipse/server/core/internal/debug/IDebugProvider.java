@@ -24,8 +24,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationType;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
 
 public interface IDebugProvider {
 
@@ -38,8 +38,8 @@ public interface IDebugProvider {
 	 * @return
 	 * @throws CoreException if error occurs.
 	 */
-	public DebugConnectionDescriptor getDebugConnectionDescriptor(CloudFoundryApplicationModule appModule,
-			CloudFoundryServer cloudServer, IProgressMonitor monitor) throws CoreException;
+	public DebugConnectionDescriptor getDebugConnectionDescriptor(DockerFoundryApplicationModule appModule,
+			DockerFoundryServer cloudServer, IProgressMonitor monitor) throws CoreException;
 
 	/**
 	 * Determine if the application is in a state where it can be launched. If
@@ -50,7 +50,7 @@ public interface IDebugProvider {
 	 * @param cloudServer
 	 * @return True if app should be debugged. False if debug should stop.
 	 */
-	public boolean canLaunch(CloudFoundryApplicationModule appModule, CloudFoundryServer cloudServer,
+	public boolean canLaunch(DockerFoundryApplicationModule appModule, DockerFoundryServer cloudServer,
 			IProgressMonitor monitor) throws CoreException;
 
 	/**
@@ -61,7 +61,7 @@ public interface IDebugProvider {
 	 * @param cloudServer
 	 * @return true if debug is supported for the given app. False otherwise
 	 */
-	public boolean isDebugSupported(CloudFoundryApplicationModule appModule, CloudFoundryServer cloudServer);
+	public boolean isDebugSupported(DockerFoundryApplicationModule appModule, DockerFoundryServer cloudServer);
 
 	/**
 	 * Optional configuration ID to be used for launching the application in
@@ -88,7 +88,7 @@ public interface IDebugProvider {
 	 * @return true if application is ready to be launched. False if debug
 	 * launch should stop.
 	 */
-	public boolean configureApp(CloudFoundryApplicationModule appModule, CloudFoundryServer cloudServer,
+	public boolean configureApp(DockerFoundryApplicationModule appModule, DockerFoundryServer cloudServer,
 			IProgressMonitor monitor) throws CoreException;
 
 }

@@ -35,19 +35,19 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.wst.server.core.IModule;
 import org.eclipse.wst.server.core.model.IModuleResource;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudUtil;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.Messages;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.ValueValidationUtil;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.application.EnvironmentVariable;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.client.LocalCloudService;
 
 /**
  * API that application contributions through the extension point:
  * <p/>
- * org.dockerfoundry.ide.eclipse.server.core.application
+ * cn.dockerfoundry.ide.eclipse.server.core.application
  * <p/>
  * are required to implement. Applications are represented as Eclipse WST
  * IModules. The main contributions for an application is:
@@ -130,8 +130,8 @@ public abstract class AbstractApplicationDelegate {
 	 * @throws CoreException if the application delegate provides an application
 	 * archive but it failed to create one.
 	 */
-	public abstract ApplicationArchive getApplicationArchive(CloudFoundryApplicationModule module,
-			CloudFoundryServer cloudServer, IModuleResource[] moduleResources, IProgressMonitor monitor)
+	public abstract ApplicationArchive getApplicationArchive(DockerFoundryApplicationModule module,
+			DockerFoundryServer cloudServer, IModuleResource[] moduleResources, IProgressMonitor monitor)
 			throws CoreException;
 
 	/**
@@ -153,8 +153,8 @@ public abstract class AbstractApplicationDelegate {
 	 * @return A new copy of the deployment information for an existing
 	 * application, or null if it cannot be resolved.
 	 */
-	public ApplicationDeploymentInfo resolveApplicationDeploymentInfo(CloudFoundryApplicationModule appModule,
-			CloudFoundryServer cloudServer) {
+	public ApplicationDeploymentInfo resolveApplicationDeploymentInfo(DockerFoundryApplicationModule appModule,
+			DockerFoundryServer cloudServer) {
 		return parseApplicationDeploymentInfo(appModule.getApplication());
 	}
 
@@ -170,15 +170,15 @@ public abstract class AbstractApplicationDelegate {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.dockerfoundry.ide.eclipse.server.core.internal.application.
+	 * @see cn.dockerfoundry.ide.eclipse.server.core.internal.application.
 	 * AbstractApplicationDelegate
 	 * #getDefaultApplicationDeploymentInfo(org.cloudfoundry.
 	 * ide.eclipse.internal.server.core.client.CloudFoundryApplicationModule,
-	 * org.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer,
+	 * cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer,
 	 * org.eclipse.core.runtime.IProgressMonitor)
 	 */
-	public ApplicationDeploymentInfo getDefaultApplicationDeploymentInfo(CloudFoundryApplicationModule appModule,
-			CloudFoundryServer cloudServer, IProgressMonitor monitor) throws CoreException {
+	public ApplicationDeploymentInfo getDefaultApplicationDeploymentInfo(DockerFoundryApplicationModule appModule,
+			DockerFoundryServer cloudServer, IProgressMonitor monitor) throws CoreException {
 
 		// Set default values.
 		String appName = appModule.getDeployedApplicationName();
@@ -204,7 +204,7 @@ public abstract class AbstractApplicationDelegate {
 		}
 
 		if (errorMessage != null) {
-			status = CloudFoundryPlugin.getErrorStatus(errorMessage);
+			status = DockerFoundryPlugin.getErrorStatus(errorMessage);
 		}
 
 		return status;

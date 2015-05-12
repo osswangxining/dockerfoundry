@@ -57,7 +57,7 @@ public class ApplicationUrlValidator {
 			errorMessage = Messages.INVALID_CHARACTERS_ERROR;
 		}
 
-		IStatus status = errorMessage != null ? CloudFoundryPlugin.getErrorStatus(errorMessage) : Status.OK_STATUS;
+		IStatus status = errorMessage != null ? DockerFoundryPlugin.getErrorStatus(errorMessage) : Status.OK_STATUS;
 
 		return status;
 	}

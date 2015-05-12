@@ -22,7 +22,7 @@ package cn.dockerfoundry.ide.eclipse.server.core.internal.application;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
 
 /**
  * 
@@ -63,7 +63,7 @@ public class FrameworkProvider<T> {
 			try {
 				Object object = configurationElement.createExecutableExtension(CLASS_ELEMENT);
 				if (object == null) {
-					CloudFoundryPlugin
+					DockerFoundryPlugin
 							.logError("No delegate class found. Must implement a delegate class. See extension point: " //$NON-NLS-1$
 									+ extensionPointID + " for more details."); //$NON-NLS-1$
 				}
@@ -72,7 +72,7 @@ public class FrameworkProvider<T> {
 				}
 			}
 			catch (CoreException e) {
-				CloudFoundryPlugin.logError(e);
+				DockerFoundryPlugin.logError(e);
 			}
 		}
 		return delegate;

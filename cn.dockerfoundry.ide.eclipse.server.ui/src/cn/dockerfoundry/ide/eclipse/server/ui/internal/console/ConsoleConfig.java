@@ -21,8 +21,8 @@ package cn.dockerfoundry.ide.eclipse.server.ui.internal.console;
 
 import org.eclipse.ui.console.MessageConsole;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
 
 /**
  * Contains configuration for a Cloud console, including the associated
@@ -32,19 +32,19 @@ import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryAppl
  */
 public class ConsoleConfig {
 
-	private final CloudFoundryServer cloudServer;
+	private final DockerFoundryServer cloudServer;
 
 //	private final CloudFoundryApplicationModule appModule;
 
 	private final MessageConsole messageConsole;
 
-	public ConsoleConfig(MessageConsole messageConsole, CloudFoundryServer cloudServer) {
+	public ConsoleConfig(MessageConsole messageConsole, DockerFoundryServer cloudServer) {
 
 		this.cloudServer = cloudServer;
 		this.messageConsole = messageConsole;
 	}
 
-	public CloudFoundryServer getCloudServer() {
+	public DockerFoundryServer getCloudServer() {
 		return cloudServer;
 	}
 

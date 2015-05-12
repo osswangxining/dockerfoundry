@@ -33,7 +33,7 @@ Bundle-ClassPath: .,
  lib/commons-logging-1.1.3.jar,
  lib/cloudfoundry-client-lib-1.1.1-20150318.jar,
  lib/spring-web-4.0.5.RELEASE.jar
-Bundle-Activator: cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin
+Bundle-Activator: cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin
 Export-Package: cn.dockerfoundry.ide.eclipse.server.core,
  cn.dockerfoundry.ide.eclipse.server.core.internal,
  cn.dockerfoundry.ide.eclipse.server.core.internal.application,

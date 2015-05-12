@@ -28,7 +28,7 @@ import org.eclipse.wst.server.core.model.IModuleFile;
 import org.eclipse.wst.server.core.model.IModuleFolder;
 import org.eclipse.wst.server.core.model.IModuleResource;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.Messages;
 
 /**
@@ -70,7 +70,7 @@ public class ModuleResourceApplicationArchive extends AbstractModuleResourceArch
 		super(module, resources);
 		if (resources == null || resources.isEmpty()) {
 			throw new CoreException(
-					CloudFoundryPlugin.getErrorStatus(NLS.bind(Messages.ModuleResourceApplicationArchive_ERROR_NO_DEPLOYABLE_RES_FOUND,
+					DockerFoundryPlugin.getErrorStatus(NLS.bind(Messages.ModuleResourceApplicationArchive_ERROR_NO_DEPLOYABLE_RES_FOUND,
 							module.getName(), module.getId())));
 		}
 	}

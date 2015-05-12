@@ -26,7 +26,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.TableColumn;
 
 import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerApplicationService;
-import cn.dockerfoundry.ide.eclipse.server.ui.internal.CloudFoundryImages;
+import cn.dockerfoundry.ide.eclipse.server.ui.internal.DockerFoundryImages;
 
 /**
  * @author Terry Denney
@@ -43,7 +43,7 @@ public class ServicesTreeLabelProvider extends LabelProvider implements ITableLa
 	@Override
 	public Image getImage(Object element) {
 		if (element instanceof DockerApplicationService) {
-			return CloudFoundryImages.getImage(CloudFoundryImages.OBJ_SERVICE);
+			return DockerFoundryImages.getImage(DockerFoundryImages.OBJ_SERVICE);
 		}
 		return null;
 	}

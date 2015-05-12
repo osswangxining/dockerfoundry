@@ -29,7 +29,7 @@ import cn.dockerfoundry.ide.eclipse.server.ui.internal.Messages;
 /**
  * Prompts users for unset application options
  */
-public class SetValueVariablesWizardPage extends CloudFoundryAwareWizardPage {
+public class SetValueVariablesWizardPage extends DockerFoundryAwareWizardPage {
 
 	private IStatus status;
 

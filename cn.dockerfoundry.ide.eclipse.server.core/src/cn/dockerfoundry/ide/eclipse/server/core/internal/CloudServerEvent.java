@@ -54,23 +54,23 @@ public class CloudServerEvent extends EventObject {
 
 	private IStatus status;
 
-	public CloudServerEvent(CloudFoundryServer server) {
+	public CloudServerEvent(DockerFoundryServer server) {
 		this(server, -1);
 	}
 
-	public CloudServerEvent(CloudFoundryServer server, int type) {
+	public CloudServerEvent(DockerFoundryServer server, int type) {
 		this(server, type, null);
 	}
 
-	public CloudServerEvent(CloudFoundryServer server, int type, IStatus status) {
+	public CloudServerEvent(DockerFoundryServer server, int type, IStatus status) {
 		super(server);
 		Assert.isNotNull(server);
 		this.type = type;
 		this.status = status;
 	}
 
-	public CloudFoundryServer getServer() {
-		return (CloudFoundryServer) getSource();
+	public DockerFoundryServer getServer() {
+		return (DockerFoundryServer) getSource();
 	}
 
 	public int getType() {

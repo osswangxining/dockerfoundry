@@ -27,9 +27,9 @@ import org.eclipse.wst.server.core.IModule;
 import org.eclipse.wst.server.core.IServer;
 import org.eclipse.wst.server.ui.IServerModule;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
 
 public abstract class AbstractCloudFoundryServerAction implements IObjectActionDelegate {
 
@@ -39,9 +39,9 @@ public abstract class AbstractCloudFoundryServerAction implements IObjectActionD
 
 	public void selectionChanged(IAction action, ISelection selection) {
 		selectedServer = getSelectedServer(selection);
-		CloudFoundryServer cloudServer = selectedServer != null ? (CloudFoundryServer) selectedServer.loadAdapter(
-				CloudFoundryServer.class, null) : null;
-		CloudFoundryApplicationModule appModule = cloudServer != null && selectedModule != null ? cloudServer
+		DockerFoundryServer cloudServer = selectedServer != null ? (DockerFoundryServer) selectedServer.loadAdapter(
+				DockerFoundryServer.class, null) : null;
+		DockerFoundryApplicationModule appModule = cloudServer != null && selectedModule != null ? cloudServer
 				.getExistingCloudModule(selectedModule) : null;
 		serverSelectionChanged(cloudServer, appModule, action);
 	}
@@ -51,7 +51,7 @@ public abstract class AbstractCloudFoundryServerAction implements IObjectActionD
 	 * server selection, like enabling/disabling the action.
 	 * @param action
 	 */
-	protected void serverSelectionChanged(CloudFoundryServer cloudServer, CloudFoundryApplicationModule appModule,
+	protected void serverSelectionChanged(DockerFoundryServer cloudServer, DockerFoundryApplicationModule appModule,
 			IAction action) {
 		// Do nothing
 	}
@@ -60,9 +60,9 @@ public abstract class AbstractCloudFoundryServerAction implements IObjectActionD
 
 	
 		String error = null;
-		CloudFoundryServer cloudServer = selectedServer != null ? (CloudFoundryServer) selectedServer.loadAdapter(
-				CloudFoundryServer.class, null) : null;
-		CloudFoundryApplicationModule appModule = cloudServer != null && selectedModule != null ? cloudServer
+		DockerFoundryServer cloudServer = selectedServer != null ? (DockerFoundryServer) selectedServer.loadAdapter(
+				DockerFoundryServer.class, null) : null;
+		DockerFoundryApplicationModule appModule = cloudServer != null && selectedModule != null ? cloudServer
 				.getExistingCloudModule(selectedModule) : null;
 		if (selectedServer == null) {
 			error = "No Cloud Foundry server instance available to run the selected action."; //$NON-NLS-1$
@@ -73,11 +73,11 @@ public abstract class AbstractCloudFoundryServerAction implements IObjectActionD
 		}
 		else {
 			error += " - " + action.getText(); //$NON-NLS-1$
-			CloudFoundryPlugin.logError(error);
+			DockerFoundryPlugin.logError(error);
 		}
 	}
 
-	abstract void doRun(CloudFoundryServer cloudServer, CloudFoundryApplicationModule appModule, IAction action);
+	abstract void doRun(DockerFoundryServer cloudServer, DockerFoundryApplicationModule appModule, IAction action);
 
 
 

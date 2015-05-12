@@ -27,7 +27,7 @@ import org.eclipse.wst.server.core.IModule;
 import org.eclipse.wst.server.core.model.IModuleResource;
 
 import cn.dockerfoundry.ide.eclipse.server.core.AbstractApplicationDelegate;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
 
 /**
  * 
@@ -52,20 +52,20 @@ public abstract class ModuleResourceApplicationDelegate extends AbstractApplicat
 	 * @param appModule
 	 * @return true if default URL should be set. False otherwise
 	 */
-	public boolean shouldSetDefaultUrl(CloudFoundryApplicationModule appModule) {
+	public boolean shouldSetDefaultUrl(DockerFoundryApplicationModule appModule) {
 		return requiresURL();
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.dockerfoundry.ide.eclipse.server.core.internal.application.
+	 * @see cn.dockerfoundry.ide.eclipse.server.core.internal.application.
 	 * AbstractApplicationDelegate
-	 * #getApplicationArchive(org.dockerfoundry.ide.eclipse.internal
+	 * #getApplicationArchive(cn.dockerfoundry.ide.eclipse.internal
 	 * .server.core.client.CloudFoundryApplicationModule,
 	 * org.eclipse.wst.server.core.model.IModuleResource[])
 	 */
-	public ApplicationArchive getApplicationArchive(CloudFoundryApplicationModule module,
+	public ApplicationArchive getApplicationArchive(DockerFoundryApplicationModule module,
 			IModuleResource[] moduleResources) throws CoreException {
 		return new ModuleResourceApplicationArchive(module.getLocalModule(), Arrays.asList(moduleResources));
 	}

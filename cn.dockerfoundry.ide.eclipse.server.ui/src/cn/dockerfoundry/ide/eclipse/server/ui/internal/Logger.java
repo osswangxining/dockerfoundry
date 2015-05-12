@@ -28,10 +28,10 @@ public class Logger implements DebugOptionsListener {
 
 	public void optionsChanged(DebugOptions options) {
 
-		Logger.ERROR = options.getBooleanOption(CloudFoundryServerUiPlugin.PLUGIN_ID + Logger.ERROR_LEVEL, false);
-		Logger.WARNING = options.getBooleanOption(CloudFoundryServerUiPlugin.PLUGIN_ID + Logger.WARNING_LEVEL, false);
-		Logger.INFO = options.getBooleanOption(CloudFoundryServerUiPlugin.PLUGIN_ID + Logger.INFO_LEVEL, false);
-		Logger.DETAILS = options.getBooleanOption(CloudFoundryServerUiPlugin.PLUGIN_ID + Logger.DETAILS_LEVEL, false);
+		Logger.ERROR = options.getBooleanOption(DockerFoundryServerUiPlugin.PLUGIN_ID + Logger.ERROR_LEVEL, false);
+		Logger.WARNING = options.getBooleanOption(DockerFoundryServerUiPlugin.PLUGIN_ID + Logger.WARNING_LEVEL, false);
+		Logger.INFO = options.getBooleanOption(DockerFoundryServerUiPlugin.PLUGIN_ID + Logger.INFO_LEVEL, false);
+		Logger.DETAILS = options.getBooleanOption(DockerFoundryServerUiPlugin.PLUGIN_ID + Logger.DETAILS_LEVEL, false);
 	}
 
 	/**

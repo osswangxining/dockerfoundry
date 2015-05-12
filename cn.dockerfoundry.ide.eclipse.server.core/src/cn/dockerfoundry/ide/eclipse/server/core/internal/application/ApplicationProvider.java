@@ -31,7 +31,7 @@ import cn.dockerfoundry.ide.eclipse.server.core.internal.application.Application
  * 
  * A wrapper around a application contribution from the extension point:
  * 
- * org.dockerfoundry.ide.eclipse.server.core.application
+ * cn.dockerfoundry.ide.eclipse.server.core.application
  * 
  * Reads the attributes and application delegate from the extension point
  * configuration element, and contains additional API to access the extension

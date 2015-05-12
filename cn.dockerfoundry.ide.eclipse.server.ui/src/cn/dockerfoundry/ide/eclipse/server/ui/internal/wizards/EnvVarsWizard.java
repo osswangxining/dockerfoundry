@@ -29,9 +29,9 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.Wizard;
 
 import cn.dockerfoundry.ide.eclipse.explorer.ui.utils.DockerContainerInfo;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DeploymentInfoWorkingCopy;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.Messages;
 
@@ -41,17 +41,17 @@ import cn.dockerfoundry.ide.eclipse.server.ui.internal.Messages;
  */
 public class EnvVarsWizard extends Wizard {
 
-	private final CloudFoundryServer cloudServer;
+	private final DockerFoundryServer cloudServer;
 
-	private final CloudFoundryApplicationModule appModule;
+	private final DockerFoundryApplicationModule appModule;
 
 	private DeploymentInfoWorkingCopy infoWorkingCopy;
 
-	private CloudFoundryApplicationEnvVarWizardPage envVarPage;
+	private DockerFoundryApplicationEnvVarWizardPage envVarPage;
 	
 	private DockerContainerInfo dockerContainerInfo;
 
-	public EnvVarsWizard(CloudFoundryServer server, CloudFoundryApplicationModule appModule,
+	public EnvVarsWizard(DockerFoundryServer server, DockerFoundryApplicationModule appModule,
 			DeploymentInfoWorkingCopy workingCopy, DockerContainerInfo dockerContainerInfo) {
 
 		Assert.isNotNull(server);
@@ -70,7 +70,7 @@ public class EnvVarsWizard extends Wizard {
 	@Override
 	public void addPages() {
 
-		envVarPage = new CloudFoundryApplicationEnvVarWizardPage(cloudServer, infoWorkingCopy, dockerContainerInfo);
+		envVarPage = new DockerFoundryApplicationEnvVarWizardPage(cloudServer, infoWorkingCopy, dockerContainerInfo);
 		envVarPage.setWizard(this);
 		addPage(envVarPage);
 	}

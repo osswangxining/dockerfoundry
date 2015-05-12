@@ -25,9 +25,9 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.jface.wizard.IWizardPage;
 
 import cn.dockerfoundry.ide.eclipse.server.core.AbstractApplicationDelegate;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.application.FrameworkProvider;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
 
 /**
  * 
@@ -35,7 +35,7 @@ import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryAppl
  * application type from the extension point:
  * 
  * <p/>
- * org.dockerfoundry.ide.eclipse.server.ui.applicationWizard
+ * cn.dockerfoundry.ide.eclipse.server.ui.applicationWizard
  * <p/>
  * 
  * The wrapper converts an {@link IApplicationWizardDelegate} as defined in the
@@ -98,8 +98,8 @@ public class ApplicationWizardProvider {
 			setApplicationDelegate(coreDelegate);
 		}
 
-		public List<IWizardPage> getWizardPages(ApplicationWizardDescriptor descriptor, CloudFoundryServer cloudServer,
-				CloudFoundryApplicationModule applicationModule) {
+		public List<IWizardPage> getWizardPages(ApplicationWizardDescriptor descriptor, DockerFoundryServer cloudServer,
+				DockerFoundryApplicationModule applicationModule) {
 			return actualDelegate.getWizardPages(descriptor, cloudServer, applicationModule);
 		}
 

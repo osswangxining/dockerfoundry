@@ -26,7 +26,7 @@ import java.util.List;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.wst.server.core.IServer;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
 
 public class ServerMenuActionHandler extends MenuActionHandler<IServer> {
 
@@ -36,7 +36,7 @@ public class ServerMenuActionHandler extends MenuActionHandler<IServer> {
 
 	@Override
 	protected List<IAction> getActionsFromSelection(IServer server) {
-		CloudFoundryServer cloudFoundryServer = (CloudFoundryServer) server.loadAdapter(CloudFoundryServer.class, null);
+		DockerFoundryServer cloudFoundryServer = (DockerFoundryServer) server.loadAdapter(DockerFoundryServer.class, null);
 		if (cloudFoundryServer == null || server.getServerState() != IServer.STATE_STARTED) {
 			return Collections.emptyList();
 		}

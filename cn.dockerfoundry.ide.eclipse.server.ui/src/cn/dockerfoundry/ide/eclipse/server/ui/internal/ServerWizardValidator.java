@@ -32,21 +32,21 @@ import org.eclipse.jface.operation.IRunnableContext;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.Messages;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.ValidationEvents;
 
 /**
  * Performs both local and remote server validation of server account details
- * for a given Cloud Foundry server instance ( {@link CloudFoundryServer} ),
+ * for a given Cloud Foundry server instance ( {@link DockerFoundryServer} ),
  * like credentials and cloud spaces, as well as handling self-signed errors
  * when remote server authorisations are attempted.
  * 
  */
 public abstract class ServerWizardValidator implements ServerValidator {
 
-	private final CloudFoundryServer cfServer;
+	private final DockerFoundryServer cfServer;
 
 //	private final CloudSpacesDelegate cloudServerSpaceDelegate;
 
@@ -64,7 +64,7 @@ public abstract class ServerWizardValidator implements ServerValidator {
 	// prompting the user multiple times
 	private boolean acceptSelfSigned = true;
 
-	public ServerWizardValidator(CloudFoundryServer cloudServer) {
+	public ServerWizardValidator(DockerFoundryServer cloudServer) {
 		this.cfServer = cloudServer;
 //		this.cloudServerSpaceDelegate = cloudServerSpaceDelegate;
 	}
@@ -73,7 +73,7 @@ public abstract class ServerWizardValidator implements ServerValidator {
 //		return cloudServerSpaceDelegate;
 //	}
 
-	public CloudFoundryServer getCloudFoundryServer() {
+	public DockerFoundryServer getCloudFoundryServer() {
 		return cfServer;
 	}
 
@@ -93,7 +93,7 @@ public abstract class ServerWizardValidator implements ServerValidator {
 	/**
 	 * Note that this will be run in the UI thread.
 	 * 
-	 * @see org.dockerfoundry.ide.eclipse.server.ui.internal.editor.ServerValidator
+	 * @see cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.ServerValidator
 	 * #validate(boolean, org.eclipse.jface.operation.IRunnableContext)
 	 */
 	public synchronized ValidationStatus validate(boolean validateAgainstServer, boolean validateSpace,
@@ -162,7 +162,7 @@ public abstract class ServerWizardValidator implements ServerValidator {
 						// If user selected not to accept self-signed server, no
 						// further validation
 						// can be possible. Indicate this as an error
-						validationStatus[0] = new ValidationStatus(CloudFoundryPlugin
+						validationStatus[0] = new ValidationStatus(DockerFoundryPlugin
 								.getErrorStatus(Messages.ERROR_UNABLE_CONNECT_SERVER_CREDENTIALS),
 								ValidationEvents.SELF_SIGNED);
 					}
@@ -254,7 +254,7 @@ public abstract class ServerWizardValidator implements ServerValidator {
 	}
 
 	protected ValidationStatus getValidationStatus(int statusType, String validationMessage, int eventType) {
-		IStatus status = CloudFoundryPlugin.getStatus(validationMessage, statusType);
+		IStatus status = DockerFoundryPlugin.getStatus(validationMessage, statusType);
 		return getValidationStatus(status, eventType);
 	}
 

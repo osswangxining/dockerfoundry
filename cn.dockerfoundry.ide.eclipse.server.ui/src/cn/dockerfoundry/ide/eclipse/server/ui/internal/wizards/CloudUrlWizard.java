@@ -31,9 +31,9 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.Wizard;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryBrandingExtensionPoint.CloudServerURL;
-import cn.dockerfoundry.ide.eclipse.server.ui.internal.CloudFoundryImages;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryBrandingExtensionPoint.CloudServerURL;
+import cn.dockerfoundry.ide.eclipse.server.ui.internal.DockerFoundryImages;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.Messages;
 
 /**
@@ -72,7 +72,7 @@ public class CloudUrlWizard extends Wizard {
 	@Override
 	public void addPages() {
 
-		page = new CloudUrlWizardPage(allCloudUrls, CloudFoundryImages.getWizardBanner(serverID), url, name);
+		page = new CloudUrlWizardPage(allCloudUrls, DockerFoundryImages.getWizardBanner(serverID), url, name);
 		addPage(page);
 	}
 
@@ -131,7 +131,7 @@ public class CloudUrlWizard extends Wizard {
 					protected IStatus run(IProgressMonitor arg0) {
 
 						try {
-							CloudFoundryPlugin.getCloudFoundryClientFactory()
+							DockerFoundryPlugin.getCloudFoundryClientFactory()
 									.getCloudFoundryOperations(url).getCloudInfo();
 							shouldProceed[0] = new Boolean(true);
 

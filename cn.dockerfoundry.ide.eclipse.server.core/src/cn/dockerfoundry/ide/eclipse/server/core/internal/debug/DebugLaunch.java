@@ -29,8 +29,8 @@ import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants;
 
 import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudErrorUtil;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
 
 /**
  * Creates a debug launch configuration.
@@ -38,9 +38,9 @@ import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryAppl
  */
 public class DebugLaunch {
 
-	private final CloudFoundryServer server;
+	private final DockerFoundryServer server;
 
-	private final CloudFoundryApplicationModule appModule;
+	private final DockerFoundryApplicationModule appModule;
 
 	private String debugConnectionID;
 
@@ -48,7 +48,7 @@ public class DebugLaunch {
 
 	private ILaunchConfigurationType launchConfigType;
 
-	DebugLaunch(CloudFoundryServer server, CloudFoundryApplicationModule appModule, IDebugProvider provider) {
+	DebugLaunch(DockerFoundryServer server, DockerFoundryApplicationModule appModule, IDebugProvider provider) {
 		this.server = server;
 		this.appModule = appModule;
 		this.provider = provider;
@@ -58,11 +58,11 @@ public class DebugLaunch {
 		return provider.isDebugSupported(getApplicationModule(), getCloudFoundryServer());
 	}
 
-	public CloudFoundryServer getCloudFoundryServer() {
+	public DockerFoundryServer getCloudFoundryServer() {
 		return server;
 	}
 
-	public CloudFoundryApplicationModule getApplicationModule() {
+	public DockerFoundryApplicationModule getApplicationModule() {
 		return appModule;
 	}
 

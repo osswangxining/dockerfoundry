@@ -34,7 +34,7 @@ public class ApplicationUpdateOperation extends BehaviourOperation {
 
 	private final BaseClientRequest<?> request;
 
-	public ApplicationUpdateOperation(BaseClientRequest<?> request, CloudFoundryServerBehaviour behaviour, IModule module) {
+	public ApplicationUpdateOperation(BaseClientRequest<?> request, DockerFoundryServerBehaviour behaviour, IModule module) {
 		super(behaviour, module);
 		this.request = request;
 	}

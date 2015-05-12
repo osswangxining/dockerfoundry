@@ -28,8 +28,8 @@ import org.eclipse.wst.server.core.IServer;
 import org.eclipse.wst.server.core.internal.Server;
 
 import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudErrorUtil;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.Messages;
 
 import com.spotify.docker.client.DockerClient;
@@ -58,7 +58,7 @@ public abstract class LocalServerRequest<T> extends ClientRequest<T> {
 			String label = super.getRequestLabel();
 			String serverName = null;
 			try {
-				CloudFoundryServer cloudServer = getCloudServer();
+				DockerFoundryServer cloudServer = getCloudServer();
 				if (cloudServer != null && cloudServer.getServer() != null) {
 					serverName = NLS.bind(Messages.LocalServerRequest_SERVER_LABEL, cloudServer.getServer().getId());
 				}
@@ -81,9 +81,9 @@ public abstract class LocalServerRequest<T> extends ClientRequest<T> {
 
 	@Override
 	public T runAndWait(DockerClient client, SubMonitor monitor) throws CoreException {
-		CloudFoundryServer cloudServer = getCloudServer();
+		DockerFoundryServer cloudServer = getCloudServer();
 		if (cloudServer.getDockerfile() == null || cloudServer.getDockerfile().length() == 0) {
-			CloudFoundryPlugin.getCallback().getCredentials(cloudServer);
+			DockerFoundryPlugin.getCallback().getCredentials(cloudServer);
 		}
 
 		Server server = (Server) cloudServer.getServer();
@@ -132,5 +132,5 @@ public abstract class LocalServerRequest<T> extends ClientRequest<T> {
 	 * throw {@link CoreException}
 	 * @throws CoreException if Cloud Foundry server cannot be resolved.
 	 */
-	abstract protected CloudFoundryServer getCloudServer() throws CoreException;
+	abstract protected DockerFoundryServer getCloudServer() throws CoreException;
 }

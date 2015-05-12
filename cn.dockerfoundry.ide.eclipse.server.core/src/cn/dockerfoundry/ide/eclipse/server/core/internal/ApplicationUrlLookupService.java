@@ -40,13 +40,13 @@ import org.eclipse.osgi.util.NLS;
  */
 public class ApplicationUrlLookupService {
 
-	private final CloudFoundryServer cloudServer;
+	private final DockerFoundryServer cloudServer;
 
 	private List<CloudDomain> domainsPerActiveSpace;
 
 	private ApplicationUrlValidator validator;
 
-	public ApplicationUrlLookupService(CloudFoundryServer cloudServer) {
+	public ApplicationUrlLookupService(DockerFoundryServer cloudServer) {
 		this.cloudServer = cloudServer;
 		validator = new ApplicationUrlValidator();
 	}
@@ -124,7 +124,7 @@ public class ApplicationUrlLookupService {
 
 		if (domainsPerActiveSpace == null || domainsPerActiveSpace.isEmpty()) {
 			throw new CoreException(
-					CloudFoundryPlugin
+					DockerFoundryPlugin
 							.getErrorStatus(Messages.ApplicationUrlLookupService_ERROR_GET_CLOUD_URL));
 		}
 
@@ -135,7 +135,7 @@ public class ApplicationUrlLookupService {
 			newUri = URI.create(url);
 		}
 		catch (IllegalArgumentException e) {
-			throw new CoreException(CloudFoundryPlugin.getErrorStatus(e));
+			throw new CoreException(DockerFoundryPlugin.getErrorStatus(e));
 		}
 
 		String authority = newUri.getScheme() != null ? newUri.getAuthority() : newUri.getPath();
@@ -176,11 +176,11 @@ public class ApplicationUrlLookupService {
 		}
 
 		if (parsedDomainName == null || parsedDomainName.trim().length() == 0) {
-			throw new CoreException(CloudFoundryPlugin.getErrorStatus(NLS.bind(
+			throw new CoreException(DockerFoundryPlugin.getErrorStatus(NLS.bind(
 					Messages.ERROR_NO_DOMAIN_RESOLVED_FOR_URL, url)));
 		}
 		if (parsedSubdomainName == null || parsedSubdomainName.trim().length() == 0l) {
-			throw new CoreException(CloudFoundryPlugin.getErrorStatus(NLS.bind(Messages.ERROR_INVALID_SUBDOMAIN, url,
+			throw new CoreException(DockerFoundryPlugin.getErrorStatus(NLS.bind(Messages.ERROR_INVALID_SUBDOMAIN, url,
 					parsedDomainName)));
 		}
 		return new CloudApplicationURL(parsedSubdomainName, parsedDomainName);
@@ -199,7 +199,7 @@ public class ApplicationUrlLookupService {
 	 * @param cloudServer
 	 * @return Cloud Application URL look service. Is never null.
 	 */
-	public static ApplicationUrlLookupService getCurrentLookup(CloudFoundryServer cloudServer) {
+	public static ApplicationUrlLookupService getCurrentLookup(DockerFoundryServer cloudServer) {
 		ApplicationUrlLookupService service = cloudServer.getBehaviour().getApplicationUrlLookup();
 		if (service == null) {
 			service = new ApplicationUrlLookupService(cloudServer);
@@ -216,7 +216,7 @@ public class ApplicationUrlLookupService {
 	 * @return non-null URL lookup service.
 	 * @throws CoreException if error occurred while refreshing lookup service.
 	 */
-	public static ApplicationUrlLookupService update(CloudFoundryServer cloudServer, IProgressMonitor monitor)
+	public static ApplicationUrlLookupService update(DockerFoundryServer cloudServer, IProgressMonitor monitor)
 			throws CoreException {
 		ApplicationUrlLookupService lookUp = getCurrentLookup(cloudServer);
 		lookUp.refreshDomains(monitor);

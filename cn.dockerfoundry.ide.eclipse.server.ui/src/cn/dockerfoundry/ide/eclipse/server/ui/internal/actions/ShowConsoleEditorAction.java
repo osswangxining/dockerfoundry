@@ -25,9 +25,9 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.Action;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.Messages;
 
 /**
@@ -35,13 +35,13 @@ import cn.dockerfoundry.ide.eclipse.server.ui.internal.Messages;
  */
 public class ShowConsoleEditorAction extends Action {
 
-	private final CloudFoundryServer server;
+	private final DockerFoundryServer server;
 
 //	private final CloudFoundryApplicationModule appModule;
 
 	private final int instanceIndex;
 
-	public ShowConsoleEditorAction(CloudFoundryServer server,  int instanceIndex) {
+	public ShowConsoleEditorAction(DockerFoundryServer server,  int instanceIndex) {
 		this.server = server;
 //		this.appModule = appModule;
 		this.instanceIndex = instanceIndex;
@@ -54,17 +54,17 @@ public class ShowConsoleEditorAction extends Action {
 
 			@Override
 			public IStatus run(IProgressMonitor monitor) {
-				if (CloudFoundryPlugin.getCallback() != null) {
-					CloudFoundryPlugin.getCallback().stopApplicationConsole(server);
+				if (DockerFoundryPlugin.getCallback() != null) {
+					DockerFoundryPlugin.getCallback().stopApplicationConsole(server);
 
-					CloudFoundryPlugin.getCallback().printToConsole(server, Messages.SHOWING_CONSOLE, true,
+					DockerFoundryPlugin.getCallback().printToConsole(server, Messages.SHOWING_CONSOLE, true,
 							false);
 
-					CloudFoundryPlugin.getCallback().showCloudFoundryLogs(server, instanceIndex, monitor);
+					DockerFoundryPlugin.getCallback().showCloudFoundryLogs(server, instanceIndex, monitor);
 					return Status.OK_STATUS;
 				}
 				else {
-					return CloudFoundryPlugin
+					return DockerFoundryPlugin
 							.getErrorStatus("Internal Error: No Cloud Foundry console callback available. Unable to refresh console contents."); //$NON-NLS-1$
 				}
 			}

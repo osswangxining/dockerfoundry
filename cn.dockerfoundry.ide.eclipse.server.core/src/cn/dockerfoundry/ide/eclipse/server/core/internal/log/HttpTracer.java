@@ -22,7 +22,7 @@ package cn.dockerfoundry.ide.eclipse.server.core.internal.log;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.osgi.service.prefs.BackingStoreException;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
 
 /**
  * Enables HTTP tracing for Cloud Foundry requests via a
@@ -33,7 +33,7 @@ public class HttpTracer {
 
 	private static HttpTracer currentTracer;
 
-	public static final String PREFERENCE_TRACE = CloudFoundryPlugin.PLUGIN_ID + ".http.tracing"; //$NON-NLS-1$
+	public static final String PREFERENCE_TRACE = DockerFoundryPlugin.PLUGIN_ID + ".http.tracing"; //$NON-NLS-1$
 
 //	private RestLogCallback activeListener = null;
 
@@ -86,17 +86,17 @@ public class HttpTracer {
 	 */
 	public synchronized void enableTracing(boolean enable) {
 		isEnabled = enable;
-		IEclipsePreferences prefs = CloudFoundryPlugin.getDefault().getPreferences();
+		IEclipsePreferences prefs = DockerFoundryPlugin.getDefault().getPreferences();
 		prefs.putBoolean(PREFERENCE_TRACE, isEnabled);
 		try {
 			prefs.flush();
 		}
 		catch (BackingStoreException e) {
-			CloudFoundryPlugin.logError(e);
+			DockerFoundryPlugin.logError(e);
 		}
 
 		if (isEnabled) {
-			CloudFoundryPlugin.getCallback().showTraceView(isEnabled);
+			DockerFoundryPlugin.getCallback().showTraceView(isEnabled);
 		}
 	}
 
@@ -116,11 +116,11 @@ public class HttpTracer {
 	 * otherwise.
 	 */
 	public synchronized boolean loadTracePreference() {
-		isEnabled = CloudFoundryPlugin.getDefault().getPreferences().getBoolean(PREFERENCE_TRACE, false);
+		isEnabled = DockerFoundryPlugin.getDefault().getPreferences().getBoolean(PREFERENCE_TRACE, false);
 		// When loading from preference store, if tracing is enabled, also show
 		// the tracing view (e.g. a console)
 		if (isEnabled) {
-			CloudFoundryPlugin.getCallback().showTraceView(isEnabled);
+			DockerFoundryPlugin.getCallback().showTraceView(isEnabled);
 		}
 		return isEnabled;
 	}

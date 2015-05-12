@@ -24,14 +24,14 @@ import java.util.List;
 import org.eclipse.jface.wizard.IWizardPage;
 
 import cn.dockerfoundry.ide.eclipse.server.core.AbstractApplicationDelegate;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
 
 /**
  * Delegate that provides Application deployment wizard pages through the
  * extension point:
  * 
- * org.dockerfoundry.ide.eclipse.server.ui.applicationWizard
+ * cn.dockerfoundry.ide.eclipse.server.ui.applicationWizard
  * 
  * <p/>
  * The wizard delegate may correspond got an AbstractApplicationDelegate, with the
@@ -75,7 +75,7 @@ public interface IApplicationWizardDelegate {
 	 * pages. Return null or empty list if the default wizard pages should be
 	 * used.
 	 */
-	public List<IWizardPage> getWizardPages(ApplicationWizardDescriptor descriptor, CloudFoundryServer cloudServer,
-			CloudFoundryApplicationModule applicationModule);
+	public List<IWizardPage> getWizardPages(ApplicationWizardDescriptor descriptor, DockerFoundryServer cloudServer,
+			DockerFoundryApplicationModule applicationModule);
 
 }

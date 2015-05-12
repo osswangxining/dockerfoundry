@@ -40,11 +40,11 @@ import org.eclipse.wst.server.core.IServer;
 
 import cn.dockerfoundry.ide.eclipse.explorer.ui.domain.DockerConnectionElement;
 import cn.dockerfoundry.ide.eclipse.explorer.ui.utils.ConsoleHelper;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.Messages;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryServerBehaviour;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryServerBehaviour;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.log.LogContentType;
 
 import com.spotify.docker.client.DockerCertificateException;
@@ -76,7 +76,7 @@ public class ApplicationLogConsoleManager extends CloudConsoleManager {
 					Object server = ((MessageConsole) console).getAttribute(ApplicationLogConsole.ATTRIBUTE_SERVER);
 					Object app = ((MessageConsole) console).getAttribute(ApplicationLogConsole.ATTRIBUTE_APP);
 					Object index = ((MessageConsole) console).getAttribute(ApplicationLogConsole.ATTRIBUTE_INSTANCE);
-					if (server instanceof IServer && app instanceof CloudFoundryApplicationModule
+					if (server instanceof IServer && app instanceof DockerFoundryApplicationModule
 							&& index instanceof Integer) {
 						stopConsole((IServer) server);
 					}
@@ -92,13 +92,13 @@ public class ApplicationLogConsoleManager extends CloudConsoleManager {
 	}
 
 	@Override
-	public void startConsole(CloudFoundryServer server, LogContentType type, 
+	public void startConsole(DockerFoundryServer server, LogContentType type, 
 			int instanceIndex, boolean show, boolean clear, IProgressMonitor monitor) {
 		try {
 			doStartConsole(server, type,  show, clear);
 		}
 		catch (CoreException e) {
-			CloudFoundryPlugin.logError(e);
+			DockerFoundryPlugin.logError(e);
 		}
 	}
 
@@ -113,18 +113,18 @@ public class ApplicationLogConsoleManager extends CloudConsoleManager {
 	 * @param clear
 	 * @return
 	 */
-	protected CloudFoundryConsole doStartConsole(CloudFoundryServer server, LogContentType type,
+	protected DockerFoundryConsole doStartConsole(DockerFoundryServer server, LogContentType type,
 			boolean show, boolean clear) throws CoreException {
 
 //		if (!appModule.isDeployed()) {
 //			throw CloudErrorUtil
 //					.toCoreException(NLS
-//							.bind(org.dockerfoundry.ide.eclipse.server.ui.internal.Messages.ApplicationLogConsoleManager_APPLICATION_NOT_PUBLISHED,
+//							.bind(cn.dockerfoundry.ide.eclipse.server.ui.internal.Messages.ApplicationLogConsoleManager_APPLICATION_NOT_PUBLISHED,
 //									appModule.getDeployedApplicationName()));
 //		}
 		// As of 1.7.2, instances are not used for loggregator. Loggregator
 		// shows content for all instances in the same console
-		CloudFoundryConsole serverLogTail = getApplicationLogConsole(server);
+		DockerFoundryConsole serverLogTail = getApplicationLogConsole(server);
 
 		if (serverLogTail != null) {
 			if (clear) {
@@ -139,7 +139,7 @@ public class ApplicationLogConsoleManager extends CloudConsoleManager {
 		return serverLogTail;
 	}
 
-	protected synchronized ApplicationLogConsole getApplicationLogConsole(CloudFoundryServer server) {
+	protected synchronized ApplicationLogConsole getApplicationLogConsole(DockerFoundryServer server) {
 
 		String appUrl = getConsoleId(server.getServer());
 		ApplicationLogConsole serverLogTail = consoleByUri.get(appUrl);
@@ -162,7 +162,7 @@ public class ApplicationLogConsoleManager extends CloudConsoleManager {
 	// }
 
 	@Override
-	public MessageConsole findCloudFoundryConsole(IServer server, CloudFoundryApplicationModule appModule) {
+	public MessageConsole findCloudFoundryConsole(IServer server, DockerFoundryApplicationModule appModule) {
 		String curConsoleId = getConsoleId(server);
 		if (curConsoleId != null) {
 			return consoleByUri.get(curConsoleId).getConsole();
@@ -171,7 +171,7 @@ public class ApplicationLogConsoleManager extends CloudConsoleManager {
 	}
 
 	@Override
-	public void writeToStandardConsole(String message, CloudFoundryServer server,
+	public void writeToStandardConsole(String message, DockerFoundryServer server,
 			int instanceIndex, boolean clear, boolean isError) {
 		// IMPORTANT: Writing to local standard console does NOT require the
 		// application to be published, as it may
@@ -182,7 +182,7 @@ public class ApplicationLogConsoleManager extends CloudConsoleManager {
 		// log streaming and it requires the application to be published.
 		LogContentType type = isError ? StandardLogContentType.STD_ERROR : StandardLogContentType.STD_OUT;
 
-		CloudFoundryConsole serverLogTail = getApplicationLogConsole(server);
+		DockerFoundryConsole serverLogTail = getApplicationLogConsole(server);
 
 		if (serverLogTail != null) {
 			if (clear) {
@@ -193,7 +193,7 @@ public class ApplicationLogConsoleManager extends CloudConsoleManager {
 		}
 	}
 
-	protected void doWriteToStdConsole(String message, CloudFoundryConsole console, LogContentType type) {
+	protected void doWriteToStdConsole(String message, DockerFoundryConsole console, LogContentType type) {
 		if (StandardLogContentType.STD_ERROR.equals(type)) {
 			console.writeToStdError(message);
 		}
@@ -203,20 +203,20 @@ public class ApplicationLogConsoleManager extends CloudConsoleManager {
 	}
 
 	@Override
-	public void showCloudFoundryLogs(CloudFoundryServer server, 
+	public void showCloudFoundryLogs(DockerFoundryServer server, 
 			int instanceIndex, boolean clear, IProgressMonitor monitor) {
-		CloudFoundryConsole console = null;
+		DockerFoundryConsole console = null;
 		try {
 			console = doStartConsole(server, StandardLogContentType.APPLICATION_LOG, true, false);
 		}
 		catch (CoreException e) {
-			CloudFoundryPlugin.logError(e);
+			DockerFoundryPlugin.logError(e);
 			return;
 		}
 
 		if (console instanceof ApplicationLogConsole) {
 			ApplicationLogConsole logConsole = (ApplicationLogConsole) console;
-			CloudFoundryServerBehaviour behaviour = server.getBehaviour();
+			DockerFoundryServerBehaviour behaviour = server.getBehaviour();
 			List<ApplicationLog> logs = new ArrayList<ApplicationLog>();
 			//				logs = /*behaviour.getRecentApplicationLogs(appModule.getDeployedApplicationName(), monitor);*/
 			String containerId = server.getDockerContainerId();
@@ -268,7 +268,7 @@ public class ApplicationLogConsoleManager extends CloudConsoleManager {
 	@Override
 	public void stopConsole(IServer server) {
 		String appUrl = getConsoleId(server);
-		CloudFoundryConsole serverLogTail = consoleByUri.get(appUrl);
+		DockerFoundryConsole serverLogTail = consoleByUri.get(appUrl);
 		if (serverLogTail != null) {
 
 			consoleByUri.remove(appUrl);
@@ -289,7 +289,7 @@ public class ApplicationLogConsoleManager extends CloudConsoleManager {
 		consoleByUri.clear();
 	}
 
-	public static MessageConsole getApplicationConsole(CloudFoundryServer server) {
+	public static MessageConsole getApplicationConsole(DockerFoundryServer server) {
 		MessageConsole appConsole = null;
 		String consoleName = getConsoleId(server.getServer());
 		for (IConsole console : ConsolePlugin.getDefault().getConsoleManager().getConsoles()) {
@@ -314,7 +314,7 @@ public class ApplicationLogConsoleManager extends CloudConsoleManager {
 		return server.getId(); //$NON-NLS-1$
 	}
 
-	public static String getConsoleDisplayName(CloudFoundryServer server) {
+	public static String getConsoleDisplayName(DockerFoundryServer server) {
 		StringWriter writer = new StringWriter();
 		writer.append(server.getServer().getName());
 //		writer.append('-');

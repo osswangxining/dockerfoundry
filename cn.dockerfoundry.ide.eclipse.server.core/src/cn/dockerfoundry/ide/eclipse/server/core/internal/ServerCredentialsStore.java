@@ -105,10 +105,10 @@ public class ServerCredentialsStore {
 
 	private void disableSecurePreferences(StorageException e) {
 		if (!securePreferencesDisabled.getAndSet(true)) {
-			CloudFoundryPlugin
+			DockerFoundryPlugin
 					.getDefault()
 					.getLog()
-					.log(new Status(IStatus.ERROR, CloudFoundryPlugin.PLUGIN_ID, "Unexpected error while accessing secure preferences for server: " + serverId)); //$NON-NLS-1$
+					.log(new Status(IStatus.ERROR, DockerFoundryPlugin.PLUGIN_ID, "Unexpected error while accessing secure preferences for server: " + serverId)); //$NON-NLS-1$
 		}
 	}
 
@@ -117,7 +117,7 @@ public class ServerCredentialsStore {
 			String serverId = getServerId();
 			if (serverId != null) {
 				ISecurePreferences securePreferences = SecurePreferencesFactory.getDefault().node(
-						CloudFoundryPlugin.PLUGIN_ID);
+						DockerFoundryPlugin.PLUGIN_ID);
 				securePreferences = securePreferences.node(EncodingUtils.encodeSlashes(serverId));
 				return securePreferences;
 			}

@@ -39,7 +39,7 @@ import org.eclipse.wst.server.core.IServerLifecycleListener;
 import org.eclipse.wst.server.core.ServerCore;
 import org.osgi.service.prefs.BackingStoreException;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
 
 /**
  * Manages the cloud state of the modules in the form of {@link ServerData}.
@@ -53,7 +53,7 @@ public class ModuleCache {
 
 	public static class ServerData {
 
-		private final List<CloudFoundryApplicationModule> cloudModules = new ArrayList<CloudFoundryApplicationModule>();
+		private final List<DockerFoundryApplicationModule> cloudModules = new ArrayList<DockerFoundryApplicationModule>();
 
 		/** Cached password in case secure store fails. */
 		private String password;
@@ -65,7 +65,7 @@ public class ModuleCache {
 		 */
 		private final List<IModule> undeployedModules = new ArrayList<IModule>();
 
-		private final Map<String, CloudFoundryApplicationModule> mapProject = new HashMap<String, CloudFoundryApplicationModule>();
+		private final Map<String, DockerFoundryApplicationModule> mapProject = new HashMap<String, DockerFoundryApplicationModule>();
 
 		private int[] applicationMemoryChoices;
 
@@ -80,10 +80,10 @@ public class ModuleCache {
 		/**
 		 * 
 		 * @param application
-		 * @return Non-null new {@link CloudFoundryApplicationModule}
+		 * @return Non-null new {@link DockerFoundryApplicationModule}
 		 */
-		public synchronized CloudFoundryApplicationModule createModule(CloudApplication application) {
-			CloudFoundryApplicationModule appModule = new CloudFoundryApplicationModule(application.getName(), server);
+		public synchronized DockerFoundryApplicationModule createModule(CloudApplication application) {
+			DockerFoundryApplicationModule appModule = new DockerFoundryApplicationModule(application.getName(), server);
 			appModule.setCloudApplication(application);
 			add(appModule);
 			return appModule;
@@ -98,7 +98,7 @@ public class ModuleCache {
 		 * @param module whose mapping to a local module needs to be updated and
 		 * persisted.
 		 */
-		public synchronized void updateCloudApplicationModule(CloudFoundryApplicationModule module) {
+		public synchronized void updateCloudApplicationModule(DockerFoundryApplicationModule module) {
 			// Update the map of module ID -> Deployed Application name
 			if (module.getLocalModule() != null) {
 				Map<String, String> mapping = getLocalModuleToCloudModuleMapping();
@@ -111,8 +111,8 @@ public class ModuleCache {
 		 * 
 		 * @return never null. May be empty
 		 */
-		public synchronized Collection<CloudFoundryApplicationModule> getExistingCloudModules() {
-			return new ArrayList<CloudFoundryApplicationModule>(cloudModules);
+		public synchronized Collection<DockerFoundryApplicationModule> getExistingCloudModules() {
+			return new ArrayList<DockerFoundryApplicationModule>(cloudModules);
 		}
 
 		public synchronized String getPassword() {
@@ -123,7 +123,7 @@ public class ModuleCache {
 			return undeployedModules.contains(module);
 		}
 
-		public synchronized void remove(CloudFoundryApplicationModule module) {
+		public synchronized void remove(DockerFoundryApplicationModule module) {
 			if (module == null) {
 				return;
 			}
@@ -135,14 +135,14 @@ public class ModuleCache {
 			}
 		}
 
-		public synchronized void removeObsoleteModules(Set<CloudFoundryApplicationModule> allModules) {
-			HashSet<CloudFoundryApplicationModule> deletedModules = new HashSet<CloudFoundryApplicationModule>(
+		public synchronized void removeObsoleteModules(Set<DockerFoundryApplicationModule> allModules) {
+			HashSet<DockerFoundryApplicationModule> deletedModules = new HashSet<DockerFoundryApplicationModule>(
 					cloudModules);
 			deletedModules.removeAll(allModules);
 			if (deletedModules.size() > 0) {
 				Map<String, String> mapping = getLocalModuleToCloudModuleMapping();
 				boolean mappingModified = false;
-				for (CloudFoundryApplicationModule deletedModule : deletedModules) {
+				for (DockerFoundryApplicationModule deletedModule : deletedModules) {
 					if (deletedModule.getLocalModule() != null) {
 						mappingModified |= mapping.remove(deletedModule.getLocalModule().getId()) != null;
 					}
@@ -165,23 +165,23 @@ public class ModuleCache {
 			undeployedModules.add(module);
 		}
 
-		public synchronized void tagForReplace(CloudFoundryApplicationModule appModule) {
+		public synchronized void tagForReplace(DockerFoundryApplicationModule appModule) {
 			if (appModule != null) {
 				mapProject.put(appModule.getDeployedApplicationName(), appModule);
 			}
 		}
 
-		public synchronized void untagForReplace(CloudFoundryApplicationModule appModule) {
+		public synchronized void untagForReplace(DockerFoundryApplicationModule appModule) {
 			if (appModule != null) {
 				mapProject.remove(appModule.getDeployedApplicationName());
 			}
 		}
 
-		public synchronized CloudFoundryApplicationModule getTaggedForReplace(CloudFoundryApplicationModule appModule) {
+		public synchronized DockerFoundryApplicationModule getTaggedForReplace(DockerFoundryApplicationModule appModule) {
 			return appModule != null ? mapProject.get(appModule.getDeployedApplicationName()) : null;
 		}
 
-		private void add(CloudFoundryApplicationModule module) {
+		private void add(DockerFoundryApplicationModule module) {
 			cloudModules.add(module);
 		}
 
@@ -219,13 +219,13 @@ public class ModuleCache {
 		 * application name (value)
 		 */
 		private Map<String, String> getLocalModuleToCloudModuleMapping() {
-			IEclipsePreferences node = new InstanceScope().getNode(CloudFoundryPlugin.PLUGIN_ID);
+			IEclipsePreferences node = new InstanceScope().getNode(DockerFoundryPlugin.PLUGIN_ID);
 			String string = node.get(KEY_MODULE_MAPPING_LIST + ":" + getServerId(), ""); //$NON-NLS-1$ //$NON-NLS-2$
 			return convertStringToMap(string);
 		}
 
-		private CloudFoundryApplicationModule getCloudModuleByDeployedAppName(String deployedApplicationName) {
-			for (CloudFoundryApplicationModule module : cloudModules) {
+		private DockerFoundryApplicationModule getCloudModuleByDeployedAppName(String deployedApplicationName) {
+			for (DockerFoundryApplicationModule module : cloudModules) {
 				if (deployedApplicationName.equals(module.getDeployedApplicationName())) {
 					return module;
 				}
@@ -234,7 +234,7 @@ public class ModuleCache {
 		}
 
 		/**
-		 * A {@link CloudFoundryApplicationModule} is a Cloud Foundry-aware
+		 * A {@link DockerFoundryApplicationModule} is a Cloud Foundry-aware
 		 * module representing a deployed application. If it exists, it means
 		 * that the application is currently or has been already processed by
 		 * the CF plugin. If it does not exist (its null), it means it still
@@ -246,8 +246,8 @@ public class ModuleCache {
 		 * project name) differs from the user-defined deployed name.
 		 * @return
 		 */
-		private CloudFoundryApplicationModule getCloudModuleToLocalModuleName(String localName) {
-			for (CloudFoundryApplicationModule module : cloudModules) {
+		private DockerFoundryApplicationModule getCloudModuleToLocalModuleName(String localName) {
+			for (DockerFoundryApplicationModule module : cloudModules) {
 				if (localName.equals(module.getName())) {
 					return module;
 				}
@@ -256,33 +256,33 @@ public class ModuleCache {
 		}
 
 		private String getServerId() {
-			return server.getAttribute(CloudFoundryServer.PROP_SERVER_ID, (String) null);
+			return server.getAttribute(DockerFoundryServer.PROP_SERVER_ID, (String) null);
 		}
 
 		private void setLocalModuleToCloudModuleMapping(Map<String, String> list) {
 			String string = convertMapToString(list);
-			IEclipsePreferences node = new InstanceScope().getNode(CloudFoundryPlugin.PLUGIN_ID);
-			CloudFoundryPlugin.trace("Updated mapping: " + string); //$NON-NLS-1$
+			IEclipsePreferences node = new InstanceScope().getNode(DockerFoundryPlugin.PLUGIN_ID);
+			DockerFoundryPlugin.trace("Updated mapping: " + string); //$NON-NLS-1$
 			node.put(KEY_MODULE_MAPPING_LIST + ":" + getServerId(), string); //$NON-NLS-1$
 			try {
 				node.flush();
 			}
 			catch (BackingStoreException e) {
-				CloudFoundryPlugin
+				DockerFoundryPlugin
 						.getDefault()
 						.getLog()
-						.log(new Status(IStatus.ERROR, CloudFoundryPlugin.PLUGIN_ID,
+						.log(new Status(IStatus.ERROR, DockerFoundryPlugin.PLUGIN_ID,
 								"Failed to update application mappings", e)); //$NON-NLS-1$
 			}
 		}
 
-		synchronized CloudFoundryApplicationModule getExistingCloudModule(IModule module) {
+		synchronized DockerFoundryApplicationModule getExistingCloudModule(IModule module) {
 			if (module == null) {
 				return null;
 			}
 			// See if the cloud module for the given local IModule has been
 			// created.
-			CloudFoundryApplicationModule appModule = getCloudModuleToLocalModuleName(module.getName());
+			DockerFoundryApplicationModule appModule = getCloudModuleToLocalModuleName(module.getName());
 			if (appModule != null) {
 				return appModule;
 			}
@@ -302,11 +302,11 @@ public class ModuleCache {
 			return null;
 		}
 
-		synchronized CloudFoundryApplicationModule getOrCreateCloudModule(IModule module) {
+		synchronized DockerFoundryApplicationModule getOrCreateCloudModule(IModule module) {
 
 			// See if the cloud module for the given local IModule has been
 			// created.
-			CloudFoundryApplicationModule appModule = getExistingCloudModule(module);
+			DockerFoundryApplicationModule appModule = getExistingCloudModule(module);
 			if (appModule != null) {
 				return appModule;
 			}
@@ -323,14 +323,14 @@ public class ModuleCache {
 			// no mapping found, create new Cloud Foundry-aware module. Note
 			// that the
 			// deployedAppName and the module name need not be the same.
-			appModule = new CloudFoundryApplicationModule(module, deployedAppName, server);
+			appModule = new DockerFoundryApplicationModule(module, deployedAppName, server);
 
 			add(appModule);
 			return appModule;
 		}
 
 		void updateServerId(String oldServerId, String newServerId) {
-			IEclipsePreferences node = new InstanceScope().getNode(CloudFoundryPlugin.PLUGIN_ID);
+			IEclipsePreferences node = new InstanceScope().getNode(DockerFoundryPlugin.PLUGIN_ID);
 			String string = node.get(KEY_MODULE_MAPPING_LIST + ":" + oldServerId, ""); //$NON-NLS-1$ //$NON-NLS-2$
 			node.remove(KEY_MODULE_MAPPING_LIST + ":" + oldServerId); //$NON-NLS-1$
 			node.put(KEY_MODULE_MAPPING_LIST + ":" + newServerId, string); //$NON-NLS-1$
@@ -348,7 +348,7 @@ public class ModuleCache {
 	/**
 	 * List of appName, module id pairs.
 	 */
-	static final String KEY_MODULE_MAPPING_LIST = "org.dockerfoundry.ide.eclipse.moduleMapping"; //$NON-NLS-1$
+	static final String KEY_MODULE_MAPPING_LIST = "cn.dockerfoundry.ide.eclipse.moduleMapping"; //$NON-NLS-1$
 
 	private Map<IServer, ServerData> dataByServer;
 
@@ -389,18 +389,18 @@ public class ModuleCache {
 	protected synchronized void remove(IServer server) {
 		dataByServer.remove(server);
 
-		String serverId = server.getAttribute(CloudFoundryServer.PROP_SERVER_ID, (String) null);
+		String serverId = server.getAttribute(DockerFoundryServer.PROP_SERVER_ID, (String) null);
 		if (serverId != null) {
-			IEclipsePreferences node = new InstanceScope().getNode(CloudFoundryPlugin.PLUGIN_ID);
+			IEclipsePreferences node = new InstanceScope().getNode(DockerFoundryPlugin.PLUGIN_ID);
 			node.remove(KEY_MODULE_MAPPING_LIST + ":" + serverId); //$NON-NLS-1$
 			try {
 				node.flush();
 			}
 			catch (BackingStoreException e) {
-				CloudFoundryPlugin
+				DockerFoundryPlugin
 						.getDefault()
 						.getLog()
-						.log(new Status(IStatus.ERROR, CloudFoundryPlugin.PLUGIN_ID,
+						.log(new Status(IStatus.ERROR, DockerFoundryPlugin.PLUGIN_ID,
 								"Failed to remove application mappings", e)); //$NON-NLS-1$
 			}
 		}

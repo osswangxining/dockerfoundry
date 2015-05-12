@@ -34,9 +34,9 @@ import cn.dockerfoundry.ide.eclipse.server.core.ApplicationDeploymentInfo;
  */
 public abstract class DeploymentInfoWorkingCopy extends ApplicationDeploymentInfo {
 
-	protected final CloudFoundryApplicationModule appModule;
+	protected final DockerFoundryApplicationModule appModule;
 
-	protected DeploymentInfoWorkingCopy(CloudFoundryApplicationModule appModule) {
+	protected DeploymentInfoWorkingCopy(DockerFoundryApplicationModule appModule) {
 		super(appModule.getDeployedApplicationName());
 		this.appModule = appModule;
 
@@ -58,7 +58,7 @@ public abstract class DeploymentInfoWorkingCopy extends ApplicationDeploymentInf
 
 	/**
 	 * Saves the working copy in the associated
-	 * {@link CloudFoundryApplicationModule}.
+	 * {@link DockerFoundryApplicationModule}.
 	 */
 	abstract public void save();
 

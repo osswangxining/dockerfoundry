@@ -34,11 +34,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerApplicationService;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryServerBehaviour;
-import cn.dockerfoundry.ide.eclipse.server.ui.internal.CloudFoundryImages;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryServerBehaviour;
+import cn.dockerfoundry.ide.eclipse.server.ui.internal.DockerFoundryImages;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.CloudUiUtil;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.ICoreRunnable;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.Logger;
@@ -49,21 +49,21 @@ import cn.dockerfoundry.ide.eclipse.server.ui.internal.ServiceToApplicationsBind
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.actions.AddServicesToApplicationAction;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.actions.ModifyServicesForApplicationAction;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.actions.RemoveServicesFromApplicationAction;
-import cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.CloudFoundryApplicationsEditorPage;
+import cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.DockerFoundryApplicationsEditorPage;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.ServicesHandler;
 
 public class ServiceToApplicationsBindingWizard extends Wizard {
 
-	private final CloudFoundryServer cloudServer;
+	private final DockerFoundryServer cloudServer;
 
 	private ServiceToApplicationsBindingWizardPage bindServiceToApplicationPage;
 
 	private ServicesHandler servicesHandler;
 
-	private final CloudFoundryApplicationsEditorPage editorPage;
+	private final DockerFoundryApplicationsEditorPage editorPage;
 
-	public ServiceToApplicationsBindingWizard(ServicesHandler servicesHandler, CloudFoundryServer server,
-			CloudFoundryApplicationsEditorPage editorPage) {
+	public ServiceToApplicationsBindingWizard(ServicesHandler servicesHandler, DockerFoundryServer server,
+			DockerFoundryApplicationsEditorPage editorPage) {
 		this.cloudServer = server;
 		this.servicesHandler = servicesHandler;
 		this.editorPage = editorPage;
@@ -89,16 +89,16 @@ public class ServiceToApplicationsBindingWizard extends Wizard {
 	static class ServiceToApplicationsBindingWizardPage extends PartsWizardPage {
 		private ServiceToApplicationsBindingPart serviceToApplicationsBindingPart;
 
-		private final CloudFoundryServer server;
+		private final DockerFoundryServer server;
 
 		ServicesHandler servicesHandler;
 
-		CloudFoundryApplicationsEditorPage editorPage;
+		DockerFoundryApplicationsEditorPage editorPage;
 
-		public ServiceToApplicationsBindingWizardPage(ServicesHandler servicesHandler, CloudFoundryServer server,
-				CloudFoundryApplicationsEditorPage editorPage) {
+		public ServiceToApplicationsBindingWizardPage(ServicesHandler servicesHandler, DockerFoundryServer server,
+				DockerFoundryApplicationsEditorPage editorPage) {
 			super(Messages.MANAGE_SERVICES_TO_APPLICATIONS_TITLE, Messages.MANAGE_SERVICES_TO_APPLICATIONS_TITLE,
-					CloudFoundryImages.getWizardBanner(server.getServer().getServerType().getId()));
+					DockerFoundryImages.getWizardBanner(server.getServer().getServerType().getId()));
 
 			setDescription(NLS.bind(Messages.MANAGE_SERVICES_TO_APPLICATIONS_DESCRIPTION, servicesHandler.toString()));
 			this.server = server;
@@ -112,7 +112,7 @@ public class ServiceToApplicationsBindingWizard extends Wizard {
 				@Override
 				public void run(IProgressMonitor monitor) throws CoreException {
 					if (server != null) {
-						CloudFoundryServerBehaviour behaviour = server.getBehaviour();
+						DockerFoundryServerBehaviour behaviour = server.getBehaviour();
 						if (behaviour != null) {
 							monitor.beginTask(Messages.MANAGE_SERVICES_TO_APPLICATIONS_GET_APPLICATION_NAMES,
 									IProgressMonitor.UNKNOWN);
@@ -145,7 +145,7 @@ public class ServiceToApplicationsBindingWizard extends Wizard {
 					@Override
 					public void run(IProgressMonitor monitor) throws CoreException {
 						monitor.setTaskName(Messages.MANAGE_SERVICES_TO_APPLICATIONS_FINISH);
-						CloudFoundryServerBehaviour behaviour = server.getBehaviour();
+						DockerFoundryServerBehaviour behaviour = server.getBehaviour();
 						if (serviceToApplicationsBindingPart != null && server != null && behaviour != null) {
 							List<ApplicationToService> applicationsToProcess = serviceToApplicationsBindingPart
 									.getApplicationToService();
@@ -187,7 +187,7 @@ public class ServiceToApplicationsBindingWizard extends Wizard {
 									boolean isBoundToServiceAfter = curr.getBoundToServiceAfter();
 									if (isBoundToServiceAfter != curr.getBoundToServiceBefore()) {
 										CloudApplication cloudApp = applicationsToProcess.get(i).getCloudApplication();
-										CloudFoundryApplicationModule module = server.getExistingCloudModule(cloudApp
+										DockerFoundryApplicationModule module = server.getExistingCloudModule(cloudApp
 												.getName());
 										if (isBoundToServiceAfter) {
 											ModifyServicesForApplicationAction bindService = new AddServicesToApplicationAction(

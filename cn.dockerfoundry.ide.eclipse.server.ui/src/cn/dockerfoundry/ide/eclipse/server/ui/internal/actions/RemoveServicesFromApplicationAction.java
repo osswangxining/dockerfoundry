@@ -24,11 +24,11 @@ import java.util.List;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryServerBehaviour;
-import cn.dockerfoundry.ide.eclipse.server.ui.internal.CloudFoundryImages;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryServerBehaviour;
+import cn.dockerfoundry.ide.eclipse.server.ui.internal.DockerFoundryImages;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.Messages;
-import cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.CloudFoundryApplicationsEditorPage;
+import cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.DockerFoundryApplicationsEditorPage;
 
 /**
  * @author Terry Denney
@@ -40,12 +40,12 @@ public class RemoveServicesFromApplicationAction extends ModifyServicesForApplic
 	private final List<String> services;
 
 	public RemoveServicesFromApplicationAction(IStructuredSelection selection,
-			CloudFoundryApplicationModule application, CloudFoundryServerBehaviour serverBehaviour,
-			CloudFoundryApplicationsEditorPage editorPage) {
+			DockerFoundryApplicationModule application, DockerFoundryServerBehaviour serverBehaviour,
+			DockerFoundryApplicationsEditorPage editorPage) {
 		super(application, serverBehaviour, editorPage);
 
 		setText(Messages.RemoveServicesFromApplicationAction_TEXT_UNBIND_FROM_APP);
-		setImageDescriptor(CloudFoundryImages.REMOVE);
+		setImageDescriptor(DockerFoundryImages.REMOVE);
 
 		services = getServiceNames(selection);
 	}

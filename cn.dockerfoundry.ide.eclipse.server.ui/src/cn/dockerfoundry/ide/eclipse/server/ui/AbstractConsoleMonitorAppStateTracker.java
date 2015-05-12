@@ -29,14 +29,14 @@ import org.eclipse.wst.server.core.IModule;
 import org.eclipse.wst.server.core.IServer;
 
 import cn.dockerfoundry.ide.eclipse.server.core.AbstractAppStateTracker;
-import cn.dockerfoundry.ide.eclipse.server.core.ICloudFoundryApplicationModule;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.IDockerFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.Logger;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.console.ConsoleManagerRegistry;
 
 /**
- * A general implementation class of the org.dockerfoundry.ide.eclipse.server.core.internal.AbstractAppStateTracker
+ * A general implementation class of the cn.dockerfoundry.ide.eclipse.server.core.internal.AbstractAppStateTracker
  * that provides easy implementation to track console output to decide whether the app is started or not. In
  * most of the cases, the adopter only need to implement the getAppStartedPattern() method.  In more complex cases, 
  * the adopter can override the createPatternMatchListener() to provide their own pattern match listener.
@@ -109,7 +109,7 @@ public abstract class AbstractConsoleMonitorAppStateTracker extends AbstractAppS
 	    }
 	}
 	
-	protected ConsolePatternMatchListener createPatternMatchListener(ICloudFoundryApplicationModule appModule) {
+	protected ConsolePatternMatchListener createPatternMatchListener(IDockerFoundryApplicationModule appModule) {
 		return new ConsolePatternMatchListener(((IModule)appModule).getName());
 	}
 	
@@ -120,13 +120,13 @@ public abstract class AbstractConsoleMonitorAppStateTracker extends AbstractAppS
 	 * @param appModule the app for that console
 	 * @return the message console. Null if no corresponding console is found.
 	 */
-	protected MessageConsole findCloudFoundryConsole(IServer server, CloudFoundryApplicationModule appModule) {
-		CloudFoundryServer cfServer = (CloudFoundryServer)server.getAdapter(CloudFoundryServer.class);
+	protected MessageConsole findCloudFoundryConsole(IServer server, DockerFoundryApplicationModule appModule) {
+		DockerFoundryServer cfServer = (DockerFoundryServer)server.getAdapter(DockerFoundryServer.class);
 		return ConsoleManagerRegistry.getConsoleManager(cfServer).findCloudFoundryConsole(server, appModule);
 	}
 	
 	@Override
-	public int getApplicationState(ICloudFoundryApplicationModule appModule) {
+	public int getApplicationState(IDockerFoundryApplicationModule appModule) {
 		if (Logger.DETAILS) {
 			 Logger.println(Logger.DETAILS_LEVEL, this, "getApplicationState", "Waiting for app to start: " + ((IModule)appModule).getName() + ", state=" + consoleMonitor.getApplicationState()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		}
@@ -141,7 +141,7 @@ public abstract class AbstractConsoleMonitorAppStateTracker extends AbstractAppS
     protected abstract String getAppStartedPattern();
 
 	@Override
-	public void startTracking(CloudFoundryApplicationModule appModule) {
+	public void startTracking(DockerFoundryApplicationModule appModule) {
 		if (server == null || appModule == null) {
 			return;
 		}
@@ -157,7 +157,7 @@ public abstract class AbstractConsoleMonitorAppStateTracker extends AbstractAppS
 	}
 
 	@Override
-	public void stopTracking(CloudFoundryApplicationModule appModule) {
+	public void stopTracking(DockerFoundryApplicationModule appModule) {
 		if (server == null || consoleMonitor == null || appModule == null) {
 			return;
 		}

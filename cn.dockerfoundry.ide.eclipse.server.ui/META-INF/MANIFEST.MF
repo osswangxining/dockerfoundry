@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: cn.dockerfoundry.ide.eclipse.server.ui
 Bundle-SymbolicName: cn.dockerfoundry.ide.eclipse.server.ui;singleton:=true
 Bundle-Version: 0.1.0
-Bundle-Activator: cn.dockerfoundry.ide.eclipse.server.ui.internal.CloudFoundryServerUiPlugin
+Bundle-Activator: cn.dockerfoundry.ide.eclipse.server.ui.internal.DockerFoundryServerUiPlugin
 Bundle-Vendor: DockerFoundry.cn
 Require-Bundle: org.eclipse.wst.common.project.facet.ui,
  org.eclipse.wst.server.core,

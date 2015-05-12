@@ -22,11 +22,11 @@ package cn.dockerfoundry.ide.eclipse.server.ui.internal.actions;
 import org.eclipse.jface.action.Action;
 import org.eclipse.wst.server.core.IModule;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryServerBehaviour;
-import cn.dockerfoundry.ide.eclipse.server.ui.internal.CloudFoundryImages;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryServerBehaviour;
+import cn.dockerfoundry.ide.eclipse.server.ui.internal.DockerFoundryImages;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.Messages;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.actions.EditorAction.RefreshArea;
-import cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.CloudFoundryApplicationsEditorPage;
+import cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.DockerFoundryApplicationsEditorPage;
 
 /**
  * Performs a full refresh of all published modules. This may be a long running
@@ -39,11 +39,11 @@ import cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.CloudFoundryApplic
  */
 public class RefreshEditorAction extends Action {
 
-	private final CloudFoundryApplicationsEditorPage editorPage;
+	private final DockerFoundryApplicationsEditorPage editorPage;
 
-	public RefreshEditorAction(CloudFoundryApplicationsEditorPage editorPage) {
+	public RefreshEditorAction(DockerFoundryApplicationsEditorPage editorPage) {
 
-		setImageDescriptor(CloudFoundryImages.REFRESH);
+		setImageDescriptor(DockerFoundryImages.REFRESH);
 		setText(Messages.RefreshApplicationEditorAction_TEXT_REFRESH);
 
 		this.editorPage = editorPage;
@@ -56,7 +56,7 @@ public class RefreshEditorAction extends Action {
 	 * @return Editor action for the given area. If no area is specified,
 	 * returns a general refresh action. Never null.
 	 */
-	public static Action getRefreshAction(CloudFoundryApplicationsEditorPage editorPage, RefreshArea area) {
+	public static Action getRefreshAction(DockerFoundryApplicationsEditorPage editorPage, RefreshArea area) {
 
 		if (area == RefreshArea.DETAIL && editorPage.getMasterDetailsBlock().getCurrentModule() != null) {
 			return new RefreshModuleEditorAction(editorPage);
@@ -69,7 +69,7 @@ public class RefreshEditorAction extends Action {
 	@Override
 	public void run() {
 		IModule selectedModule = editorPage.getMasterDetailsBlock().getCurrentModule();
-		CloudFoundryServerBehaviour behaviour = editorPage.getCloudServer().getBehaviour();
+		DockerFoundryServerBehaviour behaviour = editorPage.getCloudServer().getBehaviour();
 		behaviour.getRefreshHandler().scheduleRefreshAll(selectedModule);
 	}
 }

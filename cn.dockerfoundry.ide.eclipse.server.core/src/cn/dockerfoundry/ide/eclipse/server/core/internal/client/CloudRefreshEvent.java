@@ -23,7 +23,7 @@ import java.util.List;
 
 import org.eclipse.wst.server.core.IModule;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerApplicationService;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.application.ModuleChangeEvent;
 
@@ -36,7 +36,7 @@ public class CloudRefreshEvent extends ModuleChangeEvent {
 
 	private final List<DockerApplicationService> services;
 
-	public CloudRefreshEvent(CloudFoundryServer server, IModule module, int type, List<DockerApplicationService> services) {
+	public CloudRefreshEvent(DockerFoundryServer server, IModule module, int type, List<DockerApplicationService> services) {
 		super(server, type, module, null);
 		this.services = services;
 	}

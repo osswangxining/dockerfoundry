@@ -251,7 +251,7 @@ public class Messages extends NLS {
 
 	public static String ApplicationURLWizard_TITLE_MOD_APP_URL;
 
-	public static String CloudFoundryUiCallback_STARTING_CONSOLE;
+	public static String DockerFoundryUiCallback_STARTING_CONSOLE;
 
 	public static String EditorAction_CLOUD_OPERATION;
 
@@ -507,179 +507,179 @@ public class Messages extends NLS {
 
 	public static String CloudApplicationUrlPart_TEXT_SUBDOMAIN_LABEL;
 
-	public static String CloudFoundryAccountSection_BUTTON_CHANGE_PW;
+	public static String DockerFoundryAccountSection_BUTTON_CHANGE_PW;
 
-	public static String CloudFoundryAccountSection_BUTTON_CLONE_SERVER;
+	public static String DockerFoundryAccountSection_BUTTON_CLONE_SERVER;
 
-	public static String CloudFoundryAccountSection_BUTTON_VALIDATE_ACCOUNT;
+	public static String DockerFoundryAccountSection_BUTTON_VALIDATE_ACCOUNT;
 
-	public static String CloudFoundryAccountSection_DIALOG_UNSAVE_BODY;
+	public static String DockerFoundryAccountSection_DIALOG_UNSAVE_BODY;
 
-	public static String CloudFoundryAccountSection_DIALOG_UNSAVE_TITLE;
+	public static String DockerFoundryAccountSection_DIALOG_UNSAVE_TITLE;
 
-	public static String CloudFoundryAccountSection_LABEL_ORG;
+	public static String DockerFoundryAccountSection_LABEL_ORG;
 
-	public static String CloudFoundryAccountSection_LABEL_PW_CHANGED;
+	public static String DockerFoundryAccountSection_LABEL_PW_CHANGED;
 
-	public static String CloudFoundryAccountSection_LABEL_SPACE;
+	public static String DockerFoundryAccountSection_LABEL_SPACE;
 
-	public static String CloudFoundryActionProvider_ERROR_REFLECTION_CF_APP_PAGE;
+	public static String DockerFoundryActionProvider_ERROR_REFLECTION_CF_APP_PAGE;
 
-	public static String CloudFoundryApplicationEnvVarWizardPage_TEXT_EDIT_ENV_VAR;
+	public static String DockerFoundryApplicationEnvVarWizardPage_TEXT_EDIT_ENV_VAR;
 
-	public static String CloudFoundryApplicationEnvVarWizardPage_TEXT_ENV_VAR_WIZ;
+	public static String DockerFoundryApplicationEnvVarWizardPage_TEXT_ENV_VAR_WIZ;
 
-	public static String CloudFoundryApplicationsEditorPage_JOB_REFRESH;
+	public static String DockerFoundryApplicationsEditorPage_JOB_REFRESH;
 
-	public static String CloudFoundryApplicationsEditorPage_TEXT_SEE_ERRORLOG;
+	public static String DockerFoundryApplicationsEditorPage_TEXT_SEE_ERRORLOG;
 
-	public static String CloudFoundryApplicationServicesWizardPage_ERROR_VERIFY_SERVICE;
+	public static String DockerFoundryApplicationServicesWizardPage_ERROR_VERIFY_SERVICE;
 
-	public static String CloudFoundryApplicationServicesWizardPage_LABEL_SELECT_SERVICE;
+	public static String DockerFoundryApplicationServicesWizardPage_LABEL_SELECT_SERVICE;
 
-	public static String CloudFoundryApplicationServicesWizardPage_TEXT_BIND_DESCRIP;
+	public static String DockerFoundryApplicationServicesWizardPage_TEXT_BIND_DESCRIP;
 
-	public static String CloudFoundryApplicationServicesWizardPage_TEXT_SERVICE_SELECTION;
+	public static String DockerFoundryApplicationServicesWizardPage_TEXT_SERVICE_SELECTION;
 
-	public static String CloudFoundryApplicationServicesWizardPage_TEXT_TOOLTIP;
+	public static String DockerFoundryApplicationServicesWizardPage_TEXT_TOOLTIP;
 
-	public static String CloudFoundryApplicationServicesWizardPage_TEXT_VERIFY_SERVICE_PROGRESS;
+	public static String DockerFoundryApplicationServicesWizardPage_TEXT_VERIFY_SERVICE_PROGRESS;
 
-	public static String CloudFoundryApplicationWizard_TITLE_APP;
+	public static String DockerFoundryApplicationWizard_TITLE_APP;
 
-	public static String CloudFoundryApplicationWizardPage_BUTTON_SAVE_MANIFEST;
+	public static String DockerFoundryApplicationWizardPage_BUTTON_SAVE_MANIFEST;
 
-	public static String CloudFoundryApplicationWizardPage_ERROR_INVALID_CHAR;
+	public static String DockerFoundryApplicationWizardPage_ERROR_INVALID_CHAR;
 
-	public static String CloudFoundryApplicationWizardPage_ERROR_MISSING_APPNAME;
+	public static String DockerFoundryApplicationWizardPage_ERROR_MISSING_APPNAME;
 
-	public static String CloudFoundryApplicationWizardPage_ERROR_NAME_CONFLICT;
+	public static String DockerFoundryApplicationWizardPage_ERROR_NAME_CONFLICT;
 
-	public static String CloudFoundryApplicationWizardPage_LABEL_BUILDPACK;
+	public static String DockerFoundryApplicationWizardPage_LABEL_BUILDPACK;
 
-	public static String CloudFoundryApplicationWizardPage_TEXT_DEPLOY_WIZ;
+	public static String DockerFoundryApplicationWizardPage_TEXT_DEPLOY_WIZ;
 
-	public static String CloudFoundryApplicationWizardPage_TEXT_SAVE_MANIFEST_TOOLTIP;
+	public static String DockerFoundryApplicationWizardPage_TEXT_SAVE_MANIFEST_TOOLTIP;
 
-	public static String CloudFoundryApplicationWizardPage_TEXT_SET_APP_DETAIL;
+	public static String DockerFoundryApplicationWizardPage_TEXT_SET_APP_DETAIL;
 
-	public static String CloudFoundryApplicationWizardPage_TITLE_APP_DETAIL;
+	public static String DockerFoundryApplicationWizardPage_TITLE_APP_DETAIL;
 
-	public static String CloudFoundryCloudSpaceWizardpage_TEXT_ORG_AND_SPACES;
+	public static String DockerFoundryCloudSpaceWizardpage_TEXT_ORG_AND_SPACES;
 
-	public static String CloudFoundryCredentialsPart_TEXT_CREDENTIAL_WIZ_TITLE;
+	public static String DockerFoundryCredentialsPart_TEXT_CREDENTIAL_WIZ_TITLE;
 
-	public static String CloudFoundryCredentialsPart_TEXT_REGISTER_BUTTON;
+	public static String DockerFoundryCredentialsPart_TEXT_REGISTER_BUTTON;
 
-	public static String CloudFoundryCredentialsPart_TEXT_VALIDATE_BUTTON;
+	public static String DockerFoundryCredentialsPart_TEXT_VALIDATE_BUTTON;
 
-	public static String CloudFoundryCredentialsWizardPage_TEXT_CRENDENTIAL;
+	public static String DockerFoundryCredentialsWizardPage_TEXT_CRENDENTIAL;
 
-	public static String CloudFoundryDecorator_SUFFIX_DEPLOYED_AS;
+	public static String DockerFoundryDecorator_SUFFIX_DEPLOYED_AS;
 
-	public static String CloudFoundryDecorator_SUFFIX_NOT_DEPLOYED;
+	public static String DockerFoundryDecorator_SUFFIX_NOT_DEPLOYED;
 
-	public static String CloudFoundryDeploymentWizardPage_LABEL_START_APP;
+	public static String DockerFoundryDeploymentWizardPage_LABEL_START_APP;
 
-	public static String CloudFoundryDeploymentWizardPage_TEXT_DEPLOY_DETAIL;
+	public static String DockerFoundryDeploymentWizardPage_TEXT_DEPLOY_DETAIL;
 
-	public static String CloudFoundryDeploymentWizardPage_TEXT_DEPLOYMENT;
+	public static String DockerFoundryDeploymentWizardPage_TEXT_DEPLOYMENT;
 
-	public static String CloudFoundryDeploymentWizardPage_TITLE_LAUNCH_DEPLOY;
+	public static String DockerFoundryDeploymentWizardPage_TITLE_LAUNCH_DEPLOY;
 
-	public static String CloudFoundryEditorAction_TEXT_NO_OP_EXECUTE;
+	public static String DockerFoundryEditorAction_TEXT_NO_OP_EXECUTE;
 
-	public static String CloudFoundryEditorAction_WARNING_RESTART_APP;
+	public static String DockerFoundryEditorAction_WARNING_RESTART_APP;
 
-	public static String CloudFoundryPreferencePage_TEXT_SELECT_CF_FEATURE;
+	public static String DockerFoundryPreferencePage_TEXT_SELECT_CF_FEATURE;
 
-	public static String CloudFoundryServerStatusSection_ERROR_SERV_EDITOR;
+	public static String DockerFoundryServerStatusSection_ERROR_SERV_EDITOR;
 
-	public static String CloudFoundryServerStatusSection_TEXT_CONN_BUTTON;
+	public static String DockerFoundryServerStatusSection_TEXT_CONN_BUTTON;
 
-	public static String CloudFoundryServerStatusSection_TEXT_CONNECTED;
+	public static String DockerFoundryServerStatusSection_TEXT_CONNECTED;
 
-	public static String CloudFoundryServerStatusSection_TEXT_DISCONN_BUTTON;
+	public static String DockerFoundryServerStatusSection_TEXT_DISCONN_BUTTON;
 
-	public static String CloudFoundryServerStatusSection_TEXT_NOT_CONNECTED;
+	public static String DockerFoundryServerStatusSection_TEXT_NOT_CONNECTED;
 
-	public static String CloudFoundryServerStatusSection_TEXT_SERV_STAT;
+	public static String DockerFoundryServerStatusSection_TEXT_SERV_STAT;
 
-	public static String CloudFoundryServerStatusSection_JOB_CONN_SERVER;
+	public static String DockerFoundryServerStatusSection_JOB_CONN_SERVER;
 
-	public static String CloudFoundryServerWizardFragment_TEXT_CONNECT_ACCOUNT;
+	public static String DockerFoundryServerWizardFragment_TEXT_CONNECT_ACCOUNT;
 
-	public static String CloudFoundryServicePlanWizardPage_ERROR_CONFIG_RETRIVE;
+	public static String DockerFoundryServicePlanWizardPage_ERROR_CONFIG_RETRIVE;
 
-	public static String CloudFoundryServicePlanWizardPage_ERROR_INVALID_CHAR;
+	public static String DockerFoundryServicePlanWizardPage_ERROR_INVALID_CHAR;
 
-	public static String CloudFoundryServicePlanWizardPage_ERROR_SELECT_PLAN;
+	public static String DockerFoundryServicePlanWizardPage_ERROR_SELECT_PLAN;
 
-	public static String CloudFoundryServicePlanWizardPage_LABEL_PLAN;
+	public static String DockerFoundryServicePlanWizardPage_LABEL_PLAN;
 
-	public static String CloudFoundryServicePlanWizardPage_LABEL_TYPE;
+	public static String DockerFoundryServicePlanWizardPage_LABEL_TYPE;
 
-	public static String CloudFoundryServicePlanWizardPage_TEXT_ENTER_NAME;
+	public static String DockerFoundryServicePlanWizardPage_TEXT_ENTER_NAME;
 
-	public static String CloudFoundryServicePlanWizardPage_TEXT_FINISH_ADD;
+	public static String DockerFoundryServicePlanWizardPage_TEXT_FINISH_ADD;
 
-	public static String CloudFoundryServicePlanWizardPage_TEXT_SELECT_TYPE;
+	public static String DockerFoundryServicePlanWizardPage_TEXT_SELECT_TYPE;
 
-	public static String CloudFoundryServicePlanWizardPage_TEXT_SERVICE_PAGE;
+	public static String DockerFoundryServicePlanWizardPage_TEXT_SERVICE_PAGE;
 
-	public static String CloudFoundryServicePlanWizardPage_TITLE_SERVICE_CONFIG;
+	public static String DockerFoundryServicePlanWizardPage_TITLE_SERVICE_CONFIG;
 
-	public static String CloudFoundryServiceWizard_ERROR_ADD_SERVICE;
+	public static String DockerFoundryServiceWizard_ERROR_ADD_SERVICE;
 
-	public static String CloudFoundryServiceWizardPage_ERROR_CONFIG_RETRIVE;
+	public static String DockerFoundryServiceWizardPage_ERROR_CONFIG_RETRIVE;
 
-	public static String CloudFoundryServiceWizardPage_ERROR_INVALID_CHAR;
+	public static String DockerFoundryServiceWizardPage_ERROR_INVALID_CHAR;
 
-	public static String CloudFoundryServiceWizardPage_TEXT_FINISH;
+	public static String DockerFoundryServiceWizardPage_TEXT_FINISH;
 
-	public static String CloudFoundryServiceWizardPage_TEXT_SELECT_SERVICE_LIST;
+	public static String DockerFoundryServiceWizardPage_TEXT_SELECT_SERVICE_LIST;
 
-	public static String CloudFoundryServiceWizardPage_TEXT_SET_SERVICE_NAME;
+	public static String DockerFoundryServiceWizardPage_TEXT_SET_SERVICE_NAME;
 
-	public static String CloudFoundryServiceWizardPage_TTILE_SERVICE_CONFIG;
+	public static String DockerFoundryServiceWizardPage_TTILE_SERVICE_CONFIG;
 
-	public static String CloudFoundryServiceWizardPageRightPanel_FREE_PLAN;
+	public static String DockerFoundryServiceWizardPageRightPanel_FREE_PLAN;
 
-	public static String CloudFoundryServiceWizard_JOB_SUBTASK_VERIFYING_SERVICES;
+	public static String DockerFoundryServiceWizard_JOB_SUBTASK_VERIFYING_SERVICES;
 
-	public static String CloudFoundryServiceWizard_JOB_TASK_CREATING_SERVICES;
+	public static String DockerFoundryServiceWizard_JOB_TASK_CREATING_SERVICES;
 
-	public static String CloudFoundryServiceWizardPageRightPanel_SERVICES_TO_CREATE;
+	public static String DockerFoundryServiceWizardPageRightPanel_SERVICES_TO_CREATE;
 
-	public static String CloudFoundryServiceWizardPageRightPanel_NAME;
+	public static String DockerFoundryServiceWizardPageRightPanel_NAME;
 
-	public static String CloudFoundryServiceWizardPageRightPanel_PLAN;
+	public static String DockerFoundryServiceWizardPageRightPanel_PLAN;
 
-	public static String CloudFoundryServiceWizardPageRightPanel_ADD_A_SERVICE;
+	public static String DockerFoundryServiceWizardPageRightPanel_ADD_A_SERVICE;
 
-	public static String CloudFoundryServiceWizardPageRightPanel_REMOVE_TOOLTIP;
+	public static String DockerFoundryServiceWizardPageRightPanel_REMOVE_TOOLTIP;
 
-	public static String CloudFoundryServiceWizardPageRightPanel_EXISTING_SERVICE_DUPE;
+	public static String DockerFoundryServiceWizardPageRightPanel_EXISTING_SERVICE_DUPE;
 
-	public static String CloudFoundryServiceWizardPageRightPanel_ERROR_DUPE_SERVICE_NAMES_FOUND;
+	public static String DockerFoundryServiceWizardPageRightPanel_ERROR_DUPE_SERVICE_NAMES_FOUND;
 
-	public static String CloudFoundryServiceWizardPageLeftPanel_FILTER_TITLE;
+	public static String DockerFoundryServiceWizardPageLeftPanel_FILTER_TITLE;
 
-	public static String CloudFoundryServiceWizardPageLeftPanel_DEFAULT_FILTER_TEXT;
+	public static String DockerFoundryServiceWizardPageLeftPanel_DEFAULT_FILTER_TEXT;
 
-	public static String CloudFoundryServiceWizardPageLeftPanel_AVAILABLE_SERVICES;
+	public static String DockerFoundryServiceWizardPageLeftPanel_AVAILABLE_SERVICES;
 
-	public static String CloudFoundryServiceWizardPageLeftPanel_ADD;
+	public static String DockerFoundryServiceWizardPageLeftPanel_ADD;
 
-	public static String CloudFoundryServiceWizardPageLeftPanel_CLEAR;
+	public static String DockerFoundryServiceWizardPageLeftPanel_CLEAR;
 
 	public static String CloudRoutePart_UNDO;
 
-	public static String CloudFoundryUiCallback_ERROR_CALLBACK_TITLE;
+	public static String DockerFoundryUiCallback_ERROR_CALLBACK_TITLE;
 
-	public static String CloudFoundryUiCallback_JOB_CF_ERROR;
+	public static String DockerFoundryUiCallback_JOB_CF_ERROR;
 
-	public static String CloudFoundryURLNavigation_TEXT_OPEN_LABEL;
+	public static String DockerFoundryURLNavigation_TEXT_OPEN_LABEL;
 
 	public static String CloudRoutePart_ERROR_NO_ROUTE_AVAIL;
 
@@ -902,9 +902,9 @@ public class Messages extends NLS {
 
 	public static String MANAGE_SERVICES_TO_APPLICATIONS_FINISH_ERROR_DESCRIPTION;
 
-	public static String CloudFoundryServiceWizardPage_GETTING_AVAILABLE_SERVICES;
+	public static String DockerFoundryServiceWizardPage_GETTING_AVAILABLE_SERVICES;
 
-	private static final String BUNDLE_NAME = CloudFoundryServerUiPlugin.PLUGIN_ID + ".internal.Messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = DockerFoundryServerUiPlugin.PLUGIN_ID + ".internal.Messages"; //$NON-NLS-1$
 
 	static {
 		// initialize resource bundle

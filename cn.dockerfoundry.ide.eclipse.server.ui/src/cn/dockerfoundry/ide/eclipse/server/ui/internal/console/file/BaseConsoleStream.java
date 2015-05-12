@@ -24,7 +24,7 @@ import java.io.IOException;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.console.IOConsoleOutputStream;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
 
 /**
  * Basic console stream that manages an output stream to an Eclipse console,
@@ -51,7 +51,7 @@ public abstract class BaseConsoleStream {
 				outputStream.close();
 			}
 			catch (IOException e) {
-				CloudFoundryPlugin.logError("Failed to close console output stream due to: " + e.getMessage(), e); //$NON-NLS-1$
+				DockerFoundryPlugin.logError("Failed to close console output stream due to: " + e.getMessage(), e); //$NON-NLS-1$
 			}
 		}
 	}

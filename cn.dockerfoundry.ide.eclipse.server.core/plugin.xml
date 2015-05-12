@@ -11,14 +11,14 @@
    <extension
 	       point="org.eclipse.wst.server.core.moduleTypes">
 	    <moduleType
-	          id="cn.dockerfoundry.ide.eclipse.server.core.CloudFoundryApplicationModule"
+	          id="cn.dockerfoundry.ide.eclipse.server.core.DockerFoundryApplicationModule"
 	          name="Docker Foundry Module">
 	    </moduleType>
 	 </extension>
   <extension
         point="org.eclipse.debug.core.launchConfigurationTypes">
      <launchConfigurationType
-           delegate="cn.dockerfoundry.ide.eclipse.server.core.internal.debug.CloudFoundryDebuggingLaunchConfigDelegate"
+           delegate="cn.dockerfoundry.ide.eclipse.server.core.internal.debug.DockerFoundryDebuggingLaunchConfigDelegate"
            id="cn.dockerfoundry.ide.eclipse.launchconfig.debug"
            modes="debug"
            name="Docker Foundry"
@@ -28,7 +28,7 @@
   <extension
         point="org.eclipse.debug.core.sourcePathComputers">
      <sourcePathComputer
-           class="cn.dockerfoundry.ide.eclipse.server.core.internal.debug.CloudFoundryDebugSourceLocator"
+           class="cn.dockerfoundry.ide.eclipse.server.core.internal.debug.DockerFoundryDebugSourceLocator"
            id="cn.dockerfoundry.ide.eclipse.debug.sourcepathcomputer">
      </sourcePathComputer>
   </extension>

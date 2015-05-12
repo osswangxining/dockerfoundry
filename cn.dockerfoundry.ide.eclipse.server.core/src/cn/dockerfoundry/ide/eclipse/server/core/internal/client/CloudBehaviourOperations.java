@@ -31,7 +31,7 @@ import org.eclipse.wst.server.core.IModule;
 
 import cn.dockerfoundry.ide.eclipse.server.core.internal.ApplicationAction;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudErrorUtil;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.Messages;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.ServerEventHandler;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.application.EnvironmentVariable;
@@ -49,9 +49,9 @@ public class CloudBehaviourOperations {
 
 	public static String INTERNAL_ERROR_NO_WST_MODULE = "Internal Error: No WST IModule specified - Unable to deploy or start application"; //$NON-NLS-1$
 
-	private final CloudFoundryServerBehaviour behaviour;
+	private final DockerFoundryServerBehaviour behaviour;
 
-	public CloudBehaviourOperations(CloudFoundryServerBehaviour behaviour) {
+	public CloudBehaviourOperations(DockerFoundryServerBehaviour behaviour) {
 		this.behaviour = behaviour;
 	}
 
@@ -83,7 +83,7 @@ public class CloudBehaviourOperations {
 	 * @param instanceCount must be 1 or higher.
 	 * @throws CoreException if operation was not created
 	 */
-	public ICloudFoundryOperation instancesUpdate(final CloudFoundryApplicationModule appModule, final int instanceCount)
+	public ICloudFoundryOperation instancesUpdate(final DockerFoundryApplicationModule appModule, final int instanceCount)
 			throws CoreException {
 
 		return new BehaviourOperation(behaviour, appModule.getLocalModule()) {
@@ -123,7 +123,7 @@ public class CloudBehaviourOperations {
 	 * @param memory must be above zero.
 	 * @throws CoreException if operation was not created
 	 */
-	public ICloudFoundryOperation memoryUpdate(final CloudFoundryApplicationModule appModule, final int memory)
+	public ICloudFoundryOperation memoryUpdate(final DockerFoundryApplicationModule appModule, final int memory)
 			throws CoreException {
 		return new ApplicationUpdateOperation(behaviour.getUpdateApplicationMemoryRequest(appModule, memory),
 				behaviour, appModule);
@@ -135,7 +135,7 @@ public class CloudBehaviourOperations {
 	 */
 	public ICloudFoundryOperation mappedUrlsUpdate(final String appName, final List<String> urls) throws CoreException {
 
-		final CloudFoundryApplicationModule appModule = behaviour.getCloudFoundryServer().getExistingCloudModule(
+		final DockerFoundryApplicationModule appModule = behaviour.getCloudFoundryServer().getExistingCloudModule(
 				appName);
 
 		if (appModule != null) {
@@ -152,7 +152,7 @@ public class CloudBehaviourOperations {
 	 * Gets an operation to update the service bindings of an application
 	 * @throws CoreException if operation was not created
 	 */
-	public ICloudFoundryOperation bindServices(final CloudFoundryApplicationModule appModule,
+	public ICloudFoundryOperation bindServices(final DockerFoundryApplicationModule appModule,
 			final List<String> services) throws CoreException {
 		return new ApplicationUpdateOperation(behaviour.getUpdateServicesRequest(
 				appModule.getDeployedApplicationName(), services), behaviour, appModule.getLocalModule());
@@ -189,7 +189,7 @@ public class CloudBehaviourOperations {
 	 * deployment mode, or null if an operation could not be resolved.
 	 * @throws CoreException
 	 */
-	public ICloudFoundryOperation applicationDeployment(CloudFoundryApplicationModule application,
+	public ICloudFoundryOperation applicationDeployment(DockerFoundryApplicationModule application,
 			ApplicationAction action) throws CoreException {
 		IModule[] modules = new IModule[] { application.getLocalModule() };
 
@@ -230,7 +230,7 @@ public class CloudBehaviourOperations {
 		case UPDATE_RESTART:
 			// Check the full publish preference to determine if full or
 			// incremental publish should be done when starting an application
-			operation = new StartOperation(behaviour, CloudFoundryPlugin.getDefault().getIncrementalPublish(), modules);
+			operation = new StartOperation(behaviour, DockerFoundryPlugin.getDefault().getIncrementalPublish(), modules);
 			break;
 		case PUSH:
 			operation = new PushApplicationOperation(behaviour, modules);

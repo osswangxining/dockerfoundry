@@ -27,9 +27,9 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.wst.server.ui.IServerModule;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
-import cn.dockerfoundry.ide.eclipse.server.ui.internal.CloudFoundryImages;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.ui.internal.DockerFoundryImages;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.DebugCommand;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.Messages;
 
@@ -44,15 +44,15 @@ public class DebugMenuActionHandler extends MenuActionHandler<IServerModule> {
 		super(IServerModule.class);
 	}
 
-	public static final String DEBUG_ACTION_ID = "org.dockerfoundry.ide.eclipse.server.ui.action.debug"; //$NON-NLS-1$
+	public static final String DEBUG_ACTION_ID = "cn.dockerfoundry.ide.eclipse.server.ui.action.debug"; //$NON-NLS-1$
 
 	static class DebugAction extends Action {
 
-		protected final CloudFoundryServer cloudServer;
+		protected final DockerFoundryServer cloudServer;
 
-		protected final CloudFoundryApplicationModule appModule;
+		protected final DockerFoundryApplicationModule appModule;
 
-		public DebugAction(CloudFoundryServer cloudServer, CloudFoundryApplicationModule appModule) {
+		public DebugAction(DockerFoundryServer cloudServer, DockerFoundryApplicationModule appModule) {
 			this.cloudServer = cloudServer;
 			this.appModule = appModule;
 			setActionValues();
@@ -60,7 +60,7 @@ public class DebugMenuActionHandler extends MenuActionHandler<IServerModule> {
 
 		protected void setActionValues() {
 			setText(Messages.DebugMenuActionHandler_TEXT_DEBUG_TOOLTIP);
-			setImageDescriptor(CloudFoundryImages.DEBUG);
+			setImageDescriptor(DockerFoundryImages.DEBUG);
 			setToolTipText(Messages.DebugMenuActionHandler_TEXT_DEBUG_TOOLTIP);
 			setEnabled(true);
 		}
@@ -73,8 +73,8 @@ public class DebugMenuActionHandler extends MenuActionHandler<IServerModule> {
 
 	@Override
 	protected List<IAction> getActionsFromSelection(IServerModule serverModule) {
-		CloudFoundryServer cloudFoundryServer = (CloudFoundryServer) serverModule.getServer().loadAdapter(
-				CloudFoundryServer.class, null);
+		DockerFoundryServer cloudFoundryServer = (DockerFoundryServer) serverModule.getServer().loadAdapter(
+				DockerFoundryServer.class, null);
 		if (cloudFoundryServer == null) {
 			return Collections.emptyList();
 		}

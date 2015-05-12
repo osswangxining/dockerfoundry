@@ -28,8 +28,8 @@ import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.TransferData;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryServerBehaviour;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryServerBehaviour;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.actions.AddServicesToApplicationAction;
 
 
@@ -42,14 +42,14 @@ public class ServicesViewerDropListener extends ViewerDropAdapter {
 
 //	private CloudApplication application;
 
-	private final CloudFoundryApplicationsEditorPage editorPage;
+	private final DockerFoundryApplicationsEditorPage editorPage;
 
-	private CloudFoundryApplicationModule appModule;
+	private DockerFoundryApplicationModule appModule;
 
-	private final CloudFoundryServerBehaviour serverBehaviour;
+	private final DockerFoundryServerBehaviour serverBehaviour;
 
-	protected ServicesViewerDropListener(Viewer viewer, CloudFoundryServerBehaviour serverBehaviour,
-			CloudFoundryApplicationsEditorPage editorPage) {
+	protected ServicesViewerDropListener(Viewer viewer, DockerFoundryServerBehaviour serverBehaviour,
+			DockerFoundryApplicationsEditorPage editorPage) {
 		super(viewer);
 		this.serverBehaviour = serverBehaviour;
 		this.editorPage = editorPage;
@@ -71,7 +71,7 @@ public class ServicesViewerDropListener extends ViewerDropAdapter {
 		return true;
 	}
 
-	public void setModule(CloudFoundryApplicationModule module) {
+	public void setModule(DockerFoundryApplicationModule module) {
 		this.appModule = module;
 		
 //		if (module == null) {

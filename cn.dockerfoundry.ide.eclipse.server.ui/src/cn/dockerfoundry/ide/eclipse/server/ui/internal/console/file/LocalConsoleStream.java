@@ -30,7 +30,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
  * the console.
  * 
  */
-public abstract class LocalConsoleStream extends CloudFoundryConsoleStream {
+public abstract class LocalConsoleStream extends DockerFoundryConsoleStream {
 
 	public LocalConsoleStream(int swtColour) {
 		super(null, swtColour, null, -1);

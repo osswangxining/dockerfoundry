@@ -45,23 +45,23 @@ import org.eclipse.wst.server.core.IServerWorkingCopy;
 import org.eclipse.wst.server.core.ServerUtil;
 
 import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudErrorUtil;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryProjectUtil;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryProjectUtil;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.ModuleCache;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.client.ICloudFoundryOperation;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.Messages;
 
 public class MapToProjectOperation implements ICloudFoundryOperation {
 
-	private final CloudFoundryApplicationModule appModule;
+	private final DockerFoundryApplicationModule appModule;
 
-	private final CloudFoundryServer cloudServer;
+	private final DockerFoundryServer cloudServer;
 
 	private Shell shell;
 
-	public MapToProjectOperation(CloudFoundryApplicationModule appModule, CloudFoundryServer cloudServer, Shell shell) {
+	public MapToProjectOperation(DockerFoundryApplicationModule appModule, DockerFoundryServer cloudServer, Shell shell) {
 		this.appModule = appModule;
 		this.cloudServer = cloudServer;
 		this.shell = shell;
@@ -90,7 +90,7 @@ public class MapToProjectOperation implements ICloudFoundryOperation {
 					.toCoreException("No Cloud module specified. Unable to map to project: " + project.getName()); //$NON-NLS-1$
 		}
 
-		ModuleCache moduleCache = CloudFoundryPlugin.getModuleCache();
+		ModuleCache moduleCache = DockerFoundryPlugin.getModuleCache();
 		ModuleCache.ServerData data = moduleCache.getData(cloudServer.getServerOriginal());
 
 		// if it is being deployed, do not perform remap
@@ -138,8 +138,8 @@ public class MapToProjectOperation implements ICloudFoundryOperation {
 	 * @return true if the replace project is selected, false indicates the user
 	 * aborts the selection operation
 	 */
-	protected IProject selectReplaceProject(final CloudFoundryServer cloudServer,
-			final CloudFoundryApplicationModule appModule) {
+	protected IProject selectReplaceProject(final DockerFoundryServer cloudServer,
+			final DockerFoundryApplicationModule appModule) {
 		Class<?>[] acceptedClasses = new Class[] { IJavaProject.class, IProject.class };
 		TypedElementSelectionValidator selectionValidator = new TypedElementSelectionValidator(acceptedClasses, false);
 
@@ -154,7 +154,7 @@ public class MapToProjectOperation implements ICloudFoundryOperation {
 				if (element instanceof IJavaProject) {
 					potentialProject = ((IJavaProject) element).getProject();
 				}
-				else if (element instanceof IProject && CloudFoundryProjectUtil.isJavaProject((IProject) element)) {
+				else if (element instanceof IProject && DockerFoundryProjectUtil.isJavaProject((IProject) element)) {
 					potentialProject = (IProject) element;
 				}
 

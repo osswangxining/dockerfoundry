@@ -22,18 +22,18 @@ package cn.dockerfoundry.ide.eclipse.server.ui.internal.actions;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
 
 public class ShowConsoleViewerCommand extends BaseCommandHandler {
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		initializeSelection(event);
 		String error = null;
-		CloudFoundryServer cloudServer = selectedServer != null ? (CloudFoundryServer) selectedServer.loadAdapter(
-				CloudFoundryServer.class, null) : null;
-		CloudFoundryApplicationModule appModule = cloudServer != null && selectedModule != null ? cloudServer
+		DockerFoundryServer cloudServer = selectedServer != null ? (DockerFoundryServer) selectedServer.loadAdapter(
+				DockerFoundryServer.class, null) : null;
+		DockerFoundryApplicationModule appModule = cloudServer != null && selectedModule != null ? cloudServer
 				.getExistingCloudModule(selectedModule) : null;
 		if (selectedServer == null) {
 			error = "No Cloud Foundry server instance available to run the selected action."; //$NON-NLS-1$
@@ -43,7 +43,7 @@ public class ShowConsoleViewerCommand extends BaseCommandHandler {
 			new ShowConsoleEditorAction(cloudServer, 0).run();
 		}
 		else {
-			CloudFoundryPlugin.logError(error);
+			DockerFoundryPlugin.logError(error);
 		}
 
 		return null;

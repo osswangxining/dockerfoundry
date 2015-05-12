@@ -27,9 +27,9 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.wst.server.core.IModule;
 
 import cn.dockerfoundry.ide.eclipse.server.core.internal.ApplicationAction;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.debug.CloudFoundryProperties;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.debug.DockerFoundryProperties;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.debug.DebugConnectionDescriptor;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.debug.IDebugProvider;
 
@@ -47,19 +47,19 @@ class DebugUIProvider implements IDebugProvider {
 	}
 
 	@Override
-	public DebugConnectionDescriptor getDebugConnectionDescriptor(CloudFoundryApplicationModule appModule,
-			CloudFoundryServer cloudServer, IProgressMonitor monitor) throws CoreException {
+	public DebugConnectionDescriptor getDebugConnectionDescriptor(DockerFoundryApplicationModule appModule,
+			DockerFoundryServer cloudServer, IProgressMonitor monitor) throws CoreException {
 		return provider.getDebugConnectionDescriptor(appModule, cloudServer, monitor);
 	}
 
 	@Override
-	public boolean canLaunch(CloudFoundryApplicationModule appModule, CloudFoundryServer cloudServer,
+	public boolean canLaunch(DockerFoundryApplicationModule appModule, DockerFoundryServer cloudServer,
 			IProgressMonitor monitor) throws CoreException {
 		return provider.canLaunch(appModule, cloudServer, monitor);
 	}
 
 	@Override
-	public boolean isDebugSupported(CloudFoundryApplicationModule appModule, CloudFoundryServer cloudServer) {
+	public boolean isDebugSupported(DockerFoundryApplicationModule appModule, DockerFoundryServer cloudServer) {
 		return provider.isDebugSupported(appModule, cloudServer);
 	}
 
@@ -69,11 +69,11 @@ class DebugUIProvider implements IDebugProvider {
 	}
 
 	@Override
-	public boolean configureApp(CloudFoundryApplicationModule appModule, CloudFoundryServer cloudServer,
+	public boolean configureApp(DockerFoundryApplicationModule appModule, DockerFoundryServer cloudServer,
 			IProgressMonitor monitor) throws CoreException {
 		IModule[] mod = new IModule[] { appModule.getLocalModule() };
 
-		boolean shouldRestart = CloudFoundryProperties.isModuleStopped.testProperty(mod, cloudServer);
+		boolean shouldRestart = DockerFoundryProperties.isModuleStopped.testProperty(mod, cloudServer);
 
 		// If the application cannot yet launch then prompt the user to restart
 		// the app in order for

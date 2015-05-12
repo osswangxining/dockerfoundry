@@ -32,12 +32,12 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaModelException;
 
 import cn.dockerfoundry.ide.eclipse.server.core.ApplicationDeploymentInfo;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryProjectUtil;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryProjectUtil;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.application.EnvironmentVariable;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.client.AbstractWaitWithProgressJob;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
 
 /**
  * Performs a connection to a given server and module. Handles network timeouts,
@@ -50,8 +50,8 @@ public class DebugProvider implements IDebugProvider {
 	private static final String JAVA_OPTS = "JAVA_OPTS"; //$NON-NLS-1$
 
 	@Override
-	public DebugConnectionDescriptor getDebugConnectionDescriptor(final CloudFoundryApplicationModule appModule,
-			final CloudFoundryServer cloudServer, IProgressMonitor monitor) throws CoreException {
+	public DebugConnectionDescriptor getDebugConnectionDescriptor(final DockerFoundryApplicationModule appModule,
+			final DockerFoundryServer cloudServer, IProgressMonitor monitor) throws CoreException {
 
 		String fileContent = new AbstractWaitWithProgressJob<String>(50, 5000, true) {
 
@@ -80,14 +80,14 @@ public class DebugProvider implements IDebugProvider {
 	}
 
 	@Override
-	public boolean canLaunch(CloudFoundryApplicationModule appModule, CloudFoundryServer cloudServer,
+	public boolean canLaunch(DockerFoundryApplicationModule appModule, DockerFoundryServer cloudServer,
 			IProgressMonitor monitor) throws CoreException {
 		return containsDebugOption(getDebugEnvironment(appModule.getDeploymentInfo()));
 	}
 
 	@Override
-	public boolean isDebugSupported(CloudFoundryApplicationModule appModule, CloudFoundryServer cloudServer) {
-		IJavaProject javaProject = CloudFoundryProjectUtil.getJavaProject(appModule);
+	public boolean isDebugSupported(DockerFoundryApplicationModule appModule, DockerFoundryServer cloudServer) {
+		IJavaProject javaProject = DockerFoundryProjectUtil.getJavaProject(appModule);
 		return javaProject != null && javaProject.exists() && containsDebugFiles(javaProject);
 	}
 
@@ -111,7 +111,7 @@ public class DebugProvider implements IDebugProvider {
 	}
 
 	@Override
-	public boolean configureApp(CloudFoundryApplicationModule appModule, CloudFoundryServer cloudServer,
+	public boolean configureApp(DockerFoundryApplicationModule appModule, DockerFoundryServer cloudServer,
 			IProgressMonitor monitor) throws CoreException {
 
 		ApplicationDeploymentInfo info = appModule.getDeploymentInfo();
@@ -152,7 +152,7 @@ public class DebugProvider implements IDebugProvider {
 				&& (var.getValue().contains("-Xdebug") || var.getValue().contains("-Xrunjdwp")); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
-	public static DebugProvider getCurrent(CloudFoundryApplicationModule appModule, CloudFoundryServer cloudServer) {
+	public static DebugProvider getCurrent(DockerFoundryApplicationModule appModule, DockerFoundryServer cloudServer) {
 		if (defaultProvider == null) {
 			defaultProvider = new DebugProvider();
 		}
@@ -182,10 +182,10 @@ public class DebugProvider implements IDebugProvider {
 			}
 		}
 		catch (JavaModelException e) {
-			CloudFoundryPlugin.logError(e);
+			DockerFoundryPlugin.logError(e);
 		}
 		catch (CoreException ce) {
-			CloudFoundryPlugin.logError(ce);
+			DockerFoundryPlugin.logError(ce);
 		}
 		return false;
 	}

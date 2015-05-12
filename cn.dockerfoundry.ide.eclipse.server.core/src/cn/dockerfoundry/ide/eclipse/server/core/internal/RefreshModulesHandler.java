@@ -35,7 +35,7 @@ import cn.dockerfoundry.ide.eclipse.server.core.internal.client.BehaviourOperati
  * <p/>
  * As refreshing modules may include fetch a list of {@link CloudApplication}
  * from the target Cloud space associated with the given
- * {@link CloudFoundryServer} which may be a long-running task, module refreshes
+ * {@link DockerFoundryServer} which may be a long-running task, module refreshes
  * is performed asynchronously as a job, and only one job is scheduled per
  * behaviour regardless of the number of refresh requests received
  * 
@@ -44,11 +44,11 @@ public class RefreshModulesHandler {
 
 	private BehaviourRefreshJob refreshJob;
 
-	private final CloudFoundryServer cloudServer;
+	private final DockerFoundryServer cloudServer;
 
 	private BehaviourOperation opToRun;
 
-	public RefreshModulesHandler(CloudFoundryServer cloudServer) {
+	public RefreshModulesHandler(DockerFoundryServer cloudServer) {
 		this.cloudServer = cloudServer;
 		String serverName = cloudServer != null ? cloudServer.getServer().getId() : "Unknown server"; //$NON-NLS-1$
 
@@ -131,7 +131,7 @@ public class RefreshModulesHandler {
 		@Override
 		public IStatus run(IProgressMonitor monitor) {
 			try {
-				CloudFoundryServer cloudServer = null;
+				DockerFoundryServer cloudServer = null;
 				IModule module = opToRun.getModule();
 
 				try {
@@ -139,7 +139,7 @@ public class RefreshModulesHandler {
 							: null;
 				}
 				catch (CoreException ce) {
-					CloudFoundryPlugin.logError(ce);
+					DockerFoundryPlugin.logError(ce);
 				}
 
 				try {
@@ -149,12 +149,12 @@ public class RefreshModulesHandler {
 					// Cloud server must not be null as it's the source of
 					// the event
 					if (cloudServer == null) {
-						CloudFoundryPlugin.logError(NLS.bind(Messages.RefreshModulesHandler_EVENT_CLOUD_SERVER_NULL,
+						DockerFoundryPlugin.logError(NLS.bind(Messages.RefreshModulesHandler_EVENT_CLOUD_SERVER_NULL,
 								opToRun.getClass()));
 					}
 					else {
 						ServerEventHandler.getDefault().fireError(cloudServer, module,
-								CloudFoundryPlugin.getErrorStatus(Messages.RefreshModulesHandler_REFRESH_FAILURE, t));
+								DockerFoundryPlugin.getErrorStatus(Messages.RefreshModulesHandler_REFRESH_FAILURE, t));
 
 					}
 				}

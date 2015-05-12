@@ -28,8 +28,8 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.wst.server.core.IModule;
 import org.eclipse.wst.server.core.IServer;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.Messages;
 
 /**
@@ -48,7 +48,7 @@ import cn.dockerfoundry.ide.eclipse.server.core.internal.Messages;
  * <p/>
  * If the application is already published (it exists in the server), it will
  * ONLY update the published cloud application mapping in the
- * {@link CloudFoundryApplicationModule}. It will NOT re-create, re-publish, or
+ * {@link DockerFoundryApplicationModule}. It will NOT re-create, re-publish, or
  * restart the application.
  * <p/>
  *
@@ -59,12 +59,12 @@ public class PushApplicationOperation extends StartOperation {
 	 * 
 	 */
 
-	public PushApplicationOperation(CloudFoundryServerBehaviour behaviour, IModule[] modules) {
+	public PushApplicationOperation(DockerFoundryServerBehaviour behaviour, IModule[] modules) {
 		super(behaviour, false, modules);
 	}
 
 	@Override
-	protected DeploymentConfiguration prepareForDeployment(CloudFoundryApplicationModule appModule,
+	protected DeploymentConfiguration prepareForDeployment(DockerFoundryApplicationModule appModule,
 			IProgressMonitor monitor) throws CoreException {
 		// If the app is already published, just refresh the application
 		// mapping.
@@ -90,10 +90,10 @@ public class PushApplicationOperation extends StartOperation {
 		}
 		else {
 			try {
-				CloudFoundryServer cloudServer = getBehaviour().getCloudFoundryServer();
+				DockerFoundryServer cloudServer = getBehaviour().getCloudFoundryServer();
 
 				// prompt user for missing details
-				return CloudFoundryPlugin.getCallback().prepareForDeployment(cloudServer, appModule, monitor);
+				return DockerFoundryPlugin.getCallback().prepareForDeployment(cloudServer, appModule, monitor);
 			}
 			catch (OperationCanceledException oce) {
 				// Prepare for deployment prompts the user for missing
@@ -108,7 +108,7 @@ public class PushApplicationOperation extends StartOperation {
 	}
 
 	@Override
-	protected void performDeployment(CloudFoundryApplicationModule appModule, IProgressMonitor monitor)
+	protected void performDeployment(DockerFoundryApplicationModule appModule, IProgressMonitor monitor)
 			throws CoreException {
 		if (!appModule.isDeployed()) {
 			super.performDeployment(appModule, monitor);

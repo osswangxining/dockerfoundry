@@ -29,15 +29,15 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.osgi.util.NLS;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
-import cn.dockerfoundry.ide.eclipse.server.ui.internal.CloudFoundryServerUiPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.ui.internal.DockerFoundryServerUiPlugin;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.Messages;
 
 public class DisconnectCommand extends BaseCommandHandler {
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		initializeSelection(event);
-		final CloudFoundryServer cloudServer = (CloudFoundryServer) selectedServer.loadAdapter(CloudFoundryServer.class, null);
+		final DockerFoundryServer cloudServer = (DockerFoundryServer) selectedServer.loadAdapter(DockerFoundryServer.class, null);
 		Job disconnectJob = new Job(Messages.DisconnectCommand_JOB_DISCONN_SERVER) {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
@@ -49,7 +49,7 @@ public class DisconnectCommand extends BaseCommandHandler {
 				}
 				catch (CoreException e) {
 //					Trace.trace(Trace.STRING_SEVERE, "Error calling disconnect() ", e);
-					return new Status(IStatus.ERROR, CloudFoundryServerUiPlugin.PLUGIN_ID, NLS.bind(
+					return new Status(IStatus.ERROR, DockerFoundryServerUiPlugin.PLUGIN_ID, NLS.bind(
 							"Failed to disconnect from server: {0}", e.getMessage())); //$NON-NLS-1$
 				}
 				return Status.OK_STATUS;

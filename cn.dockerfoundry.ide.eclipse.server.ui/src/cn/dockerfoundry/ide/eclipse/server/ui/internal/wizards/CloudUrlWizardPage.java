@@ -37,7 +37,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryBrandingExtensionPoint.CloudServerURL;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryBrandingExtensionPoint.CloudServerURL;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.Messages;
 
 

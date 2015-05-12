@@ -28,7 +28,7 @@ import org.eclipse.wst.server.core.internal.Server;
 
 import cn.dockerfoundry.ide.eclipse.server.core.internal.ApplicationAction;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudErrorUtil;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.Messages;
 
 import com.spotify.docker.client.DockerClient;
@@ -48,7 +48,7 @@ public class RestartOperation extends ApplicationOperation {
 	 * 
 	 */
 
-	public RestartOperation(CloudFoundryServerBehaviour behaviour, IModule[] modules) {
+	public RestartOperation(DockerFoundryServerBehaviour behaviour, IModule[] modules) {
 		super(behaviour, modules);
 	}
 
@@ -58,7 +58,7 @@ public class RestartOperation extends ApplicationOperation {
 	}
 
 	@Override
-	protected void performDeployment(CloudFoundryApplicationModule appModule, IProgressMonitor monitor)
+	protected void performDeployment(DockerFoundryApplicationModule appModule, IProgressMonitor monitor)
 			throws CoreException {
 		final Server server = (Server) getBehaviour().getServer();
 
@@ -83,7 +83,7 @@ public class RestartOperation extends ApplicationOperation {
 //			appModule = getBehaviour().updateCloudModule(appModule.getDeployedApplicationName(),
 //					subMonitor.newChild(20));
 
-			final CloudFoundryApplicationModule cloudModule = appModule;
+			final DockerFoundryApplicationModule cloudModule = appModule;
 
 			final ApplicationAction deploymentMode = getDeploymentConfiguration().getApplicationStartMode();
 			if (deploymentMode != ApplicationAction.STOP) {
@@ -98,13 +98,13 @@ public class RestartOperation extends ApplicationOperation {
 				String startLabel = Messages.RestartOperation_STARTING_APP + " - " + deploymentName; //$NON-NLS-1$
 				getBehaviour().printlnToConsole(cloudModule, startLabel);
 
-				CloudFoundryPlugin.getCallback().startApplicationConsole(getBehaviour().getCloudFoundryServer(),
+				DockerFoundryPlugin.getCallback().startApplicationConsole(getBehaviour().getCloudFoundryServer(),
 						cloudModule, 0, subMonitor.newChild(20));
 
 				getBehaviour().new BehaviourRequest<Void>(startLabel) {
 					@Override
 					protected Void doRun(final DockerClient client, SubMonitor progress) throws CoreException {
-						CloudFoundryPlugin.trace("Application " + deploymentName + " starting"); //$NON-NLS-1$ //$NON-NLS-2$
+						DockerFoundryPlugin.trace("Application " + deploymentName + " starting"); //$NON-NLS-1$ //$NON-NLS-2$
 
 						System.out.println("Application " + deploymentName + " starting...statrted......");
 //						client.stopApplication(deploymentName);
@@ -121,7 +121,7 @@ public class RestartOperation extends ApplicationOperation {
 //						}
 						
 						
-						CloudFoundryPlugin.getCallback().applicationStarted(
+						DockerFoundryPlugin.getCallback().applicationStarted(
 								RestartOperation.this.getBehaviour().getCloudFoundryServer(), cloudModule);
 //						server.setModulePublishState(getModules(), IServer.PUBLISH_FULL);
 						server.setModuleState(getModules(), IServer.STATE_STARTED);
@@ -133,7 +133,7 @@ public class RestartOperation extends ApplicationOperation {
 				// staging related issues when checking if an app has
 				// started or not
 //				getBehaviour().new StagingAwareRequest<Void>(NLS.bind(
-//						Messages.CloudFoundryServerBehaviour_WAITING_APP_START, deploymentName)) {
+//						Messages.DockerFoundryServerBehaviour_WAITING_APP_START, deploymentName)) {
 //					@Override
 //					protected Void doRun(final CloudFoundryOperations client, SubMonitor progress) throws CoreException {
 //

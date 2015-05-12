@@ -73,11 +73,11 @@ import org.eclipse.wst.server.ui.internal.view.servers.RemoveModuleAction;
 import org.eclipse.wst.server.ui.internal.view.servers.ServersViewDropAdapter;
 import org.eclipse.wst.server.ui.internal.wizard.ModifyModulesWizard;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerApplicationService;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.debug.CloudFoundryProperties;
-import cn.dockerfoundry.ide.eclipse.server.ui.internal.CloudFoundryImages;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.debug.DockerFoundryProperties;
+import cn.dockerfoundry.ide.eclipse.server.ui.internal.DockerFoundryImages;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.Messages;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.actions.RefreshEditorAction;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.actions.ServiceToApplicationsBindingAction;
@@ -93,11 +93,11 @@ public class ApplicationMasterPart extends SectionPart {
 
 	private TableViewer applicationsViewer;
 
-	private final CloudFoundryServer cloudServer;
+	private final DockerFoundryServer cloudServer;
 
 	private IModule currentModule;
 
-	private final CloudFoundryApplicationsEditorPage editorPage;
+	private final DockerFoundryApplicationsEditorPage editorPage;
 
 	private TableViewer servicesViewer;
 
@@ -108,8 +108,8 @@ public class ApplicationMasterPart extends SectionPart {
 
 	private Section servicesSection;
 
-	public ApplicationMasterPart(CloudFoundryApplicationsEditorPage editorPage, IManagedForm managedForm,
-			Composite parent, CloudFoundryServer cloudServer) {
+	public ApplicationMasterPart(DockerFoundryApplicationsEditorPage editorPage, IManagedForm managedForm,
+			Composite parent, DockerFoundryServer cloudServer) {
 		super(parent, managedForm.getToolkit(), Section.TITLE_BAR | Section.DESCRIPTION);
 		this.editorPage = editorPage;
 		this.cloudServer = cloudServer;
@@ -220,8 +220,8 @@ public class ApplicationMasterPart extends SectionPart {
 
 						if (prj != null) {
 
-							final CloudFoundryServer cloudServer = (CloudFoundryServer) editorPage.getServer()
-									.getOriginal().loadAdapter(CloudFoundryServer.class, monitor);
+							final DockerFoundryServer cloudServer = (DockerFoundryServer) editorPage.getServer()
+									.getOriginal().loadAdapter(DockerFoundryServer.class, monitor);
 
 							if (cloudServer != null) {
 
@@ -315,11 +315,11 @@ public class ApplicationMasterPart extends SectionPart {
 
 				if (element instanceof IModule) {
 					IModule module = (IModule) element;
-					CloudFoundryApplicationModule appModule = editorPage.getCloudServer()
+					DockerFoundryApplicationModule appModule = editorPage.getCloudServer()
 							.getExistingCloudModule(module);
 					if (appModule != null && appModule.getErrorMessage() != null) {
-						return CloudFoundryImages.getImage(new DecorationOverlayIcon(image,
-								CloudFoundryImages.OVERLAY_ERROR, IDecoration.BOTTOM_LEFT));
+						return DockerFoundryImages.getImage(new DecorationOverlayIcon(image,
+								DockerFoundryImages.OVERLAY_ERROR, IDecoration.BOTTOM_LEFT));
 					}
 				}
 
@@ -344,7 +344,7 @@ public class ApplicationMasterPart extends SectionPart {
 
 					// Find the corresponding Cloud Foundry-aware application
 					// Module.
-					CloudFoundryApplicationModule appModule = cloudServer.getExistingCloudModule((IModule) element);
+					DockerFoundryApplicationModule appModule = cloudServer.getExistingCloudModule((IModule) element);
 
 					if (appModule != null) {
 						String cfAppName = appModule.getDeployedApplicationName();
@@ -356,7 +356,7 @@ public class ApplicationMasterPart extends SectionPart {
 							// that should not be encountered
 							if (moduleName != null
 									&& !cfAppName.equals(moduleName)
-									&& CloudFoundryProperties.isModuleProjectAccessible.testProperty(
+									&& DockerFoundryProperties.isModuleProjectAccessible.testProperty(
 											new IModule[] { module }, cloudServer)) {
 								moduleName = cfAppName + " (" + moduleName + ")"; //$NON-NLS-1$ //$NON-NLS-2$
 							}
@@ -372,7 +372,7 @@ public class ApplicationMasterPart extends SectionPart {
 
 		});
 		applicationsViewer.setInput(new CloudApplication[0]);
-		applicationsViewer.setSorter(new CloudFoundryViewerSorter());
+		applicationsViewer.setSorter(new DockerFoundryViewerSorter());
 
 		applicationsViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 

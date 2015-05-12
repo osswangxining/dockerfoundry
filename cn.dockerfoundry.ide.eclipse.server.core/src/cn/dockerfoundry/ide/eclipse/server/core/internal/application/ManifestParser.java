@@ -51,11 +51,11 @@ import cn.dockerfoundry.ide.eclipse.server.core.ApplicationDeploymentInfo;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.ApplicationUrlLookupService;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudApplicationURL;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudErrorUtil;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryProjectUtil;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryProjectUtil;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.Messages;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DeploymentInfoWorkingCopy;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.client.LocalCloudService;
 
@@ -91,17 +91,17 @@ public class ManifestParser {
 
 	private final String relativePath;
 
-	private final CloudFoundryApplicationModule appModule;
+	private final DockerFoundryApplicationModule appModule;
 
-	private final CloudFoundryServer cloudServer;
+	private final DockerFoundryServer cloudServer;
 
 	public static final String DEFAULT = "manifest.yml"; //$NON-NLS-1$
 
-	public ManifestParser(CloudFoundryApplicationModule appModule, CloudFoundryServer cloudServer) {
+	public ManifestParser(DockerFoundryApplicationModule appModule, DockerFoundryServer cloudServer) {
 		this(DEFAULT, appModule, cloudServer);
 	}
 
-	public ManifestParser(String relativePath, CloudFoundryApplicationModule appModule, CloudFoundryServer cloudServer) {
+	public ManifestParser(String relativePath, DockerFoundryApplicationModule appModule, DockerFoundryServer cloudServer) {
 		Assert.isNotNull(relativePath);
 		this.relativePath = relativePath;
 		this.appModule = appModule;
@@ -157,7 +157,7 @@ public class ManifestParser {
 	 * null if the project does not exists or is not accessible.
 	 */
 	protected File getFile() {
-		IProject project = CloudFoundryProjectUtil.getProject(appModule);
+		IProject project = DockerFoundryProjectUtil.getProject(appModule);
 		if (project == null) {
 			return null;
 		}
@@ -185,7 +185,7 @@ public class ManifestParser {
 	 * a manifest file can be written too. False otherwise.
 	 */
 	public boolean canWriteToManifest() {
-		return CloudFoundryProjectUtil.getProject(appModule) != null;
+		return DockerFoundryProjectUtil.getProject(appModule) != null;
 	}
 
 	/**
@@ -205,7 +205,7 @@ public class ManifestParser {
 			}
 		}
 		catch (CoreException e) {
-			CloudFoundryPlugin.logError(e);
+			DockerFoundryPlugin.logError(e);
 		}
 		return null;
 	}
@@ -351,7 +351,7 @@ public class ManifestParser {
 				workingCopy.setDeploymentName(appName);
 			}
 			else {
-				CloudFoundryPlugin.logError(Messages.ManifestParser_NO_APP_NAME);
+				DockerFoundryPlugin.logError(Messages.ManifestParser_NO_APP_NAME);
 			}
 
 			readMemory(application, workingCopy);
@@ -489,7 +489,7 @@ public class ManifestParser {
 			}
 		}
 		catch (CoreException e) {
-			CloudFoundryPlugin.logError(e);
+			DockerFoundryPlugin.logError(e);
 		}
 
 		if (cloudURL != null) {
@@ -524,7 +524,7 @@ public class ManifestParser {
 					memoryStringVal = memoryStringVal.substring(0, gIndex);
 				}
 				else if (gIndex == 0) {
-					CloudFoundryPlugin.logError("Failed to read memory value in manifest file: " + relativePath //$NON-NLS-1$
+					DockerFoundryPlugin.logError("Failed to read memory value in manifest file: " + relativePath //$NON-NLS-1$
 							+ " for: " + appModule.getDeployedApplicationName() + ". Invalid memory: " //$NON-NLS-1$ //$NON-NLS-2$
 							+ memoryStringVal);
 				}
@@ -534,7 +534,7 @@ public class ManifestParser {
 				}
 				catch (NumberFormatException e) {
 					// Log an error but do not stop the parsing
-					CloudFoundryPlugin.logError("Failed to parse memory from manifest file: " + relativePath + " for: " //$NON-NLS-1$ //$NON-NLS-2$
+					DockerFoundryPlugin.logError("Failed to parse memory from manifest file: " + relativePath + " for: " //$NON-NLS-1$ //$NON-NLS-2$
 							+ appModule.getDeployedApplicationName() + " due to: " + e.getMessage()); //$NON-NLS-1$
 				}
 			}
@@ -887,7 +887,7 @@ public class ManifestParser {
 
 	protected void refreshProject(IProgressMonitor monitor) throws CoreException {
 
-		IProject project = CloudFoundryProjectUtil.getProject(appModule);
+		IProject project = DockerFoundryProjectUtil.getProject(appModule);
 		if (project != null && project.isAccessible()) {
 			project.refreshLocal(IResource.DEPTH_INFINITE, monitor);
 		}

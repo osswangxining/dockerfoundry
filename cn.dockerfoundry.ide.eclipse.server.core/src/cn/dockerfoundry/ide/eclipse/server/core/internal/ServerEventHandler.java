@@ -58,34 +58,34 @@ public class ServerEventHandler {
 		applicationListeners.remove(listener);
 	}
 
-	public void fireServicesUpdated(CloudFoundryServer server, List<DockerApplicationService> services) {
+	public void fireServicesUpdated(DockerFoundryServer server, List<DockerApplicationService> services) {
 		fireServerEvent(new CloudRefreshEvent(server, null, CloudServerEvent.EVENT_UPDATE_SERVICES, services));
 	}
 
-	public void firePasswordUpdated(CloudFoundryServer server) {
+	public void firePasswordUpdated(DockerFoundryServer server) {
 		fireServerEvent(new CloudServerEvent(server, CloudServerEvent.EVENT_UPDATE_PASSWORD));
 	}
 
-	public void fireServerRefreshed(CloudFoundryServer server) {
+	public void fireServerRefreshed(DockerFoundryServer server) {
 		fireServerEvent(new CloudServerEvent(server, CloudServerEvent.EVENT_SERVER_REFRESHED));
 	}
 
-	public void fireAppInstancesChanged(CloudFoundryServer server, IModule module) {
+	public void fireAppInstancesChanged(DockerFoundryServer server, IModule module) {
 		fireServerEvent(new ModuleChangeEvent(server, CloudServerEvent.EVENT_INSTANCES_UPDATED, module,
 				Status.OK_STATUS));
 	}
 
-	public void fireApplicationRefreshed(CloudFoundryServer server, IModule module) {
+	public void fireApplicationRefreshed(DockerFoundryServer server, IModule module) {
 		fireServerEvent(new ModuleChangeEvent(server, CloudServerEvent.EVENT_APPLICATION_REFRESHED, module,
 				Status.OK_STATUS));
 	}
 
-	public void fireAppDeploymentChanged(CloudFoundryServer server, IModule module) {
+	public void fireAppDeploymentChanged(DockerFoundryServer server, IModule module) {
 		fireServerEvent(new ModuleChangeEvent(server, CloudServerEvent.EVENT_APP_DEPLOYMENT_CHANGED, module,
 				Status.OK_STATUS));
 	}
 
-	public void fireError(CloudFoundryServer server, IModule module, IStatus status) {
+	public void fireError(DockerFoundryServer server, IModule module, IStatus status) {
 		fireServerEvent(new ModuleChangeEvent(server, CloudServerEvent.EVENT_CLOUD_OP_ERROR, module, status));
 	}
 

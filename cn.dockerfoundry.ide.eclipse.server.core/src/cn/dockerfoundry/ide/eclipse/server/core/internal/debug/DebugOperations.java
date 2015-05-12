@@ -27,13 +27,13 @@ import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudServerEvent;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudServerUtil;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.ServerEventHandler;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.application.ModuleChangeEvent;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
 
 /**
  * Contains helper methods for common debug operations like launching a debug
@@ -72,13 +72,13 @@ public class DebugOperations {
 				}
 			}
 			catch (CoreException e) {
-				CloudFoundryPlugin.logWarning(e.getMessage());
+				DockerFoundryPlugin.logWarning(e.getMessage());
 			}
 		}
 		return null;
 	}
 
-	public static final void fireDebugChanged(CloudFoundryServer cloudServer, CloudFoundryApplicationModule appModule,
+	public static final void fireDebugChanged(DockerFoundryServer cloudServer, DockerFoundryApplicationModule appModule,
 			IStatus status) {
 		ServerEventHandler.getDefault().fireServerEvent(
 				new ModuleChangeEvent(cloudServer, CloudServerEvent.EVENT_APP_DEBUG, appModule.getLocalModule(), status));
@@ -90,28 +90,28 @@ public class DebugOperations {
 	 * @return
 	 * @throws CoreException
 	 */
-	public static DebugLaunch getDebugLaunch(CloudFoundryServer cloudServer, CloudFoundryApplicationModule appModule,
+	public static DebugLaunch getDebugLaunch(DockerFoundryServer cloudServer, DockerFoundryApplicationModule appModule,
 			IDebugProvider provider) {
 		return new DebugLaunch(cloudServer, appModule, provider);
 	}
 
-	public static CloudFoundryServer getCloudServer(ILaunchConfiguration config) {
+	public static DockerFoundryServer getCloudServer(ILaunchConfiguration config) {
 		if (config != null) {
 			try {
 				String serverId = config.getAttribute(DebugOperations.CLOUD_DEBUG_SERVER, (String) null);
 				return CloudServerUtil.getCloudServer(serverId);
 			}
 			catch (CoreException e) {
-				CloudFoundryPlugin.logError(e);
+				DockerFoundryPlugin.logError(e);
 			}
 		}
 		return null;
 	}
 
-	public static CloudFoundryApplicationModule getCloudApplication(ILaunchConfiguration config) {
+	public static DockerFoundryApplicationModule getCloudApplication(ILaunchConfiguration config) {
 		if (config != null) {
 			try {
-				CloudFoundryServer cloudServer = getCloudServer(config);
+				DockerFoundryServer cloudServer = getCloudServer(config);
 				if (cloudServer != null) {
 					String appName = config.getAttribute(DebugOperations.CLOUD_DEBUG_APP_NAME, (String) null);
 					if (appName != null) {
@@ -121,7 +121,7 @@ public class DebugOperations {
 
 			}
 			catch (CoreException e) {
-				CloudFoundryPlugin.logError(e);
+				DockerFoundryPlugin.logError(e);
 			}
 		}
 		return null;
@@ -129,8 +129,8 @@ public class DebugOperations {
 
 	public static void terminateLaunch(String launchId) {
 		ILaunch launch = DebugOperations.getLaunch(launchId);
-		CloudFoundryServer cloudServer = null;
-		CloudFoundryApplicationModule appModule = null;
+		DockerFoundryServer cloudServer = null;
+		DockerFoundryApplicationModule appModule = null;
 		CoreException error = null;
 
 		appModule = null;
@@ -159,7 +159,7 @@ public class DebugOperations {
 
 				}
 				catch (DebugException e) {
-					CloudFoundryPlugin.logError("Failed to terminate debug connection for : " + launchId, e); //$NON-NLS-1$ 
+					DockerFoundryPlugin.logError("Failed to terminate debug connection for : " + launchId, e); //$NON-NLS-1$ 
 				}
 			}
 
@@ -167,7 +167,7 @@ public class DebugOperations {
 
 			if (cloudServer == null || appModule == null) {
 				String errorMessage = "Unable to resolve cloud server or application when notifying of debug termination - " + launchId; //$NON-NLS-1$ 
-				CloudFoundryPlugin.logError(errorMessage, error);
+				DockerFoundryPlugin.logError(errorMessage, error);
 			}
 			else {
 				DebugOperations.fireDebugChanged(cloudServer, appModule, Status.OK_STATUS);

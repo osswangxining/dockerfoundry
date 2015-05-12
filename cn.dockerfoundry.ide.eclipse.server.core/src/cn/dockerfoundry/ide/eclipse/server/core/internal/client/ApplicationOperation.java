@@ -28,8 +28,8 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.wst.server.core.IModule;
 
 import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudErrorUtil;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.Messages;
 
 /**
@@ -51,7 +51,7 @@ public abstract class ApplicationOperation extends AbstractPublishApplicationOpe
 	 */
 	private DeploymentConfiguration configuration;
 
-	protected ApplicationOperation(CloudFoundryServerBehaviour behaviour, IModule[] modules) {
+	protected ApplicationOperation(DockerFoundryServerBehaviour behaviour, IModule[] modules) {
 		super(behaviour, modules);
 	}
 
@@ -83,14 +83,14 @@ public abstract class ApplicationOperation extends AbstractPublishApplicationOpe
 			return;
 		}
 
-		CloudFoundryApplicationModule appModule = getOrCreateCloudApplicationModule(getModules());
+		DockerFoundryApplicationModule appModule = getOrCreateCloudApplicationModule(getModules());
 
 		try {
 
-			CloudFoundryServer cloudServer = getBehaviour().getCloudFoundryServer();
+			DockerFoundryServer cloudServer = getBehaviour().getCloudFoundryServer();
 
 			// Stop any consoles
-			CloudFoundryPlugin.getCallback().stopApplicationConsole(cloudServer);
+			DockerFoundryPlugin.getCallback().stopApplicationConsole(cloudServer);
 
 			SubMonitor subMonitor = SubMonitor.convert(monitor, 100);
 
@@ -139,7 +139,7 @@ public abstract class ApplicationOperation extends AbstractPublishApplicationOpe
 	 * starting the application. The application's deployment information should
 	 * not be modified in this case.
 	 */
-	protected DeploymentConfiguration prepareForDeployment(CloudFoundryApplicationModule appModule,
+	protected DeploymentConfiguration prepareForDeployment(DockerFoundryApplicationModule appModule,
 			IProgressMonitor monitor) throws CoreException, OperationCanceledException {
 		return null;
 	}
@@ -159,7 +159,7 @@ public abstract class ApplicationOperation extends AbstractPublishApplicationOpe
 	 * @throws CoreException if error occurred during deployment or starting the
 	 * app, or resolving the updated cloud application from the client.
 	 */
-	protected abstract void performDeployment(CloudFoundryApplicationModule appModule, IProgressMonitor monitor)
+	protected abstract void performDeployment(DockerFoundryApplicationModule appModule, IProgressMonitor monitor)
 			throws CoreException;
 
 }

@@ -25,7 +25,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
 
 class StdConsoleStreamJob extends Job implements IConsoleJob {
 
@@ -46,7 +46,7 @@ class StdConsoleStreamJob extends Job implements IConsoleJob {
 				toStream = null;
 			}
 			catch (CoreException e) {
-				CloudFoundryPlugin.logError(
+				DockerFoundryPlugin.logError(
 						"Failed to write message to Cloud Foundry console due to - " + e.getMessage(), e); //$NON-NLS-1$
 			}
 		}

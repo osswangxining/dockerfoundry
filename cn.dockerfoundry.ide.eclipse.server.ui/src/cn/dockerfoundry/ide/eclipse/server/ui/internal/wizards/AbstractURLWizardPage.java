@@ -27,7 +27,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Display;
 
 import cn.dockerfoundry.ide.eclipse.server.core.internal.ApplicationUrlLookupService;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.ICoreRunnable;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.Messages;
 
@@ -61,7 +61,7 @@ public abstract class AbstractURLWizardPage extends PartsWizardPage {
 		final ApplicationUrlLookupService urlLookup = getApplicationUrlLookup();
 		if (urlLookup == null) {
 			update(true,
-					CloudFoundryPlugin
+					DockerFoundryPlugin
 							.getStatus(
 									Messages.AbstractURLWizardPage_ERROR_NO_URL_HANDLER,
 									IStatus.ERROR));

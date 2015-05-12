@@ -22,7 +22,7 @@ package cn.dockerfoundry.ide.eclipse.server.core;
 
 import org.eclipse.wst.server.core.IServer;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
 
 /**
  * App state tracker abstract class that all app state tracker should extends.
@@ -39,7 +39,7 @@ public abstract class AbstractAppStateTracker {
 	 * @return the application state. The state is expected to be server state constants that are defined in
 	 * org.eclipse.wst.server.core.IServer, e.g. IServer.STATE_STARTED.
 	 */
-	public abstract int getApplicationState(ICloudFoundryApplicationModule appModule);
+	public abstract int getApplicationState(IDockerFoundryApplicationModule appModule);
 
 	/**
 	 * initialize the server object for tracking purpose
@@ -54,12 +54,12 @@ public abstract class AbstractAppStateTracker {
 	 * of the tracking, e.g. start monitoring the console output.
 	 * @param appModule The application module to be tracked
 	 */
-	public abstract void startTracking(CloudFoundryApplicationModule appModule);
+	public abstract void startTracking(DockerFoundryApplicationModule appModule);
 
 	/**
 	 * Stop tracking the given application module and this can also be used to clean up
 	 * the tracking, e.g. stop monitoring the console output.
 	 * @param appModule The application module to be tracked
 	 */
-	public abstract void stopTracking(CloudFoundryApplicationModule appModule);
+	public abstract void stopTracking(DockerFoundryApplicationModule appModule);
 }

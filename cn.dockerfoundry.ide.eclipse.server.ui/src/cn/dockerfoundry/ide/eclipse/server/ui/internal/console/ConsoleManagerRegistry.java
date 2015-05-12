@@ -25,8 +25,8 @@ import org.eclipse.ui.console.IConsoleListener;
 import org.eclipse.ui.console.IConsoleManager;
 import org.eclipse.ui.console.MessageConsole;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.log.CloudLog;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.console.file.FileConsoleManager;
 
@@ -44,11 +44,11 @@ public class ConsoleManagerRegistry {
 
 	public static final String CLOUD_FOUNDRY_TRACE_CONSOLE_NAME = "Cloud Foundry Trace"; //$NON-NLS-1$ 
 
-	static final String TRACE_CONSOLE_ID = "org.dockerfoundry.ide.eclipse.server.trace"; //$NON-NLS-1$ 
+	static final String TRACE_CONSOLE_ID = "cn.dockerfoundry.ide.eclipse.server.trace"; //$NON-NLS-1$ 
 
 	private static ConsoleManagerRegistry registry;
 
-	private CloudFoundryConsole traceConsole;
+	private DockerFoundryConsole traceConsole;
 
 	private IConsoleManager consoleManager;
 
@@ -91,7 +91,7 @@ public class ConsoleManagerRegistry {
 		return registry;
 	}
 
-	public static CloudConsoleManager getConsoleManager(CloudFoundryServer cloudServer) {
+	public static CloudConsoleManager getConsoleManager(DockerFoundryServer cloudServer) {
 		return getInstance().getCloudConsoleManager(cloudServer);
 	}
 
@@ -109,7 +109,7 @@ public class ConsoleManagerRegistry {
 	 * @param cloudServer
 	 * @return non-null console manager based on the server type.
 	 */
-	public CloudConsoleManager getCloudConsoleManager(CloudFoundryServer cloudServer) {
+	public CloudConsoleManager getCloudConsoleManager(DockerFoundryServer cloudServer) {
 		if (usesLogFileStreaming(cloudServer)) {
 			return getFileConsoleManager();
 		}
@@ -123,7 +123,7 @@ public class ConsoleManagerRegistry {
 	 * adopters are sure their servers use log file streaming.
 	 * <p/>
 	 * Otherwise, callers should ONLY use
-	 * {@link #getCloudConsoleManager(CloudFoundryServer)} to obtain the
+	 * {@link #getCloudConsoleManager(DockerFoundryServer)} to obtain the
 	 * appropriate console manager for their server.
 	 * @return Log file console manager.
 	 */
@@ -131,7 +131,7 @@ public class ConsoleManagerRegistry {
 		return fileConsoleManager;
 	}
 
-	protected boolean usesLogFileStreaming(CloudFoundryServer cloudServer) {
+	protected boolean usesLogFileStreaming(DockerFoundryServer cloudServer) {
 		return false;
 	}
 
@@ -140,7 +140,7 @@ public class ConsoleManagerRegistry {
 	 * view.
 	 */
 	public void setTraceConsoleVisible() {
-		CloudFoundryConsole console = getTraceConsoleStream();
+		DockerFoundryConsole console = getTraceConsoleStream();
 		if (console != null) {
 			consoleManager.showConsoleView(console.getConsole());
 		}
@@ -158,7 +158,7 @@ public class ConsoleManagerRegistry {
 			return;
 		}
 		try {
-			CloudFoundryConsole console = getTraceConsoleStream();
+			DockerFoundryConsole console = getTraceConsoleStream();
 
 			if (console != null) {
 				// Do not make trace visible as another console may be visible
@@ -168,11 +168,11 @@ public class ConsoleManagerRegistry {
 			}
 		}
 		catch (Throwable e) {
-			CloudFoundryPlugin.logError(e);
+			DockerFoundryPlugin.logError(e);
 		}
 	}
 
-	protected synchronized CloudFoundryConsole getTraceConsoleStream() {
+	protected synchronized DockerFoundryConsole getTraceConsoleStream() {
 
 		if (traceConsole == null) {
 			MessageConsole messageConsole = null;
@@ -184,7 +184,7 @@ public class ConsoleManagerRegistry {
 			if (messageConsole == null) {
 				messageConsole = new MessageConsole(CLOUD_FOUNDRY_TRACE_CONSOLE_NAME, TRACE_CONSOLE_ID, null, true);
 			}
-			traceConsole = new CloudFoundryConsole(new ConsoleConfig(messageConsole, null));
+			traceConsole = new DockerFoundryConsole(new ConsoleConfig(messageConsole, null));
 
 			ConsolePlugin.getDefault().getConsoleManager().addConsoles(new IConsole[] { messageConsole });
 

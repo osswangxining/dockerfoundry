@@ -28,7 +28,7 @@ import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.wst.server.core.IModule;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.application.ApplicationProvider;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.application.ApplicationRegistry;
 
@@ -38,7 +38,7 @@ public class ApplicationWizardRegistry {
 
 	private static final String APPLICATION_DELEGATE_EXT_ELEMENT = "applicationWizardDelegate"; //$NON-NLS-1$
 
-	public static String EXTENSION_POINT = "org.dockerfoundry.ide.eclipse.server.ui.applicationWizard"; //$NON-NLS-1$
+	public static String EXTENSION_POINT = "cn.dockerfoundry.ide.eclipse.server.ui.applicationWizard"; //$NON-NLS-1$
 
 	public static ApplicationWizardDelegate getWizardProvider(IModule module) {
 		// See if there is a corresponding application delegate
@@ -80,7 +80,7 @@ public class ApplicationWizardRegistry {
 		IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(EXTENSION_POINT);
 
 		if (extensionPoint == null) {
-			CloudFoundryPlugin.logError("Failed to load Cloud Foundry application wizard providers from: " //$NON-NLS-1$
+			DockerFoundryPlugin.logError("Failed to load Cloud Foundry application wizard providers from: " //$NON-NLS-1$
 					+ EXTENSION_POINT);
 		}
 		else {
@@ -92,7 +92,7 @@ public class ApplicationWizardRegistry {
 								EXTENSION_POINT);
 						String providerID = wizardProvider.getProviderID();
 						if (providerID == null) {
-							CloudFoundryPlugin
+							DockerFoundryPlugin
 									.logError("Failed to load application wizard provider from extension point: " //$NON-NLS-1$
 											+ EXTENSION_POINT + ". Missing provider ID."); //$NON-NLS-1$
 						}

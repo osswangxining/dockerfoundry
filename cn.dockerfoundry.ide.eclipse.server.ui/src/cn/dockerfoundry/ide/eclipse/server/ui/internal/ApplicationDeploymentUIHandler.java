@@ -36,15 +36,15 @@ import org.eclipse.ui.PlatformUI;
 import cn.dockerfoundry.ide.eclipse.server.core.ApplicationDeploymentInfo;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.ApplicationUrlLookupService;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudErrorUtil;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.application.ManifestParser;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DeploymentConfiguration;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DeploymentInfoWorkingCopy;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.wizards.ApplicationWizardDelegate;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.wizards.ApplicationWizardRegistry;
-import cn.dockerfoundry.ide.eclipse.server.ui.internal.wizards.CloudFoundryApplicationWizard;
+import cn.dockerfoundry.ide.eclipse.server.ui.internal.wizards.DockerFoundryApplicationWizard;
 
 /**
  * Prepares an application for deployment. Application deployments are defined
@@ -74,8 +74,8 @@ public class ApplicationDeploymentUIHandler {
 	 * for the app, or null if app should be deployed with default
 	 * configuration.
 	 */
-	public DeploymentConfiguration prepareForDeployment(final CloudFoundryServer server,
-			final CloudFoundryApplicationModule appModule, final IProgressMonitor monitor) throws CoreException,
+	public DeploymentConfiguration prepareForDeployment(final DockerFoundryServer server,
+			final DockerFoundryApplicationModule appModule, final IProgressMonitor monitor) throws CoreException,
 			OperationCanceledException {
 
 		// Validate the existing deployment info. Do NOT save or make changes to
@@ -125,7 +125,7 @@ public class ApplicationDeploymentUIHandler {
 				// Some failure occurred reading the manifest file. Proceed
 				// anyway, to allow the user to manually enter deployment
 				// values.
-				CloudFoundryPlugin.logError(ce);
+				DockerFoundryPlugin.logError(ce);
 			}
 
 			// A working copy of the deployment descriptor is needed in order to
@@ -154,7 +154,7 @@ public class ApplicationDeploymentUIHandler {
 			Display.getDefault().syncExec(new Runnable() {
 				public void run() {
 
-					CloudFoundryApplicationWizard wizard = new CloudFoundryApplicationWizard(server, appModule,
+					DockerFoundryApplicationWizard wizard = new DockerFoundryApplicationWizard(server, appModule,
 							finWorkingCopy, providerDelegate);
 
 					try {
@@ -180,14 +180,14 @@ public class ApplicationDeploymentUIHandler {
 						// Any error in the wizard should result in the module
 						// being deleted (i.e. cancelled)
 						cancelled[0] = true;
-						status[0] = CloudFoundryPlugin.getErrorStatus(t);
+						status[0] = DockerFoundryPlugin.getErrorStatus(t);
 					}
 				}
 			});
 
 			if (cancelled[0]) {
 				if (!status[0].isOK()) {
-					CloudFoundryPlugin.logError("Failed to deploy application due to: " + status[0].getMessage(), //$NON-NLS-1$
+					DockerFoundryPlugin.logError("Failed to deploy application due to: " + status[0].getMessage(), //$NON-NLS-1$
 							status[0].getException());
 				}
 				throw new OperationCanceledException();
@@ -220,7 +220,7 @@ public class ApplicationDeploymentUIHandler {
 					catch (Throwable ce) {
 						// Do not let this error propagate, as failing to write
 						// to the manifest should not stop the app's deployment
-						CloudFoundryPlugin.logError(ce);
+						DockerFoundryPlugin.logError(ce);
 					}
 				}
 

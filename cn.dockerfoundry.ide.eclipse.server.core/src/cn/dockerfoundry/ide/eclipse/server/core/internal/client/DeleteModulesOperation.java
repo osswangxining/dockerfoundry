@@ -28,8 +28,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.wst.server.core.IModule;
 
 import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudErrorUtil;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
 
 /**
  * Deletes a given set of application modules. The modules need not have
@@ -45,7 +45,7 @@ public class DeleteModulesOperation extends BehaviourOperation {
 
 	private final IModule[] modules;
 
-	public DeleteModulesOperation(CloudFoundryServerBehaviour cloudFoundryServerBehaviour, IModule[] modules,
+	public DeleteModulesOperation(DockerFoundryServerBehaviour cloudFoundryServerBehaviour, IModule[] modules,
 			boolean deleteServices) {
 		super(cloudFoundryServerBehaviour, modules.length > 0 ? modules[0] : null);
 		this.modules = modules;
@@ -59,10 +59,10 @@ public class DeleteModulesOperation extends BehaviourOperation {
 	}
 
 	protected void doDelete(IProgressMonitor monitor) throws CoreException {
-		final CloudFoundryServer cloudServer = getBehaviour().getCloudFoundryServer();
+		final DockerFoundryServer cloudServer = getBehaviour().getCloudFoundryServer();
 
 		for (IModule module : modules) {
-			final CloudFoundryApplicationModule appModule = cloudServer.getExistingCloudModule(module);
+			final DockerFoundryApplicationModule appModule = cloudServer.getExistingCloudModule(module);
 
 			if (appModule == null) {
 				continue;
@@ -111,7 +111,7 @@ public class DeleteModulesOperation extends BehaviourOperation {
 
 			}
 
-			CloudFoundryPlugin.getCallback().stopApplicationConsole(cloudServer);
+			DockerFoundryPlugin.getCallback().stopApplicationConsole(cloudServer);
 
 			// Delete the module locally
 			cloudServer.removeApplication(appModule);
@@ -124,7 +124,7 @@ public class DeleteModulesOperation extends BehaviourOperation {
 
 			// Prompt the user to delete services as well
 			if (deleteServices && !servicesToDelete.isEmpty()) {
-				CloudFoundryPlugin.getCallback().deleteServices(servicesToDelete, cloudServer);
+				DockerFoundryPlugin.getCallback().deleteServices(servicesToDelete, cloudServer);
 			}
 		}
 	}

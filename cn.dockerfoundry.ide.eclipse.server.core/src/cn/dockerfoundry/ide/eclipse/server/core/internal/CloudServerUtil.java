@@ -40,20 +40,20 @@ public class CloudServerUtil {
 	 * @return returns a non-null list of cloud foundry server instances. May be
 	 * empty.
 	 */
-	public static List<CloudFoundryServer> getCloudServers() {
+	public static List<DockerFoundryServer> getCloudServers() {
 		IServer[] servers = ServerCore.getServers();
-		Set<CloudFoundryServer> matchedServers = new HashSet<CloudFoundryServer>();
+		Set<DockerFoundryServer> matchedServers = new HashSet<DockerFoundryServer>();
 
 		if (servers != null) {
 			for (IServer server : servers) {
-				CloudFoundryServer cfServer = (CloudFoundryServer) server.loadAdapter(CloudFoundryServer.class, null);
+				DockerFoundryServer cfServer = (DockerFoundryServer) server.loadAdapter(DockerFoundryServer.class, null);
 				if (cfServer != null) {
 					matchedServers.add(cfServer);
 				}
 			}
 		}
 
-		return new ArrayList<CloudFoundryServer>(matchedServers);
+		return new ArrayList<DockerFoundryServer>(matchedServers);
 
 	}
 
@@ -65,15 +65,15 @@ public class CloudServerUtil {
 	 * @return CloudFoundry server that corresponds to the given ID, or null if
 	 * not found
 	 */
-	public static CloudFoundryServer getCloudServer(String serverID) {
+	public static DockerFoundryServer getCloudServer(String serverID) {
 		IServer[] servers = ServerCore.getServers();
 		if (servers == null) {
 			return null;
 		}
-		CloudFoundryServer cfServer = null;
+		DockerFoundryServer cfServer = null;
 
 		for (IServer server : servers) {
-			cfServer = (CloudFoundryServer) server.loadAdapter(CloudFoundryServer.class, null);
+			cfServer = (DockerFoundryServer) server.loadAdapter(DockerFoundryServer.class, null);
 
 			if (cfServer != null && cfServer.getServerId().equals(serverID)) {
 				break;
@@ -102,7 +102,7 @@ public class CloudServerUtil {
 	public static boolean isCloudFoundryServerType(IServerType serverType) {
 		if (serverType != null) {
 			String serverId = serverType.getId();
-			return CloudFoundryBrandingExtensionPoint.getServerTypeIds().contains(serverId);
+			return DockerFoundryBrandingExtensionPoint.getServerTypeIds().contains(serverId);
 		}
 		return false;
 	}

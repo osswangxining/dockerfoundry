@@ -25,9 +25,9 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.client.ICloudFoundryOperation;
 
 public abstract class ModuleCommand extends BaseCommandHandler {
@@ -35,15 +35,15 @@ public abstract class ModuleCommand extends BaseCommandHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		initializeSelection(event);
-		final CloudFoundryServer cloudServer = selectedServer != null ? (CloudFoundryServer) selectedServer
-				.loadAdapter(CloudFoundryServer.class, null) : null;
-		CloudFoundryApplicationModule appModule = cloudServer != null && selectedModule != null ? cloudServer
+		final DockerFoundryServer cloudServer = selectedServer != null ? (DockerFoundryServer) selectedServer
+				.loadAdapter(DockerFoundryServer.class, null) : null;
+		DockerFoundryApplicationModule appModule = cloudServer != null && selectedModule != null ? cloudServer
 				.getExistingCloudModule(selectedModule) : null;
 		if (selectedServer == null) {
-			CloudFoundryPlugin.logError("No Cloud Foundry server instance available to run the selected action."); //$NON-NLS-1$
+			DockerFoundryPlugin.logError("No Cloud Foundry server instance available to run the selected action."); //$NON-NLS-1$
 		}
 		else if (appModule == null) {
-			CloudFoundryPlugin.logError("No Cloud module resolved for the given selection."); //$NON-NLS-1$
+			DockerFoundryPlugin.logError("No Cloud module resolved for the given selection."); //$NON-NLS-1$
 		}
 		else {
 
@@ -57,7 +57,7 @@ public abstract class ModuleCommand extends BaseCommandHandler {
 							op.run(monitor);
 						}
 						catch (CoreException e) {
-							CloudFoundryPlugin.logError(e);
+							DockerFoundryPlugin.logError(e);
 							return Status.CANCEL_STATUS;
 						}
 						return Status.OK_STATUS;
@@ -67,13 +67,13 @@ public abstract class ModuleCommand extends BaseCommandHandler {
 				job.schedule();
 			}
 			else {
-				CloudFoundryPlugin.logError("No operation resolved to run in this action"); //$NON-NLS-1$
+				DockerFoundryPlugin.logError("No operation resolved to run in this action"); //$NON-NLS-1$
 			}
 		}
 		return null;
 	}
 
-	abstract protected ICloudFoundryOperation getCloudOperation(CloudFoundryApplicationModule appModule,
-			CloudFoundryServer cloudServer);
+	abstract protected ICloudFoundryOperation getCloudOperation(DockerFoundryApplicationModule appModule,
+			DockerFoundryServer cloudServer);
 
 }

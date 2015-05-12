@@ -22,21 +22,21 @@ package cn.dockerfoundry.ide.eclipse.server.core.internal.client;
 import org.eclipse.wst.server.core.IModule;
 
 /**
- * An operation performed in a {@link CloudFoundryServerBehaviour} target Cloud
+ * An operation performed in a {@link DockerFoundryServerBehaviour} target Cloud
  * space on a target IModule
  */
 public abstract class BehaviourOperation implements ICloudFoundryOperation {
 
-	private final CloudFoundryServerBehaviour behaviour;
+	private final DockerFoundryServerBehaviour behaviour;
 
 	private final IModule module;
 
-	public BehaviourOperation(CloudFoundryServerBehaviour behaviour, IModule module) {
+	public BehaviourOperation(DockerFoundryServerBehaviour behaviour, IModule module) {
 		this.behaviour = behaviour;
 		this.module = module;
 	}
 
-	public CloudFoundryServerBehaviour getBehaviour() {
+	public DockerFoundryServerBehaviour getBehaviour() {
 		return behaviour;
 	}
 

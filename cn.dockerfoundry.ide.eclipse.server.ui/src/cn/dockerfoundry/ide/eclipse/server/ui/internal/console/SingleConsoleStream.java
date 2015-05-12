@@ -28,7 +28,7 @@ import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.IOConsoleOutputStream;
 import org.eclipse.ui.console.MessageConsole;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.log.LogContentType;
 
 public class SingleConsoleStream extends ConsoleStream {
@@ -91,7 +91,7 @@ public class SingleConsoleStream extends ConsoleStream {
 				outputStream.close();
 			}
 			catch (IOException e) {
-				CloudFoundryPlugin.logError("Failed to close console output stream due to: " + e.getMessage(), e); //$NON-NLS-1$
+				DockerFoundryPlugin.logError("Failed to close console output stream due to: " + e.getMessage(), e); //$NON-NLS-1$
 			}
 		}
 		this.console = null;

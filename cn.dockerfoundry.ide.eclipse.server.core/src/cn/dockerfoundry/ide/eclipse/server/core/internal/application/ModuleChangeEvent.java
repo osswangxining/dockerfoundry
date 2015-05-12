@@ -23,7 +23,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.wst.server.core.IModule;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudServerEvent;
 
 /**
@@ -45,7 +45,7 @@ public class ModuleChangeEvent extends CloudServerEvent {
 
 	private final IModule module;
 
-	public ModuleChangeEvent(CloudFoundryServer server, int type, IModule module, IStatus status) {
+	public ModuleChangeEvent(DockerFoundryServer server, int type, IModule module, IStatus status) {
 		super(server, type);
 		this.status = status != null ? status : Status.OK_STATUS;
 		this.module = module;

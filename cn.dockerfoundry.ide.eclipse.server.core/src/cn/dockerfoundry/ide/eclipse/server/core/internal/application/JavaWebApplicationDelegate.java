@@ -42,12 +42,12 @@ import cn.dockerfoundry.ide.eclipse.server.core.AbstractApplicationDelegate;
 import cn.dockerfoundry.ide.eclipse.server.core.ApplicationDeploymentInfo;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.ApplicationUrlLookupService;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudApplicationURL;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryConstants;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryProjectUtil;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryConstants;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryProjectUtil;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.Messages;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
 
 /**
  * Java Web applications are the standard type of applications supported on
@@ -68,10 +68,10 @@ public class JavaWebApplicationDelegate extends AbstractApplicationDelegate {
 	 */
 	protected static Map<String, String> getJavaWebSupportedFrameworks() {
 		Map<String, String> valuesByLabel = new LinkedHashMap<String, String>();
-		valuesByLabel.put(CloudFoundryConstants.SPRING, "Spring"); //$NON-NLS-1$
-		valuesByLabel.put(CloudFoundryConstants.GRAILS, "Grails"); //$NON-NLS-1$
-		valuesByLabel.put(CloudFoundryConstants.LIFT, "Lift"); //$NON-NLS-1$
-		valuesByLabel.put(CloudFoundryConstants.JAVA_WEB, "Java Web"); //$NON-NLS-1$
+		valuesByLabel.put(DockerFoundryConstants.SPRING, "Spring"); //$NON-NLS-1$
+		valuesByLabel.put(DockerFoundryConstants.GRAILS, "Grails"); //$NON-NLS-1$
+		valuesByLabel.put(DockerFoundryConstants.LIFT, "Lift"); //$NON-NLS-1$
+		valuesByLabel.put(DockerFoundryConstants.JAVA_WEB, "Java Web"); //$NON-NLS-1$
 		return valuesByLabel;
 	}
 
@@ -87,17 +87,17 @@ public class JavaWebApplicationDelegate extends AbstractApplicationDelegate {
 	 */
 	protected String getFramework(IProject project) {
 		if (project != null) {
-			IJavaProject javaProject = CloudFoundryProjectUtil.getJavaProject(project);
+			IJavaProject javaProject = DockerFoundryProjectUtil.getJavaProject(project);
 			if (javaProject != null) {
-				if (CloudFoundryProjectUtil.hasNature(project, CloudFoundryConstants.GRAILS_NATURE)) {
-					return CloudFoundryConstants.GRAILS;
+				if (DockerFoundryProjectUtil.hasNature(project, DockerFoundryConstants.GRAILS_NATURE)) {
+					return DockerFoundryConstants.GRAILS;
 				}
 
 				// in case user has Grails projects without the nature
 				// attached
 				if (project.isAccessible() && project.getFolder("grails-app").exists() //$NON-NLS-1$
 						&& project.getFile("application.properties").exists()) { //$NON-NLS-1$
-					return CloudFoundryConstants.GRAILS;
+					return DockerFoundryConstants.GRAILS;
 				}
 
 				IClasspathEntry[] entries;
@@ -107,7 +107,7 @@ public class JavaWebApplicationDelegate extends AbstractApplicationDelegate {
 					for (IClasspathEntry entry : entries) {
 						if (entry.getEntryKind() == IClasspathEntry.CPE_LIBRARY) {
 							if (isLiftLibrary(entry)) {
-								return CloudFoundryConstants.LIFT;
+								return DockerFoundryConstants.LIFT;
 							}
 							if (isSpringLibrary(entry)) {
 								foundSpringLibrary = true;
@@ -119,7 +119,7 @@ public class JavaWebApplicationDelegate extends AbstractApplicationDelegate {
 							if (container != null) {
 								for (IClasspathEntry childEntry : container.getClasspathEntries()) {
 									if (isLiftLibrary(childEntry)) {
-										return CloudFoundryConstants.LIFT;
+										return DockerFoundryConstants.LIFT;
 									}
 									if (isSpringLibrary(childEntry)) {
 										foundSpringLibrary = true;
@@ -132,16 +132,16 @@ public class JavaWebApplicationDelegate extends AbstractApplicationDelegate {
 				catch (JavaModelException e) {
 					// Log the error but don't throw it again as there may be
 					// other ways to detect the framework
-					CloudFoundryPlugin.log(new Status(IStatus.WARNING, CloudFoundryPlugin.PLUGIN_ID,
+					DockerFoundryPlugin.log(new Status(IStatus.WARNING, DockerFoundryPlugin.PLUGIN_ID,
 							"Unexpected error during auto detection of application type", e)); //$NON-NLS-1$
 				}
 
-				if (CloudFoundryProjectUtil.isSpringProject(project)) {
-					return CloudFoundryConstants.SPRING;
+				if (DockerFoundryProjectUtil.isSpringProject(project)) {
+					return DockerFoundryConstants.SPRING;
 				}
 
 				if (foundSpringLibrary) {
-					return CloudFoundryConstants.SPRING;
+					return DockerFoundryConstants.SPRING;
 				}
 			}
 		}
@@ -178,16 +178,16 @@ public class JavaWebApplicationDelegate extends AbstractApplicationDelegate {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.dockerfoundry.ide.eclipse.server.core.internal.application.
+	 * @see cn.dockerfoundry.ide.eclipse.server.core.internal.application.
 	 * AbstractApplicationDelegate
-	 * #getApplicationArchive(org.dockerfoundry.ide.eclipse.internal
+	 * #getApplicationArchive(cn.dockerfoundry.ide.eclipse.internal
 	 * .server.core.client.CloudFoundryApplicationModule,
-	 * org.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer,
+	 * cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer,
 	 * org.eclipse.wst.server.core.model.IModuleResource[],
 	 * org.eclipse.core.runtime.IProgressMonitor)
 	 */
-	public ApplicationArchive getApplicationArchive(CloudFoundryApplicationModule module,
-			CloudFoundryServer cloudServer, IModuleResource[] moduleResources, IProgressMonitor monitor)
+	public ApplicationArchive getApplicationArchive(DockerFoundryApplicationModule module,
+			DockerFoundryServer cloudServer, IModuleResource[] moduleResources, IProgressMonitor monitor)
 			throws CoreException {
 		// No need for application archive, as the CF plugin framework generates
 		// .war files for Java Web applications.
@@ -210,16 +210,16 @@ public class JavaWebApplicationDelegate extends AbstractApplicationDelegate {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.dockerfoundry.ide.eclipse.server.core.internal.application.
+	 * @see cn.dockerfoundry.ide.eclipse.server.core.internal.application.
 	 * ApplicationDelegate
 	 * #getDefaultApplicationDeploymentInfo(org.cloudfoundry.ide
 	 * .eclipse.internal.server.core.client.CloudFoundryApplicationModule,
-	 * org.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer,
+	 * cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer,
 	 * org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
-	public ApplicationDeploymentInfo getDefaultApplicationDeploymentInfo(CloudFoundryApplicationModule appModule,
-			CloudFoundryServer cloudServer, IProgressMonitor monitor) throws CoreException {
+	public ApplicationDeploymentInfo getDefaultApplicationDeploymentInfo(DockerFoundryApplicationModule appModule,
+			DockerFoundryServer cloudServer, IProgressMonitor monitor) throws CoreException {
 		ApplicationDeploymentInfo info = super.getDefaultApplicationDeploymentInfo(appModule, cloudServer, monitor);
 
 		// Set a default URL for the application.

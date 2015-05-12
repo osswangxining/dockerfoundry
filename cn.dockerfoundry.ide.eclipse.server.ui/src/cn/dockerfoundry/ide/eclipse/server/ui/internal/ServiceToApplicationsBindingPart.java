@@ -47,7 +47,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Widget;
 
-import cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.CloudFoundryViewerSorter;
+import cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.DockerFoundryViewerSorter;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.ServicesHandler;
 
 /**
@@ -117,7 +117,7 @@ public class ServiceToApplicationsBindingPart extends UIPart {
 		viewer.setLabelProvider(new BindServiceToApplicationLabelProvider(viewer));
 
 		// Sort the applications so it is consistent with the application list that shows up in the Applications and Services editor
-		viewer.setSorter(new CloudFoundryViewerSorter());
+		viewer.setSorter(new DockerFoundryViewerSorter());
 		
 		viewer.getTable().addSelectionListener(new SelectionAdapter() {
 			@Override

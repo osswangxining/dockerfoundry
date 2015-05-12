@@ -26,7 +26,7 @@ import org.eclipse.swt.widgets.TableColumn;
 
 import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerApplicationService;
 
-public class ServiceViewerSorter extends CloudFoundryViewerSorter {
+public class ServiceViewerSorter extends DockerFoundryViewerSorter {
 	private final TableViewer tableViewer;
 
 	public ServiceViewerSorter(TableViewer tableViewer) {

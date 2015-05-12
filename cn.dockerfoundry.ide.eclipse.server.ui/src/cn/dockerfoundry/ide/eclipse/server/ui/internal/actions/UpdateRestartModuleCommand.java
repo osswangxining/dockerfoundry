@@ -29,11 +29,11 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.wst.server.core.IModule;
 
 import cn.dockerfoundry.ide.eclipse.server.core.internal.ApplicationAction;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.Messages;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.client.AbstractPublishApplicationOperation;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.client.ICloudFoundryOperation;
 
 public class UpdateRestartModuleCommand extends BaseCommandHandler {
@@ -45,9 +45,9 @@ public class UpdateRestartModuleCommand extends BaseCommandHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		initializeSelection(event);
 		String error = null;
-		CloudFoundryServer cloudServer = selectedServer != null ? (CloudFoundryServer) selectedServer.loadAdapter(
-				CloudFoundryServer.class, null) : null;
-		CloudFoundryApplicationModule appModule = cloudServer != null && selectedModule != null ? cloudServer
+		DockerFoundryServer cloudServer = selectedServer != null ? (DockerFoundryServer) selectedServer.loadAdapter(
+				DockerFoundryServer.class, null) : null;
+		DockerFoundryApplicationModule appModule = cloudServer != null && selectedModule != null ? cloudServer
 				.getExistingCloudModule(selectedModule) : null;
 		if (selectedServer == null) {
 			error = "No Cloud Foundry server instance available to run the selected action."; //$NON-NLS-1$
@@ -57,14 +57,14 @@ public class UpdateRestartModuleCommand extends BaseCommandHandler {
 			doRun(cloudServer, appModule);
 		}
 		else {
-			CloudFoundryPlugin.logError(error);
+			DockerFoundryPlugin.logError(error);
 		}
 
 		return null;
 	}
 
-	protected void doRun(CloudFoundryServer server, CloudFoundryApplicationModule appModule) {
-		final CloudFoundryServer cloudServer = server;
+	protected void doRun(DockerFoundryServer server, DockerFoundryApplicationModule appModule) {
+		final DockerFoundryServer cloudServer = server;
 		Job job = new Job(Messages.PushApplicationOperation_UPDATE_APP_MESSAGE) {
 
 			protected IStatus run(IProgressMonitor monitor) {
@@ -80,8 +80,8 @@ public class UpdateRestartModuleCommand extends BaseCommandHandler {
 					operation.run(monitor);
 				}
 				catch (CoreException e) {
-					CloudFoundryPlugin.getDefault().getLog()
-							.log(new Status(IStatus.ERROR, CloudFoundryPlugin.PLUGIN_ID, getFailureMessage(), e));
+					DockerFoundryPlugin.getDefault().getLog()
+							.log(new Status(IStatus.ERROR, DockerFoundryPlugin.PLUGIN_ID, getFailureMessage(), e));
 					return Status.CANCEL_STATUS;
 				}
 				return Status.OK_STATUS;

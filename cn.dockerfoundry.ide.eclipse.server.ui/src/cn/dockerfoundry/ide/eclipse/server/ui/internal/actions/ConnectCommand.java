@@ -29,8 +29,8 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.osgi.util.NLS;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
-import cn.dockerfoundry.ide.eclipse.server.ui.internal.CloudFoundryServerUiPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.ui.internal.DockerFoundryServerUiPlugin;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.Messages;
 
 public class ConnectCommand extends BaseCommandHandler {
@@ -39,7 +39,7 @@ public class ConnectCommand extends BaseCommandHandler {
 		// Always init first
 		initializeSelection(event);
 		
-		final CloudFoundryServer cloudServer = (CloudFoundryServer) selectedServer.loadAdapter(CloudFoundryServer.class, null);
+		final DockerFoundryServer cloudServer = (DockerFoundryServer) selectedServer.loadAdapter(DockerFoundryServer.class, null);
 		Job connectJob = new Job(Messages.ConnectCommand_JOB_CONN_SERVER) {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
@@ -52,7 +52,7 @@ public class ConnectCommand extends BaseCommandHandler {
 				catch (CoreException e) {
 //					Trace.trace(Trace.STRING_SEVERE, "Error calling connect() ", e);
 					e.printStackTrace();
-					return new Status(IStatus.ERROR, CloudFoundryServerUiPlugin.PLUGIN_ID,
+					return new Status(IStatus.ERROR, DockerFoundryServerUiPlugin.PLUGIN_ID,
 							NLS.bind(Messages.ConnectCommand_ERROR_CONNECT, e.getMessage()));
 				}
 				return Status.OK_STATUS;

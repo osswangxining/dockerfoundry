@@ -122,7 +122,7 @@ public class CloudUtil {
 			return warFile;
 		}
 		catch (IOException e) {
-			throw new CoreException(new Status(IStatus.ERROR, CloudFoundryPlugin.PLUGIN_ID, 
+			throw new CoreException(new Status(IStatus.ERROR, DockerFoundryPlugin.PLUGIN_ID, 
 					"Failed to create war file: "+ e.getMessage(), e)); //$NON-NLS-1$
 		}
 	}
@@ -203,7 +203,7 @@ public class CloudUtil {
 			return targetFile;
 		}
 		catch (IOException e) {
-			throw new CoreException(new Status(IStatus.ERROR, CloudFoundryPlugin.PLUGIN_ID,
+			throw new CoreException(new Status(IStatus.ERROR, DockerFoundryPlugin.PLUGIN_ID,
 					"Failed to create war file: " + e.getMessage(), e)); //$NON-NLS-1$
 		}
 
@@ -238,7 +238,7 @@ public class CloudUtil {
 		if (status == null || status.size() == 0) {
 			return;
 		}
-		throw new CoreException(new MultiStatus(CloudFoundryPlugin.PLUGIN_ID, 0, status.toArray(new IStatus[0]),
+		throw new CoreException(new MultiStatus(DockerFoundryPlugin.PLUGIN_ID, 0, status.toArray(new IStatus[0]),
 				message, null));
 	}
 

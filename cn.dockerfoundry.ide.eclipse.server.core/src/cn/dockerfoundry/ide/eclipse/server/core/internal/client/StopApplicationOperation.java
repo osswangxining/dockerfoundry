@@ -28,8 +28,8 @@ import org.eclipse.wst.server.core.IServer;
 import org.eclipse.wst.server.core.internal.Server;
 
 import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudErrorUtil;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.Messages;
 
 import com.spotify.docker.client.DockerClient;
@@ -41,7 +41,7 @@ class StopApplicationOperation extends AbstractPublishApplicationOperation {
 	 * 
 	 */
 
-	protected StopApplicationOperation(CloudFoundryServerBehaviour behaviour, IModule[] modules) {
+	protected StopApplicationOperation(DockerFoundryServerBehaviour behaviour, IModule[] modules) {
 		super(behaviour, modules);
 	}
 
@@ -58,9 +58,9 @@ class StopApplicationOperation extends AbstractPublishApplicationOperation {
 		try {
 			server.setModuleState(getModules(), IServer.STATE_STOPPING);
 
-			CloudFoundryServer cloudServer = getBehaviour().getCloudFoundryServer();
+			DockerFoundryServer cloudServer = getBehaviour().getCloudFoundryServer();
 
-			final CloudFoundryApplicationModule cloudModule = cloudServer.getExistingCloudModule(getModule());
+			final DockerFoundryApplicationModule cloudModule = cloudServer.getExistingCloudModule(getModule());
 
 			if (cloudModule == null) {
 				throw CloudErrorUtil.toCoreException("Unable to stop application as no cloud module found for: " //$NON-NLS-1$
@@ -93,7 +93,7 @@ class StopApplicationOperation extends AbstractPublishApplicationOperation {
 
 
 			getBehaviour().printlnToConsole(cloudModule, Messages.CONSOLE_APP_STOPPED);
-			CloudFoundryPlugin.getCallback().stopApplicationConsole(cloudServer);
+			DockerFoundryPlugin.getCallback().stopApplicationConsole(cloudServer);
 			subMonitor.worked(20);
 		}
 		finally {

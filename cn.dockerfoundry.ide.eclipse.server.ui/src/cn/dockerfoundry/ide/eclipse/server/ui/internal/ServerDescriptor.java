@@ -29,8 +29,8 @@ import org.eclipse.wst.server.core.IRuntime;
 import org.eclipse.wst.server.core.IServer;
 import org.eclipse.wst.server.core.IServerWorkingCopy;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServerRuntime;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServerRuntime;
 
 /**
  * Provides information how to obtain a server runtime;
@@ -294,18 +294,18 @@ public class ServerDescriptor {
 		return getId() != null;
 	}
 
-	public static ServerDescriptor getServerDescriptor(CloudFoundryServer server, String serverName) {
+	public static ServerDescriptor getServerDescriptor(DockerFoundryServer server, String serverName) {
 		ServerDescriptor descriptor = new ServerDescriptor("space server"); //$NON-NLS-1$
 		// Loads the CF Server Runtime Adapter
-		CloudFoundryServerRuntime cfServerRuntime = server.getRuntime();
+		DockerFoundryServerRuntime cfServerRuntime = server.getRuntime();
 		if (cfServerRuntime != null) {
 			IRuntime runtime = cfServerRuntime.getRuntime();
-			descriptor.setRuntimeTypeId(runtime.getRuntimeType().getId());  // eg. "org.cloudfoundry.appcloudserver.runtime.10"
-			descriptor.setRuntimeName(runtime.getName());  // eg. "Cloud Foundry (Runtime) v1.0"
+			descriptor.setRuntimeTypeId(runtime.getRuntimeType().getId()); 
+			descriptor.setRuntimeName(runtime.getName()); 
 		}
 		IServer iServer = server.getServer();
 		if (iServer != null) {
-			descriptor.setServerTypeId(iServer.getServerType().getId());  // eg. "org.cloudfoundry.appcloudserver.10"
+			descriptor.setServerTypeId(iServer.getServerType().getId()); 
 		}
 		descriptor.setServerName(serverName);
 		descriptor.setForceCreateRuntime(true);

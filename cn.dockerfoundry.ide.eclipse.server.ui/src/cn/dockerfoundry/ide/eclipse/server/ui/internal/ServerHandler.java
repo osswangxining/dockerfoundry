@@ -48,7 +48,7 @@ import org.eclipse.wst.server.core.ServerEvent;
 import org.eclipse.wst.server.core.ServerPort;
 import org.eclipse.wst.server.core.ServerUtil;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
 
 /**
  * 
@@ -148,7 +148,7 @@ public class ServerHandler {
 
 			IServerType st = ServerCore.findServerType(serverType);
 			if (st == null) {
-				throw new CoreException(CloudFoundryPlugin.getErrorStatus("Could not find server type \"" + serverType //$NON-NLS-1$
+				throw new CoreException(DockerFoundryPlugin.getErrorStatus("Could not find server type \"" + serverType //$NON-NLS-1$
 						+ "\"")); //$NON-NLS-1$
 			}
 			IRuntime runtime;
@@ -236,7 +236,7 @@ public class ServerHandler {
 			IModule[] modules = ServerUtil.getModules(project);
 			if (modules == null || modules.length == 0) {
 				throw new CoreException(
-						CloudFoundryPlugin.getErrorStatus("Sample project does not contain web modules: " + project)); //$NON-NLS-1$
+						DockerFoundryPlugin.getErrorStatus("Sample project does not contain web modules: " + project)); //$NON-NLS-1$
 			}
 
 			if (!Arrays.asList(wc.getModules()).contains(modules[0])) {
@@ -343,7 +343,7 @@ public class ServerHandler {
 				}
 			}
 		}
-		throw new CoreException(CloudFoundryPlugin.getErrorStatus("No matching runtime found")); //$NON-NLS-1$
+		throw new CoreException(DockerFoundryPlugin.getErrorStatus("No matching runtime found")); //$NON-NLS-1$
 	}
 
 	private IServer findServer(IServerType st, IRuntime runtime, IProgressMonitor monitor) throws CoreException {
@@ -355,7 +355,7 @@ public class ServerHandler {
 				}
 			}
 		}
-		throw new CoreException(CloudFoundryPlugin.getErrorStatus("No matching server found")); //$NON-NLS-1$
+		throw new CoreException(DockerFoundryPlugin.getErrorStatus("No matching server found")); //$NON-NLS-1$
 	}
 
 	private boolean query(IOverwriteQuery query, String message) {

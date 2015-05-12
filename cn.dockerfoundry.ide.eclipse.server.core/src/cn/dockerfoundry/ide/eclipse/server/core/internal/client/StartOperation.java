@@ -43,8 +43,8 @@ import org.eclipse.wst.server.core.internal.Server;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.ApplicationAction;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.CachingApplicationArchive;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudErrorUtil;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudUtil;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.Messages;
 
@@ -94,7 +94,7 @@ public class StartOperation extends RestartOperation {
 	 * @param cloudFoundryServerBehaviour
 	 * @param alwaysStart if true, application will always start. if false,
 	 */
-	public StartOperation(CloudFoundryServerBehaviour behaviour, boolean incrementalPublish, IModule[] modules) {
+	public StartOperation(DockerFoundryServerBehaviour behaviour, boolean incrementalPublish, IModule[] modules) {
 		super(behaviour, modules);
 		this.incrementalPublish = incrementalPublish;
 	}
@@ -111,10 +111,10 @@ public class StartOperation extends RestartOperation {
 	}
 
 	@Override
-	protected void performDeployment(CloudFoundryApplicationModule appModule, IProgressMonitor monitor)
+	protected void performDeployment(DockerFoundryApplicationModule appModule, IProgressMonitor monitor)
 			throws CoreException {
 		final Server server = (Server) getBehaviour().getServer();
-		final CloudFoundryServer cloudServer = getBehaviour().getCloudFoundryServer();
+		final DockerFoundryServer cloudServer = getBehaviour().getCloudFoundryServer();
 
 		try {
 
@@ -155,11 +155,11 @@ public class StartOperation extends RestartOperation {
 
 					warFile = CloudUtil.createWarFile(getModules(), server, subMonitor.newChild(10));
 					if (warFile == null || !warFile.exists()) {
-						throw new CoreException(new Status(IStatus.ERROR, CloudFoundryPlugin.PLUGIN_ID,
+						throw new CoreException(new Status(IStatus.ERROR, DockerFoundryPlugin.PLUGIN_ID,
 								"Unable to create war file for application: " + deploymentName)); //$NON-NLS-1$
 					}
 
-					CloudFoundryPlugin.trace("War file " + warFile.getName() + " created"); //$NON-NLS-1$ //$NON-NLS-2$
+					DockerFoundryPlugin.trace("War file " + warFile.getName() + " created"); //$NON-NLS-1$ //$NON-NLS-2$
 					System.out.println("War file " + warFile.getAbsolutePath() + " created");
 					
 					String dockerVolume = cloudServer.getDockerVolume();
@@ -208,7 +208,7 @@ public class StartOperation extends RestartOperation {
 				subMonitor.worked(10);
 
 				final File warFileFin = warFile;
-				final CloudFoundryApplicationModule appModuleFin = appModule;
+				final DockerFoundryApplicationModule appModuleFin = appModule;
 				// Now push the application resources to the server
 
 				getBehaviour().new BehaviourRequest<Void>(getOperationName() + " - " + deploymentName) { //$NON-NLS-1$
@@ -219,7 +219,7 @@ public class StartOperation extends RestartOperation {
 
 //						pushApplication(client, appModuleFin, warFileFin, applicationArchive, progress);
 
-						CloudFoundryPlugin.trace("Application " + deploymentName //$NON-NLS-1$
+						DockerFoundryPlugin.trace("Application " + deploymentName //$NON-NLS-1$
 								+ " pushed to Cloud Foundry server."); //$NON-NLS-1$
 
 						cloudServer.tagAsDeployed(getModule());
@@ -255,13 +255,13 @@ public class StartOperation extends RestartOperation {
 	 * To avoid replacing the deployment info in the app module, the mapping to
 	 * the most recent {@link CloudApplication} in the app module is NOT updated
 	 * with newly created application. It is up to the caller to set the mapping
-	 * in {@link CloudFoundryApplicationModule}
+	 * in {@link DockerFoundryApplicationModule}
 	 * @param client
 	 * @param appModule valid Cloud module with valid deployment info.
 	 * @param monitor
 	 * @throws CoreException if error creating the application
 	 */
-	protected void pushApplication(CloudFoundryOperations client, final CloudFoundryApplicationModule appModule,
+	protected void pushApplication(CloudFoundryOperations client, final DockerFoundryApplicationModule appModule,
 			File warFile, ApplicationArchive applicationArchive, final IProgressMonitor monitor) throws CoreException {
 
 		String appName = appModule.getDeploymentInfo().getDeploymentName();
@@ -339,7 +339,7 @@ public class StartOperation extends RestartOperation {
 			}
 		}
 		catch (IOException e) {
-			throw new CoreException(CloudFoundryPlugin.getErrorStatus("Failed to deploy application " + //$NON-NLS-1$ 
+			throw new CoreException(DockerFoundryPlugin.getErrorStatus("Failed to deploy application " + //$NON-NLS-1$ 
 					appModule.getDeploymentInfo().getDeploymentName() + " due to " + e.getMessage(), e)); //$NON-NLS-1$
 		}
 

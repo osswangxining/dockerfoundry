@@ -27,14 +27,14 @@ import org.eclipse.wst.server.core.IModule;
 import org.eclipse.wst.server.core.IServer;
 import org.eclipse.wst.server.core.internal.Server;
 
-import cn.dockerfoundry.ide.eclipse.server.core.ICloudFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.IDockerFoundryApplicationModule;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudErrorUtil;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
 
 /**
  * Operation that focuses on publish operations for a given application. Among
  * the common steps performed by this operation is creating an
- * {@link ICloudFoundryApplicationModule} for the given app if it doesn't
+ * {@link IDockerFoundryApplicationModule} for the given app if it doesn't
  * already exist.
  */
 public abstract class AbstractPublishApplicationOperation extends BehaviourOperation {
@@ -43,7 +43,7 @@ public abstract class AbstractPublishApplicationOperation extends BehaviourOpera
 
 	private final IModule[] modules;
 
-	protected AbstractPublishApplicationOperation(CloudFoundryServerBehaviour behaviour, IModule[] modules) {
+	protected AbstractPublishApplicationOperation(DockerFoundryServerBehaviour behaviour, IModule[] modules) {
 		super(behaviour, modules[0]);
 		this.modules = modules;
 	}
@@ -67,13 +67,13 @@ public abstract class AbstractPublishApplicationOperation extends BehaviourOpera
 	 * @throws CoreException if no modules specified or mapped cloud application
 	 * module cannot be resolved.
 	 */
-	protected CloudFoundryApplicationModule getOrCreateCloudApplicationModule(IModule[] modules) throws CoreException {
+	protected DockerFoundryApplicationModule getOrCreateCloudApplicationModule(IModule[] modules) throws CoreException {
 
 		IModule module = modules[0];
 
-		CloudFoundryServer cloudServer = getBehaviour().getCloudFoundryServer();
+		DockerFoundryServer cloudServer = getBehaviour().getCloudFoundryServer();
 
-		CloudFoundryApplicationModule appModule = cloudServer.getCloudModule(module);
+		DockerFoundryApplicationModule appModule = cloudServer.getCloudModule(module);
 
 		if (appModule == null) {
 			throw CloudErrorUtil.toCoreException(NLS.bind(INTERNAL_ERROR_NO_MAPPED_CLOUD_MODULE, modules[0].getId()));

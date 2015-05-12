@@ -36,16 +36,16 @@ import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 import org.eclipse.wst.server.core.IModule;
 
 import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudErrorUtil;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudServerEvent;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.ServerEventHandler;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.client.AbstractPublishApplicationOperation;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryServerBehaviour;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryServerBehaviour;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.client.ICloudFoundryOperation;
-import cn.dockerfoundry.ide.eclipse.server.ui.internal.CloudFoundryServerUiPlugin;
+import cn.dockerfoundry.ide.eclipse.server.ui.internal.DockerFoundryServerUiPlugin;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.Messages;
-import cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.CloudFoundryApplicationsEditorPage;
-import cn.dockerfoundry.ide.eclipse.server.ui.internal.wizards.CloudFoundryCredentialsWizard;
+import cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.DockerFoundryApplicationsEditorPage;
+import cn.dockerfoundry.ide.eclipse.server.ui.internal.wizards.DockerFoundryCredentialsWizard;
 
 /**
  * Abstract class implementing an app cloud action.
@@ -56,7 +56,7 @@ import cn.dockerfoundry.ide.eclipse.server.ui.internal.wizards.CloudFoundryCrede
  */
 public abstract class EditorAction extends Action {
 
-	protected final CloudFoundryApplicationsEditorPage editorPage;
+	protected final DockerFoundryApplicationsEditorPage editorPage;
 
 	private final RefreshArea area;
 
@@ -64,11 +64,11 @@ public abstract class EditorAction extends Action {
 		MASTER, DETAIL, ALL
 	}
 
-	public EditorAction(CloudFoundryApplicationsEditorPage editorPage, RefreshArea area) {
+	public EditorAction(DockerFoundryApplicationsEditorPage editorPage, RefreshArea area) {
 		this(editorPage, area, null, null);
 	}
 
-	public EditorAction(CloudFoundryApplicationsEditorPage editorPage, RefreshArea area, String actionName,
+	public EditorAction(DockerFoundryApplicationsEditorPage editorPage, RefreshArea area, String actionName,
 			ImageDescriptor descriptor) {
 		this.editorPage = editorPage;
 		this.area = area;
@@ -80,7 +80,7 @@ public abstract class EditorAction extends Action {
 		}
 	}
 
-	public CloudFoundryApplicationsEditorPage getEditorPage() {
+	public DockerFoundryApplicationsEditorPage getEditorPage() {
 		return editorPage;
 	}
 
@@ -124,7 +124,7 @@ public abstract class EditorAction extends Action {
 					ICloudFoundryOperation operation = getOperation(monitor);
 
 					if (operation == null) {
-						throw CloudErrorUtil.toCoreException(Messages.CloudFoundryEditorAction_TEXT_NO_OP_EXECUTE);
+						throw CloudErrorUtil.toCoreException(Messages.DockerFoundryEditorAction_TEXT_NO_OP_EXECUTE);
 					}
 					if (operation instanceof AbstractPublishApplicationOperation) {
 						String name = ((AbstractPublishApplicationOperation) operation).getOperationName();
@@ -154,7 +154,7 @@ public abstract class EditorAction extends Action {
 ////								.getCause() : null;
 ////						if (cfe instanceof NotFinishedStagingException) {
 ////							status = new Status(IStatus.WARNING, CloudFoundryServerUiPlugin.PLUGIN_ID,
-////									Messages.CloudFoundryEditorAction_WARNING_RESTART_APP);
+////									Messages.DockerFoundryEditorAction_WARNING_RESTART_APP);
 ////
 ////						}
 ////						else if (CloudErrorUtil.isNotFoundException(ce)) {
@@ -220,7 +220,7 @@ public abstract class EditorAction extends Action {
 		editorPage.setMessage(message, providerStatus);
 	}
 
-	protected CloudFoundryServerBehaviour getBehaviour() {
+	protected DockerFoundryServerBehaviour getBehaviour() {
 		return getEditorPage().getCloudServer().getBehaviour();
 	}
 
@@ -230,7 +230,7 @@ public abstract class EditorAction extends Action {
 
 		private final RefreshArea refreshArea;
 
-		public EditorCloudEvent(CloudFoundryServer server, int type, IStatus status, RefreshArea refreshArea) {
+		public EditorCloudEvent(DockerFoundryServer server, int type, IStatus status, RefreshArea refreshArea) {
 			super(server, type, status);
 			this.refreshArea = refreshArea;
 		}

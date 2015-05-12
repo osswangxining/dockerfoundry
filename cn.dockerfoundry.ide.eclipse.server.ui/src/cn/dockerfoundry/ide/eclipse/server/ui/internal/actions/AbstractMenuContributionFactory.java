@@ -32,7 +32,7 @@ import org.eclipse.ui.menus.IContributionRoot;
 import org.eclipse.ui.menus.IMenuService;
 import org.eclipse.ui.services.IServiceLocator;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
 
 public abstract class AbstractMenuContributionFactory extends AbstractContributionFactory {
 
@@ -44,7 +44,7 @@ public abstract class AbstractMenuContributionFactory extends AbstractContributi
 	public void createContributionItems(IServiceLocator serviceLocator, IContributionRoot additions) {
 		IMenuService menuService = (IMenuService) serviceLocator.getService(IMenuService.class);
 		if (menuService == null) {
-			CloudFoundryPlugin
+			DockerFoundryPlugin
 					.logError("Unable to retrieve Eclipse menu service. Cannot add Cloud Foundry context menus."); //$NON-NLS-1$
 			return;
 		}

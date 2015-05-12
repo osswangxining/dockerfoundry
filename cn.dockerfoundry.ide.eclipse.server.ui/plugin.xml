@@ -9,40 +9,29 @@
 		<image
         	icon="icons/full/obj16/cloud.png"
         	id="cn.dockerfoundry.ide.eclipse.server.ui.image.CloudApplication"
-        	typeIds="cn.dockerfoundry.ide.eclipse.server.core.CloudFoundryApplicationModule" />
+        	typeIds="cn.dockerfoundry.ide.eclipse.server.core.DockerFoundryApplicationModule" />
 	</extension>
 
 	<extension point="org.eclipse.wst.common.project.facet.ui.images">
 		<image 
-			runtime-component-type="org.cloudfoundry.appcloudserver"
+			runtime-component-type="cn.dockerfoundry.appcloudserver"
 			path="icons/full/obj16/cloud_obj.png" />
 	</extension>   
    
 	<!-- extension point="org.eclipse.wst.server.ui.wizardFragments">
 		<fragment 
-			id="org.cloudfoundry.appcloudserver.runtime.10" 
-			typeIds="org.cloudfoundry.appcloudserver.runtime.10"
-			class="cn.dockerfoundry.ide.eclipse.server.ui.internal.CloudFoundryServerRuntimeWizardFragment" />
+			id="cn.dockerfoundry.appcloudserver.runtime.10" 
+			typeIds="cn.dockerfoundry.appcloudserver.runtime.10"
+			class="cn.dockerfoundry.ide.eclipse.server.ui.internal.DockerFoundryServerRuntimeWizardFragment" />
 	</extension-->
 
 	<extension point="org.eclipse.debug.ui.launchConfigurationTypeImages">
 		<launchConfigurationTypeImage 
 			icon="icons/full/obj16/cloud_obj.png"
-			configTypeID="org.cloudfoundry.appcloudserver.launchConfiguration" 
-			id="org.cloudfoundry.appcloudserver.launchimage">
+			configTypeID="cn.dockerfoundry.appcloudserver.launchConfiguration" 
+			id="cn.dockerfoundry.appcloudserver.launchimage">
 		</launchConfigurationTypeImage>
 	</extension>
-	
-	<!-- From the popupMenus extension.  This was commented out.  This is NOT ported to
-	the org.eclipse.ui.menus extension.  -->
-	<!-- disabled for CF 1.5.0 V2 until Insight support is available again in the future
-    <action
-             class="cn.dockerfoundry.ide.eclipse.server.ui.internal.actions.GoToSpringInsightAction"
-             enablesFor="1"
-             id="cn.dockerfoundry.ide.eclipse.server.ui.action.gotoinsight"
-             label="Go to Spring Insight">
-       </action>
-     -->	
 
 	<extension
        id="cn.dockerfoundry.ide.eclipse.server.ui.menus"
@@ -82,25 +71,6 @@
   	         </visibleWhen>
    	  	   </command>
  	   	</menuContribution>
-    	<menuContribution locationURI="popup:org.eclipse.wst.server.ui.ServersView">
-     	   <command
-     	       label="Open Home Page"
-     	       commandId="cn.dockerfoundry.ide.eclipse.server.ui.internal.actions.openhomepagecommand">
-  	         <visibleWhen
-  	               checkEnabled="false">
-				   <with variable="activeMenuSelection">
-                     <and>
-                  	 	<iterate>
-                     	  <adapt
-                           	type="org.eclipse.wst.server.ui.internal.view.servers.ModuleServer">
-                     	  </adapt>
-                  	    </iterate>
-						<test property="cn.dockerfoundry.ide.eclipse.server.ui.isServerSupported" value="true"/>
-                  	 </and>
-               	   </with>
-  	         </visibleWhen>
-   	  	   </command>
- 	   	</menuContribution>	   	
 	</extension>
 	
 	<extension point="org.eclipse.ui.commands">
@@ -149,16 +119,6 @@
 		</enabledWhen>
       </handler>
       <handler
-        class="cn.dockerfoundry.ide.eclipse.server.ui.internal.actions.CloneServerCommand"
-        commandId="cn.dockerfoundry.ide.eclipse.server.ui.cloneservercommand">
- 		<enabledWhen>
-           	<with variable="selection">
-           		<count value="1" />
-               	<test property="cn.dockerfoundry.ide.eclipse.server.ui.isServerSupported" value="true"/>    
-	        </with>  
-		</enabledWhen>
-      </handler>
-      <handler
         class="cn.dockerfoundry.ide.eclipse.server.ui.internal.actions.UpdatePasswordCommand"
         commandId="cn.dockerfoundry.ide.eclipse.server.ui.updatepasswordcommand">
  		<enabledWhen>
@@ -182,73 +142,6 @@
 	        </with>  
 		</enabledWhen>
       </handler>      
-      <handler
-        class="cn.dockerfoundry.ide.eclipse.server.ui.internal.actions.UpdateRestartModuleCommand"
-        commandId="cn.dockerfoundry.ide.eclipse.server.ui.internal.actions.updaterestartmodulecommand">
- 		<enabledWhen>
-           	<with variable="selection">
-           		<count value="1" />
-           		<and>
-               		<test property="cn.dockerfoundry.ide.eclipse.server.ui.isServerStarted" value="true"/>
-               		<test property="cn.dockerfoundry.ide.eclipse.server.ui.isModuleProjectAccessible" value="true"/>
-               		<test property="cn.dockerfoundry.ide.eclipse.server.ui.isCloudModuleStarted" value="true"/>
-               		<test property="cn.dockerfoundry.ide.eclipse.server.ui.isCloudModuleLocal" value="true"/>
-               	</and>    
-	        </with>  
-		</enabledWhen>
-      </handler>
-      <handler
-        class="cn.dockerfoundry.ide.eclipse.server.ui.internal.actions.PushModuleCommand"
-        commandId="cn.dockerfoundry.ide.eclipse.server.ui.internal.actions.pushcommand">
- 		<enabledWhen>
-           	<with variable="selection">
-           		<count value="1" />
-           		<and>
-               		<test property="cn.dockerfoundry.ide.eclipse.server.ui.isServerStarted" value="true"/>
-               		<test property="cn.dockerfoundry.ide.eclipse.server.ui.isModuleProjectAccessible" value="true"/>
-               		<test property="cn.dockerfoundry.ide.eclipse.server.ui.isCloudModuleLocal" value="true"/>
-               	</and>    
-	        </with>  
-		</enabledWhen>
-      </handler>
-      <handler
-        class="cn.dockerfoundry.ide.eclipse.server.ui.internal.actions.RemapModuleProjectCommand"
-        commandId="cn.dockerfoundry.ide.eclipse.server.ui.internal.actions.remaptoprojectcommand">
- 		<enabledWhen>
-           	<with variable="selection">
-           		<count value="1" />
-           		<and>
-               		<test property="cn.dockerfoundry.ide.eclipse.server.ui.isServerStarted" value="true"/>
-               	</and>    
-	        </with>  
-		</enabledWhen>
-      </handler>
-      <handler
-        class="cn.dockerfoundry.ide.eclipse.server.ui.internal.actions.UnmapProjectCommand"
-        commandId="cn.dockerfoundry.ide.eclipse.server.ui.internal.actions.unmapprojectcommand">
- 		<enabledWhen>
-           	<with variable="selection">
-           		<count value="1" />
-           		<and>
-               		<test property="cn.dockerfoundry.ide.eclipse.server.ui.isServerStarted" value="true"/>
-               		<test property="cn.dockerfoundry.ide.eclipse.server.ui.isModuleProjectAccessible" value="true"/>
-               	</and>    
-	        </with>  
-		</enabledWhen>
-      </handler>
-      <handler
-        class="cn.dockerfoundry.ide.eclipse.server.ui.internal.actions.OpenHomePageCommand"
-        commandId="cn.dockerfoundry.ide.eclipse.server.ui.internal.actions.openhomepagecommand">
- 		<enabledWhen>
-           	<with variable="selection">
-           		<count value="1" />
-           		<and>
-               		<test property="cn.dockerfoundry.ide.eclipse.server.ui.isServerStarted" value="true"/>
-               		<test property="cn.dockerfoundry.ide.eclipse.server.ui.isCloudModuleStarted" value="true"/>
-               	</and>    
-	        </with>  
-		</enabledWhen>
-      </handler>
      
       
    </extension>
@@ -256,21 +149,21 @@
   <!--extension
         point="org.eclipse.wst.server.ui.serverToolTip">
      <serverToolTip
-           class="cn.dockerfoundry.ide.eclipse.internal.servercom.ui.CloudFoundryServerTooltip"
+           class="cn.dockerfoundry.ide.eclipse.internal.servercom.ui.DockerFoundryServerTooltip"
            id="cn.dockerfoundry.ide.eclipse.server.ui.serverTooltip"
-           serverTypes="org.cloudfoundry.appcloudserver.10">
+           serverTypes="cn.dockerfoundry.appcloudserver.10">
      </serverToolTip>
   </extension-->
   <extension
         point="cn.dockerfoundry.ide.eclipse.server.core.callback">
      <callback
-           class="cn.dockerfoundry.ide.eclipse.server.ui.internal.CloudFoundryUiCallback"></callback>
+           class="cn.dockerfoundry.ide.eclipse.server.ui.internal.DockerFoundryUiCallback"></callback>
   </extension>
 
 	<extension
 	      point="org.eclipse.ui.decorators">
 	   <decorator
-	         class="cn.dockerfoundry.ide.eclipse.server.ui.internal.CloudFoundryDecorator"
+	         class="cn.dockerfoundry.ide.eclipse.server.ui.internal.DockerFoundryDecorator"
 	         icon="icons/full/obj16/single.png"
 	         id="cn.dockerfoundry.ide.eclipse.server.navigatorDecorator"
 	         label="Cloud Foundry Server State Decorator"
@@ -294,22 +187,22 @@
 			id="cn.dockerfoundry.ide.eclipse.server.editor.general"
          	order="1"
          	insertionId="org.eclipse.wst.server.editor.overview.left"
-         	typeIds="org.cloudfoundry.appcloudserver.*"
-         	class="cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.CloudFoundryAccountSection">
+         	typeIds="cn.dockerfoundry.appcloudserver.*"
+         	class="cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.DockerFoundryAccountSection">
       	</section>
 		<section
 			id="cn.dockerfoundry.ide.eclipse.server.editor.status"
          	order="2"
          	insertionId="org.eclipse.wst.server.editor.overview.left"
-         	typeIds="org.cloudfoundry.appcloudserver.*"
-         	class="cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.CloudFoundryServerStatusSection">
+         	typeIds="cn.dockerfoundry.appcloudserver.*"
+         	class="cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.DockerFoundryServerStatusSection">
       	</section>
       	<!-- Removed for CF 1.5.0 
       	<section
 			id="cn.dockerfoundry.ide.eclipse.server.editor.insight"
          	order="3"
          	insertionId="org.eclipse.wst.server.editor.overview.right"
-         	typeIds="org.cloudfoundry.appcloudserver.*"
+         	typeIds="cn.dockerfoundry.appcloudserver.*"
          	class="cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.SpringInsightSection">
       	</section>
       	-->
@@ -318,24 +211,24 @@
         id="cn.dockerfoundry.ide.eclipse.server.editor.disable.publish"
         insertionId="org.eclipse.wst.server.editor.overview.right"
         order="1"
-        typeIds="org.cloudfoundry.appcloudserver.*">
+        typeIds="cn.dockerfoundry.appcloudserver.*">
   </section>
     </extension>
 	<extension
        point="org.eclipse.wst.server.core.launchableAdapters">
     <launchableAdapter
-          class="cn.dockerfoundry.ide.eclipse.server.ui.internal.CloudFoundryLaunchableAdapterDelegate"
+          class="cn.dockerfoundry.ide.eclipse.server.ui.internal.DockerFoundryLaunchableAdapterDelegate"
           id="cn.dockerfoundry.ide.eclipse.server.launchableAdapter"
-          typeIds="org.cloudfoundry.appcloudserver*">
+          typeIds="cn.dockerfoundry.appcloudserver*">
     </launchableAdapter>
  </extension>
  <!-- 
  <extension
        point="org.eclipse.wst.server.core.clients">
     <client
-          class="cn.dockerfoundry.ide.eclipse.server.ui.internal.CloudFoundryLaunchableClient"
+          class="cn.dockerfoundry.ide.eclipse.server.ui.internal.DockerFoundryLaunchableClient"
           id="cn.dockerfoundry.ide.eclipse.server.launchClient"
-          launchable="cn.dockerfoundry.ide.eclipse.server.ui.internal.CloudFoundryLaunchable"
+          launchable="cn.dockerfoundry.ide.eclipse.server.ui.internal.DockerFoundryLaunchable"
           name="Cloud Foundry Server">
     </client>
  </extension>
@@ -343,7 +236,7 @@
  <extension
        point="org.eclipse.wst.server.ui.editorPages">
     <page
-          class="cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.CloudFoundryApplicationsEditorPage"
+          class="cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.DockerFoundryApplicationsEditorPage"
           id="cn.dockerfoundry.ide.eclipse.server.editor.applications"
           name="Applications and Services"
           order="1"
@@ -353,7 +246,7 @@
  <extension
        point="org.eclipse.ui.navigator.navigatorContent">
     <actionProvider
-          class="cn.dockerfoundry.ide.eclipse.server.ui.internal.CloudFoundryActionProvider"
+          class="cn.dockerfoundry.ide.eclipse.server.ui.internal.DockerFoundryActionProvider"
           id="cn.dockerfoundry.ide.eclipse.server.ui.navigator.ActionProvider">
        <enablement>
           <instanceof
@@ -376,7 +269,7 @@
  <extension
        point="org.eclipse.ui.console.consolePageParticipants">
     <consolePageParticipant
-          class="cn.dockerfoundry.ide.eclipse.server.ui.internal.console.CloudFoundryConsolePageParticipant"
+          class="cn.dockerfoundry.ide.eclipse.server.ui.internal.console.DockerFoundryConsolePageParticipant"
           id="cn.dockerfoundry.ide.eclipse.server.ui.console">
        <enablement></enablement>
     </consolePageParticipant>
@@ -421,14 +314,14 @@
 	<extension point="org.eclipse.ui.menus">
       <menuContribution
         allPopups="true"
-        class="cn.dockerfoundry.ide.eclipse.server.ui.internal.actions.CloudFoundryActionContributionFactory"
+        class="cn.dockerfoundry.ide.eclipse.server.ui.internal.actions.DockerFoundryActionContributionFactory"
         locationURI="popup:org.eclipse.wst.server.ui.ServersView?before=additions">
       </menuContribution>
 	</extension>
  
    <extension point="org.eclipse.core.expressions.propertyTesters">
       <propertyTester
-            class="cn.dockerfoundry.ide.eclipse.server.ui.internal.CloudFoundryPropertyTester"
+            class="cn.dockerfoundry.ide.eclipse.server.ui.internal.DockerFoundryPropertyTester"
             id="cn.dockerfoundry.ide.eclipse.server.propertytester"
             namespace="cn.dockerfoundry.ide.eclipse.server.ui"
             properties="isModuleStopped, 
@@ -439,14 +332,14 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            category="cn.dockerfoundry.ide.eclipse.server.ui.CloudFoundryPreferencePage"
-            class="cn.dockerfoundry.ide.eclipse.server.ui.internal.CloudFoundryTracePreferencePage"
-            id="cn.dockerfoundry.ide.eclipse.server.ui.CloudFoundryTracePreferencePage"
+            category="cn.dockerfoundry.ide.eclipse.server.ui.DockerFoundryPreferencePage"
+            class="cn.dockerfoundry.ide.eclipse.server.ui.internal.DockerFoundryTracePreferencePage"
+            id="cn.dockerfoundry.ide.eclipse.server.ui.DockerFoundryTracePreferencePage"
             name="HTTP Tracing">
       </page>
       <page
-            class="cn.dockerfoundry.ide.eclipse.server.ui.internal.CloudFoundryPreferencePage"
-            id="cn.dockerfoundry.ide.eclipse.server.ui.CloudFoundryPreferencePage"
+            class="cn.dockerfoundry.ide.eclipse.server.ui.internal.DockerFoundryPreferencePage"
+            id="cn.dockerfoundry.ide.eclipse.server.ui.DockerFoundryPreferencePage"
             name="Cloud Foundry">
       </page>
    </extension>
@@ -461,12 +354,12 @@
          point="org.eclipse.wst.server.ui.serverCreationWizardPageExtension">
       <serverCreationWizardPageExtension
             id="cn.dockerfoundry.ide.eclipse.server.ui.internal.wizards.serverCreationWizardPageExtension"
-            class="cn.dockerfoundry.ide.eclipse.server.ui.internal.wizards.CloudFoundryServerWizardUIControl"/>
+            class="cn.dockerfoundry.ide.eclipse.server.ui.internal.wizards.DockerFoundryServerWizardUIControl"/>
    </extension>
       <extension
          point="org.eclipse.wst.server.ui.serverEditorOverviewPageModifier">
       <serverEditorOverviewPageModifier
             id="cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.serverEditorOverviewPageExtension"
-            class="cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.CloudFoundryServerEditorOverviewPageUIControl"/>
+            class="cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.DockerFoundryServerEditorOverviewPageUIControl"/>
    </extension>
 </plugin>

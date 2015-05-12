@@ -29,23 +29,23 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.progress.UIJob;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryServerBehaviour;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryServerBehaviour;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.Logger;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.Messages;
-import cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.CloudFoundryApplicationsEditorPage;
+import cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.DockerFoundryApplicationsEditorPage;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.ServicesHandler;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.wizards.ServiceToApplicationsBindingWizard;
 
 public class ServiceToApplicationsBindingAction extends Action {
 
-	private final CloudFoundryServerBehaviour serverBehaviour;
+	private final DockerFoundryServerBehaviour serverBehaviour;
 
 	private final ServicesHandler servicesHandler;
 
-	private final CloudFoundryApplicationsEditorPage editorPage;
+	private final DockerFoundryApplicationsEditorPage editorPage;
 
 	public ServiceToApplicationsBindingAction(IStructuredSelection selection,
-			CloudFoundryServerBehaviour serverBehaviour, CloudFoundryApplicationsEditorPage editorPage) {
+			DockerFoundryServerBehaviour serverBehaviour, DockerFoundryApplicationsEditorPage editorPage) {
 
 		this.serverBehaviour = serverBehaviour;
 		this.editorPage = editorPage;

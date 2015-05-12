@@ -40,8 +40,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryBrandingExtensionPoint.CloudServerURL;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryBrandingExtensionPoint.CloudServerURL;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.Messages;
 
 
@@ -185,7 +185,7 @@ public class CloudUrlDialog extends Dialog {
 			
 			public void run() {
 				try {
-					CloudFoundryPlugin.getCloudFoundryClientFactory().getCloudFoundryOperations(url).getCloudInfo();
+					DockerFoundryPlugin.getCloudFoundryClientFactory().getCloudFoundryOperations(url).getCloudInfo();
 					shouldProceed[0] = true;
 				}
 				catch (Exception e) {

@@ -22,7 +22,7 @@ package cn.dockerfoundry.ide.eclipse.server.ui.internal.console.file;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
 
 public class StagingConsoleContents implements IConsoleContents {
 
@@ -34,7 +34,7 @@ public class StagingConsoleContents implements IConsoleContents {
 	 * @param app
 	 * @return
 	 */
-	public List<ICloudFoundryConsoleStream> getContents(final CloudFoundryServer cloudServer, String appName,
+	public List<ICloudFoundryConsoleStream> getContents(final DockerFoundryServer cloudServer, String appName,
 			final int instanceIndex) {
 
 		List<ICloudFoundryConsoleStream> contents = new ArrayList<ICloudFoundryConsoleStream>();

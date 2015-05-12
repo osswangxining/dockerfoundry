@@ -28,12 +28,12 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.viewers.IStructuredSelection;
 
 import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudErrorUtil;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryServerBehaviour;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryServerBehaviour;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DeploymentInfoWorkingCopy;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.client.ICloudFoundryOperation;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.client.LocalCloudService;
-import cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.CloudFoundryApplicationsEditorPage;
+import cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.DockerFoundryApplicationsEditorPage;
 
 /**
  * Action for modifying list of services for an application. Subclasses are
@@ -44,10 +44,10 @@ import cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.CloudFoundryApplic
  */
 public abstract class ModifyServicesForApplicationAction extends EditorAction {
 
-	private CloudFoundryApplicationModule appModule;
+	private DockerFoundryApplicationModule appModule;
 
-	public ModifyServicesForApplicationAction(CloudFoundryApplicationModule appModule,
-			CloudFoundryServerBehaviour serverBehaviour, CloudFoundryApplicationsEditorPage editorPage) {
+	public ModifyServicesForApplicationAction(DockerFoundryApplicationModule appModule,
+			DockerFoundryServerBehaviour serverBehaviour, DockerFoundryApplicationsEditorPage editorPage) {
 		super(editorPage, RefreshArea.DETAIL);
 
 		this.appModule = appModule;
@@ -57,7 +57,7 @@ public abstract class ModifyServicesForApplicationAction extends EditorAction {
 
 	abstract public List<String> getServicesToRemove();
 
-	protected void setApplicationModule(CloudFoundryApplicationModule appModule) {
+	protected void setApplicationModule(DockerFoundryApplicationModule appModule) {
 		this.appModule = appModule;
 	}
 

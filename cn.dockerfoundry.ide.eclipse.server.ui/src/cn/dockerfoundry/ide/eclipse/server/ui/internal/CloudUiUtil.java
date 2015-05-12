@@ -71,11 +71,11 @@ import org.springframework.web.client.ResourceAccessException;
 import cn.dockerfoundry.ide.eclipse.explorer.ui.Activator;
 import cn.dockerfoundry.ide.eclipse.explorer.ui.domain.DockerConnectionElement;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudErrorUtil;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryBrandingExtensionPoint;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryBrandingExtensionPoint;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.ServerEventHandler;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryBrandingExtensionPoint.CloudServerURL;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryServerBehaviour;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryBrandingExtensionPoint.CloudServerURL;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryServerBehaviour;
 
 /**
  * @author Steffen Pingel
@@ -87,7 +87,7 @@ public class CloudUiUtil {
 
 	public static final String SERVERS_VIEW_ID = "org.eclipse.wst.server.ui.ServersView"; //$NON-NLS-1$
 
-	public static String ATTR_USER_DEFINED_URLS = "org.dockerfoundry.ide.eclipse.server.user.defined.urls"; //$NON-NLS-1$
+	public static String ATTR_USER_DEFINED_URLS = "cn.dockerfoundry.ide.eclipse.server.user.defined.urls"; //$NON-NLS-1$
 
 	public static IStatus runForked(final ICoreRunnable coreRunner, IWizard wizard) {
 		try {
@@ -109,14 +109,14 @@ public class CloudUiUtil {
 		catch (InvocationTargetException e) {
 			IStatus status;
 			if (e.getCause() instanceof CoreException) {
-				status = new Status(IStatus.ERROR, CloudFoundryServerUiPlugin.PLUGIN_ID, NLS.bind(
+				status = new Status(IStatus.ERROR, DockerFoundryServerUiPlugin.PLUGIN_ID, NLS.bind(
 						Messages.CloudUiUtil_ERROR_FORK_OP_FAILED, e.getCause().getMessage()), e);
 			}
 			else {
-				status = new Status(IStatus.ERROR, CloudFoundryServerUiPlugin.PLUGIN_ID, NLS.bind(
+				status = new Status(IStatus.ERROR, DockerFoundryServerUiPlugin.PLUGIN_ID, NLS.bind(
 						Messages.CloudUiUtil_ERROR_FORK_UNEXPECTED, e.getMessage()), e);
 			}
-			CloudFoundryServerUiPlugin.getDefault().getLog().log(status);
+			DockerFoundryServerUiPlugin.getDefault().getLog().log(status);
 			IWizardPage page = wizard.getContainer().getCurrentPage();
 			if (page instanceof DialogPage) {
 				((DialogPage) page).setErrorMessage(status.getMessage());
@@ -130,14 +130,14 @@ public class CloudUiUtil {
 	}
 
 	public static List<CloudServerURL> getAllUrls(String serverTypeId) {
-		List<CloudServerURL> urls = new ArrayList<CloudFoundryBrandingExtensionPoint.CloudServerURL>();
+		List<CloudServerURL> urls = new ArrayList<DockerFoundryBrandingExtensionPoint.CloudServerURL>();
 //		urls.add(getDefaultUrl(serverTypeId));
 		urls.addAll(getUrls(serverTypeId));
 		return urls;
 	}
 
 	public static CloudServerURL getDefaultUrl(String serverTypeId) {
-		return CloudFoundryBrandingExtensionPoint.getDefaultUrl(serverTypeId);
+		return DockerFoundryBrandingExtensionPoint.getDefaultUrl(serverTypeId);
 	}
 
 	public static List<CloudServerURL> getUrls(String serverTypeId) {
@@ -151,7 +151,7 @@ public class CloudUiUtil {
 			urlNames.add(userDefinedUrl.getName());
 		}
 
-		List<CloudServerURL> defaultUrls = CloudFoundryBrandingExtensionPoint.getCloudUrls(serverTypeId);
+		List<CloudServerURL> defaultUrls = DockerFoundryBrandingExtensionPoint.getCloudUrls(serverTypeId);
 		if (defaultUrls != null) {
 			for (CloudServerURL defaultUrl : defaultUrls) {
 				if (!urlNames.contains(defaultUrl.getName())) {
@@ -262,7 +262,7 @@ public class CloudUiUtil {
 			 e.printStackTrace();
 		}
 		
-		IPreferenceStore prefStore = CloudFoundryServerUiPlugin.getDefault().getPreferenceStore();
+		IPreferenceStore prefStore = DockerFoundryServerUiPlugin.getDefault().getPreferenceStore();
 		String urlString = prefStore.getString(ATTR_USER_DEFINED_URLS + "." + serverTypeId); //$NON-NLS-1$
 
 		if (urlString != null && urlString.length() > 0) {
@@ -293,7 +293,7 @@ public class CloudUiUtil {
 	}
 
 	public static void storeUserDefinedUrls(String serverTypeId, List<CloudServerURL> urls) {
-		IPreferenceStore prefStore = CloudFoundryServerUiPlugin.getDefault().getPreferenceStore();
+		IPreferenceStore prefStore = DockerFoundryServerUiPlugin.getDefault().getPreferenceStore();
 		StringBuilder builder = new StringBuilder();
 
 		for (CloudServerURL url : urls) {
@@ -310,7 +310,7 @@ public class CloudUiUtil {
 		prefStore.setValue(ATTR_USER_DEFINED_URLS + "." + serverTypeId, builder.toString()); //$NON-NLS-1$
 	}
 
-	public static String updatePassword(final String newPassword, final CloudFoundryServer cfServer,
+	public static String updatePassword(final String newPassword, final DockerFoundryServer cfServer,
 			final IServerWorkingCopy serverWc) {
 		ICoreRunnable coreRunner = new ICoreRunnable() {
 			public void run(final IProgressMonitor monitor) throws CoreException {
@@ -349,7 +349,7 @@ public class CloudUiUtil {
 	 * determined
 	 * @throws OperationCanceledException if validation is cancelled.
 	 */
-	public static void validateCredentials(final CloudFoundryServer cfServer, final String userName, final String password, final String urlText,
+	public static void validateCredentials(final DockerFoundryServer cfServer, final String userName, final String password, final String urlText,
 			final boolean displayURL, final boolean selfSigned, IRunnableContext context) throws CoreException,
 			OperationCanceledException {
 		try {
@@ -359,7 +359,7 @@ public class CloudUiUtil {
 					if (displayURL) {
 						url = getUrlFromDisplayText(urlText);
 					}
-					CloudFoundryServerBehaviour.validate(cfServer, url, userName, password, selfSigned, monitor);
+					DockerFoundryServerBehaviour.validate(cfServer, url, userName, password, selfSigned, monitor);
 				}
 			};
 			if (context != null) {
@@ -440,10 +440,10 @@ public class CloudUiUtil {
 				throw (CoreException) e.getCause();
 			}
 			else {
-				CloudFoundryServerUiPlugin
+				DockerFoundryServerUiPlugin
 						.getDefault()
 						.getLog()
-						.log(new Status(IStatus.ERROR, CloudFoundryServerUiPlugin.PLUGIN_ID, "Unexpected exception", e)); //$NON-NLS-1$
+						.log(new Status(IStatus.ERROR, DockerFoundryServerUiPlugin.PLUGIN_ID, "Unexpected exception", e)); //$NON-NLS-1$
 			}
 		}
 		catch (InterruptedException e) {

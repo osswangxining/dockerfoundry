@@ -24,8 +24,8 @@ import java.util.List;
 
 import org.eclipse.swt.SWT;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
 
 public class StdConsoleContents implements IConsoleContents {
 
@@ -33,13 +33,13 @@ public class StdConsoleContents implements IConsoleContents {
 
 	public static final String STD_ERROR_LOG = "logs/stderr.log"; //$NON-NLS-1$
 
-	public List<ICloudFoundryConsoleStream> getContents(CloudFoundryServer cloudServer, CloudFoundryApplicationModule app,
+	public List<ICloudFoundryConsoleStream> getContents(DockerFoundryServer cloudServer, DockerFoundryApplicationModule app,
 			int instanceIndex) {
 		String appName = app.getDeployedApplicationName();
 		return getContents(cloudServer, appName, instanceIndex);
 	}
 
-	public List<ICloudFoundryConsoleStream> getContents(CloudFoundryServer cloudServer, String appName, int instanceIndex) {
+	public List<ICloudFoundryConsoleStream> getContents(DockerFoundryServer cloudServer, String appName, int instanceIndex) {
 		List<ICloudFoundryConsoleStream> contents = new ArrayList<ICloudFoundryConsoleStream>();
 //		contents.add(new StdLogFileConsoleStream(STD_ERROR_LOG, SWT.COLOR_RED, cloudServer, appName, instanceIndex));
 //		contents.add(new StdLogFileConsoleStream(STD_OUT_LOG, -1, cloudServer, appName, instanceIndex));

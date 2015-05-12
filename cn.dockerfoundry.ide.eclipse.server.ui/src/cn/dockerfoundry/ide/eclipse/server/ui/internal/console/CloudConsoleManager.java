@@ -23,8 +23,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.console.MessageConsole;
 import org.eclipse.wst.server.core.IServer;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.log.LogContentType;
 
 /**
@@ -45,7 +45,7 @@ public abstract class CloudConsoleManager {
 	 * purely client callbacks that do not require progress monitors *
 	 * 
 	 */
-	public abstract void startConsole(CloudFoundryServer server, LogContentType type,
+	public abstract void startConsole(DockerFoundryServer server, LogContentType type,
 			int instanceIndex, boolean show, boolean clear,
 			IProgressMonitor monitor);
 
@@ -57,9 +57,9 @@ public abstract class CloudConsoleManager {
 	 * @param appModule the app for that console
 	 * @return the message console. Null if no corresponding console is found.
 	 */
-	public abstract MessageConsole findCloudFoundryConsole(IServer server, CloudFoundryApplicationModule appModule);
+	public abstract MessageConsole findCloudFoundryConsole(IServer server, DockerFoundryApplicationModule appModule);
 
-	public abstract void writeToStandardConsole(String message, CloudFoundryServer server,
+	public abstract void writeToStandardConsole(String message, DockerFoundryServer server,
 			int instanceIndex, boolean clear, boolean isError);
 
 	/**
@@ -72,7 +72,7 @@ public abstract class CloudConsoleManager {
 	 * @param monitor NOTE: may be removed in the future, when consoles are
 	 * purely client callbacks that do not require progress monitors
 	 */
-	public abstract void showCloudFoundryLogs(CloudFoundryServer server, 
+	public abstract void showCloudFoundryLogs(DockerFoundryServer server, 
 			int instanceIndex, boolean clear, IProgressMonitor monitor);
 
 	public abstract void stopConsole(IServer server);

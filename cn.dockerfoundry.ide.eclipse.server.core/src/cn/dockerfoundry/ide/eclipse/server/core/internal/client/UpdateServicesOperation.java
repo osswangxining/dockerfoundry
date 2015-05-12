@@ -32,7 +32,7 @@ public class UpdateServicesOperation extends BehaviourOperation {
 
 	private final BaseClientRequest<List<DockerApplicationService>> request;
 
-	public UpdateServicesOperation(BaseClientRequest<List<DockerApplicationService>> request, CloudFoundryServerBehaviour behaviour) {
+	public UpdateServicesOperation(BaseClientRequest<List<DockerApplicationService>> request, DockerFoundryServerBehaviour behaviour) {
 		super(behaviour, null);
 		this.request = request;
 	}

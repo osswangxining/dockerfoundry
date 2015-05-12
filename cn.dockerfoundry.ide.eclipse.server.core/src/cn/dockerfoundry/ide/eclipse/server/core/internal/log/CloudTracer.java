@@ -19,7 +19,7 @@
  ********************************************************************************/
 package cn.dockerfoundry.ide.eclipse.server.core.internal.log;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
 
 /**
  * Cloud tracer that fires trace events when a trace request is received from
@@ -56,12 +56,12 @@ public abstract class CloudTracer implements ICloudTracer {
 		}
 
 		try {
-			CloudFoundryPlugin.getCallback().trace(log, false);
+			DockerFoundryPlugin.getCallback().trace(log, false);
 		}
 		catch (Throwable t) {
 			// Failure in tracing. Catch as to not prevent any further framework
 			// operations.
-			CloudFoundryPlugin.logError(t);
+			DockerFoundryPlugin.logError(t);
 		}
 	}
 

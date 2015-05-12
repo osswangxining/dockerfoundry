@@ -50,7 +50,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Widget;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.wizards.CloudUIEvent;
 
 /**
@@ -113,7 +113,7 @@ public class CloudRoutePart extends UIPart {
 	public void setInput(List<CloudRoute> routes) {
 
 		if (routes == null || routes.isEmpty()) {
-			notifyStatusChange(CloudFoundryPlugin.getErrorStatus(Messages.CloudRoutePart_ERROR_NO_ROUTE_AVAIL));
+			notifyStatusChange(DockerFoundryPlugin.getErrorStatus(Messages.CloudRoutePart_ERROR_NO_ROUTE_AVAIL));
 			return;
 		}
 

@@ -24,9 +24,9 @@ import java.util.List;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryServerBehaviour;
-import cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.CloudFoundryApplicationsEditorPage;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryServerBehaviour;
+import cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.DockerFoundryApplicationsEditorPage;
 
 /**
  * @author Terry Denney
@@ -37,8 +37,8 @@ public class AddServicesToApplicationAction extends ModifyServicesForApplication
 
 	private final List<String> services;
 
-	public AddServicesToApplicationAction(IStructuredSelection selection, CloudFoundryApplicationModule appModule,
-			CloudFoundryServerBehaviour serverBehaviour, CloudFoundryApplicationsEditorPage editorPage) {
+	public AddServicesToApplicationAction(IStructuredSelection selection, DockerFoundryApplicationModule appModule,
+			DockerFoundryServerBehaviour serverBehaviour, DockerFoundryApplicationsEditorPage editorPage) {
 		super(appModule, serverBehaviour, editorPage);
 
 		this.services = getServiceNames(selection);

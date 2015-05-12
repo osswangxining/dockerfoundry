@@ -24,13 +24,13 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 import cn.dockerfoundry.ide.eclipse.server.core.internal.client.ICloudFoundryOperation;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.DebugCommand;
-import cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.CloudFoundryApplicationsEditorPage;
+import cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.DockerFoundryApplicationsEditorPage;
 
 public class DebugApplicationEditorAction extends EditorAction {
 
 	private final DebugCommand debugCommand;
 
-	public DebugApplicationEditorAction(CloudFoundryApplicationsEditorPage editorPage, DebugCommand debugCommand) {
+	public DebugApplicationEditorAction(DockerFoundryApplicationsEditorPage editorPage, DebugCommand debugCommand) {
 		super(editorPage, RefreshArea.DETAIL);
 		this.debugCommand = debugCommand;
 	}

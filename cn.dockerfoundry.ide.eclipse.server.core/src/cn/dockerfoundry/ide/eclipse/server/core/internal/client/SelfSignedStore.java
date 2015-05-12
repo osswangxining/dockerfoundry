@@ -31,7 +31,7 @@ import org.eclipse.osgi.util.NLS;
 import org.osgi.service.prefs.BackingStoreException;
 
 import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudErrorUtil;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.Messages;
 
 /**
@@ -39,7 +39,7 @@ import cn.dockerfoundry.ide.eclipse.server.core.internal.Messages;
  */
 public class SelfSignedStore {
 
-	public static final String SELF_SIGNED_PREF = CloudFoundryPlugin.PLUGIN_ID + ".selfsigned.certificate"; //$NON-NLS-1$
+	public static final String SELF_SIGNED_PREF = DockerFoundryPlugin.PLUGIN_ID + ".selfsigned.certificate"; //$NON-NLS-1$
 
 	private final String serverURL;
 
@@ -97,7 +97,7 @@ public class SelfSignedStore {
 		}
 
 		if (asString != null) {
-			IEclipsePreferences prefs = CloudFoundryPlugin.getDefault().getPreferences();
+			IEclipsePreferences prefs = DockerFoundryPlugin.getDefault().getPreferences();
 			prefs.put(SELF_SIGNED_PREF, asString);
 			try {
 				prefs.flush();
@@ -118,7 +118,7 @@ public class SelfSignedStore {
 	 * storage
 	 */
 	protected SelfSignedServers getStoredServers() throws CoreException {
-		String storedValue = CloudFoundryPlugin.getDefault().getPreferences().get(SELF_SIGNED_PREF, null);
+		String storedValue = DockerFoundryPlugin.getDefault().getPreferences().get(SELF_SIGNED_PREF, null);
 		SelfSignedServers servers = null;
 		if (storedValue != null) {
 			try {

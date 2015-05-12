@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="org.dockerfoundry.ide.eclipse.server.core" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="cn.dockerfoundry.ide.eclipse.server.core" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="org.dockerfoundry.ide.eclipse.server.core" id="branding" name="Cloud Foundry Service Branding"/>
+         <meta.schema plugin="cn.dockerfoundry.ide.eclipse.server.core" id="branding" name="Cloud Foundry Service Branding"/>
       </appInfo>
       <documentation>
          Copyright (c) 2013 Pivotal Software, Inc. 
@@ -65,7 +65,7 @@ Pivotal Software, Inc. - initial API and implementation
    <element name="service">
       <complexType>
          <sequence>
-            <element ref="defaultUrl"/>
+            <element ref="defaultUrl" minOccurs="0" maxOccurs="1"/>
             <element ref="cloudUrl" minOccurs="0" maxOccurs="unbounded"/>
          </sequence>
          <attribute name="name" type="string" use="required">

@@ -23,10 +23,10 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 import cn.dockerfoundry.ide.eclipse.server.core.internal.ApplicationAction;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryServerBehaviour;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryServerBehaviour;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.client.ICloudFoundryOperation;
-import cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.CloudFoundryApplicationsEditorPage;
+import cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.DockerFoundryApplicationsEditorPage;
 
 /**
  * @author Terry Denney
@@ -37,12 +37,12 @@ public class StartStopApplicationAction extends EditorAction {
 
 	private final ApplicationAction action;
 
-	private final CloudFoundryApplicationModule application;
+	private final DockerFoundryApplicationModule application;
 
-	private final CloudFoundryServerBehaviour serverBehaviour;
+	private final DockerFoundryServerBehaviour serverBehaviour;
 
-	public StartStopApplicationAction(CloudFoundryApplicationsEditorPage editorPage, ApplicationAction action,
-			CloudFoundryApplicationModule application, CloudFoundryServerBehaviour serverBehaviour) {
+	public StartStopApplicationAction(DockerFoundryApplicationsEditorPage editorPage, ApplicationAction action,
+			DockerFoundryApplicationModule application, DockerFoundryServerBehaviour serverBehaviour) {
 		super(editorPage, RefreshArea.DETAIL);
 		this.action = action;
 		this.application = application;

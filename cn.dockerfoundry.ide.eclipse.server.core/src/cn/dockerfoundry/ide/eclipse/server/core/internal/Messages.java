@@ -120,69 +120,69 @@ public class Messages extends NLS {
 
 	public static String CloudBehaviourOperations_REFRESHING_APPS_AND_SERVICES;
 
-	public static String CloudFoundryApplicationModule_STATE_DEPLOYABLE;
+	public static String DockerFoundryApplicationModule_STATE_DEPLOYABLE;
 
-	public static String CloudFoundryApplicationModule_STATE_DEPLOYED;
+	public static String DockerFoundryApplicationModule_STATE_DEPLOYED;
 
-	public static String CloudFoundryApplicationModule_STATE_LAUNCHED;
+	public static String DockerFoundryApplicationModule_STATE_LAUNCHED;
 
-	public static String CloudFoundryApplicationModule_STATE_LAUNCHING;
+	public static String DockerFoundryApplicationModule_STATE_LAUNCHING;
 
-	public static String CloudFoundryApplicationModule_STATE_STARTING_SERVICES;
+	public static String DockerFoundryApplicationModule_STATE_STARTING_SERVICES;
 
-	public static String CloudFoundryApplicationModule_STATE_STOPPED;
+	public static String DockerFoundryApplicationModule_STATE_STOPPED;
 
-	public static String CloudFoundryApplicationModule_STATE_STOPPING;
+	public static String DockerFoundryApplicationModule_STATE_STOPPING;
 
-	public static String CloudFoundryApplicationModule_STATE_UPLOADING;
+	public static String DockerFoundryApplicationModule_STATE_UPLOADING;
 
-	public static String CloudFoundryApplicationModule_STATE_WAITING_TO_LAUNCH;
+	public static String DockerFoundryApplicationModule_STATE_WAITING_TO_LAUNCH;
 
-	public static String CloudFoundryConstants_LABEL_SIGNUP;
+	public static String DockerFoundryConstants_LABEL_SIGNUP;
 
-	public static String CloudFoundryLoginHandler_LABEL_PERFORM_CF_OPERATION;
+	public static String DockerFoundryLoginHandler_LABEL_PERFORM_CF_OPERATION;
 
-	public static String CloudFoundryServer_UPDATING_MODULE;
+	public static String DockerFoundryServer_UPDATING_MODULE;
 
-	public static String CloudFoundryServer_ERROR_APPTYPE_NOT_SUPPORTED;
+	public static String DockerFoundryServer_ERROR_APPTYPE_NOT_SUPPORTED;
 
-	public static String CloudFoundryServer_ERROR_FAIL_ON_CFAPP_CREATION;
+	public static String DockerFoundryServer_ERROR_FAIL_ON_CFAPP_CREATION;
 
-	public static String CloudFoundryServer_ERROR_SERVER_ORIGIN_NOT_FOUND;
+	public static String DockerFoundryServer_ERROR_SERVER_ORIGIN_NOT_FOUND;
 	
-	public static String CloudFoundryServer_ERROR_UNABLE_REPLACE_MODULE_NO_CLOUD_APP;
+	public static String DockerFoundryServer_ERROR_UNABLE_REPLACE_MODULE_NO_CLOUD_APP;
 
-	public static String CloudFoundryServer_JOB_UPDATE;
+	public static String DockerFoundryServer_JOB_UPDATE;
 
-	public static String CloudFoundryServerBehaviour_APP_STATS;
+	public static String DockerFoundryServerBehaviour_APP_STATS;
 
-	public static String CloudFoundryServerBehaviour_APP_INFO;
+	public static String DockerFoundryServerBehaviour_APP_INFO;
 
-	public static String CloudFoundryServerBehaviour_CREATE_SERVICES;
+	public static String DockerFoundryServerBehaviour_CREATE_SERVICES;
 
-	public static String CloudFoundryServerBehaviour_CREATING_SERVICE;
+	public static String DockerFoundryServerBehaviour_CREATING_SERVICE;
 
-	public static String CloudFoundryServerBehaviour_DELETE_SERVICES;
+	public static String DockerFoundryServerBehaviour_DELETE_SERVICES;
 
-	public static String CloudFoundryServerBehaviour_DELETING_SERVICE;
+	public static String DockerFoundryServerBehaviour_DELETING_SERVICE;
 
-	public static String CloudFoundryServerBehaviour_DOMAINS_FOR_SPACE;
+	public static String DockerFoundryServerBehaviour_DOMAINS_FOR_SPACE;
 
-	public static String CloudFoundryServerBehaviour_GET_ALL_APPS;
+	public static String DockerFoundryServerBehaviour_GET_ALL_APPS;
 
-	public static String CloudFoundryServerBehaviour_GET_ALL_SERVICES;
+	public static String DockerFoundryServerBehaviour_GET_ALL_SERVICES;
 
-	public static String CloudFoundryServerBehaviour_GET_APPLICATION;
+	public static String DockerFoundryServerBehaviour_GET_APPLICATION;
 
-	public static String CloudFoundryServerBehaviour_UPDATE_APP_MEMORY;
+	public static String DockerFoundryServerBehaviour_UPDATE_APP_MEMORY;
 
-	public static String CloudFoundryServerBehaviour_UPDATE_APP_URLS;
+	public static String DockerFoundryServerBehaviour_UPDATE_APP_URLS;
 
-	public static String CloudFoundryServerBehaviour_UPDATE_ENV_VARS;
+	public static String DockerFoundryServerBehaviour_UPDATE_ENV_VARS;
 
-	public static String CloudFoundryServerBehaviour_UPDATE_SERVICE_BINDING;
+	public static String DockerFoundryServerBehaviour_UPDATE_SERVICE_BINDING;
 
-	public static String CloudFoundryServerBehaviour_WAITING_APP_START;
+	public static String DockerFoundryServerBehaviour_WAITING_APP_START;
 
 	public static String CommandOptions_DESCRIPTION_VARIABLES_FOR_TUNNEL;
 
@@ -250,7 +250,7 @@ public class Messages extends NLS {
 
 	public static String ModuleResourceApplicationArchive_ERROR_NO_DEPLOYABLE_RES_FOUND;
 
-	private static final String BUNDLE_NAME = CloudFoundryPlugin.PLUGIN_ID + ".internal.Messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = DockerFoundryPlugin.PLUGIN_ID + ".internal.Messages"; //$NON-NLS-1$
 
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

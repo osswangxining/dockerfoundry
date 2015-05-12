@@ -74,10 +74,10 @@ import cn.dockerfoundry.ide.eclipse.explorer.ui.utils.DockerContainerInfo;
 import cn.dockerfoundry.ide.eclipse.explorer.ui.utils.DockerDomainHelper;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.ApplicationAction;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudErrorUtil;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryBrandingExtensionPoint;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryServerBehaviour;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryBrandingExtensionPoint;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryServerBehaviour;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DeploymentInfoWorkingCopy;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.CloudUiUtil;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.DebugCommand;
@@ -105,9 +105,9 @@ public class ApplicationDetailsPart extends AbstractFormPart implements IDetails
 
 	private boolean canUpdate;
 
-	private final CloudFoundryServer cloudServer;
+	private final DockerFoundryServer cloudServer;
 
-	private final CloudFoundryApplicationsEditorPage editorPage;
+	private final DockerFoundryApplicationsEditorPage editorPage;
 
 	private Section generalSection;
 
@@ -131,7 +131,7 @@ public class ApplicationDetailsPart extends AbstractFormPart implements IDetails
 
 	private Button updateRestartAppButton;
 
-	private final CloudFoundryServerBehaviour serverBehaviour;
+	private final DockerFoundryServerBehaviour serverBehaviour;
 
 	private Text serverNameText;
 
@@ -179,7 +179,7 @@ public class ApplicationDetailsPart extends AbstractFormPart implements IDetails
 	private DockerClient dockerClient;
 	private DockerContainerInfo dockerContainerInfo;
 	
-	public ApplicationDetailsPart(CloudFoundryApplicationsEditorPage editorPage, CloudFoundryServer cloudServer) {
+	public ApplicationDetailsPart(DockerFoundryApplicationsEditorPage editorPage, DockerFoundryServer cloudServer) {
 		this.editorPage = editorPage;
 		this.cloudServer = cloudServer;
 		this.serverBehaviour = cloudServer.getBehaviour();
@@ -307,7 +307,7 @@ public class ApplicationDetailsPart extends AbstractFormPart implements IDetails
 //
 //	}
 
-	private void updateServerNameDisplay(CloudFoundryApplicationModule application) {
+	private void updateServerNameDisplay(DockerFoundryApplicationModule application) {
 //		if (application.getApplication() == null) {
 //			serverNameText.setText(NLS.bind(Messages.ApplicationDetailsPart_TEXT_UPDATE_NOT_DEPLOYED,
 //					application.getDeployedApplicationName()));
@@ -336,7 +336,7 @@ public class ApplicationDetailsPart extends AbstractFormPart implements IDetails
 	 * @param appModule may be null. If null, publish state should indicate
 	 * unknown state.
 	 */
-	protected void refreshPublishState(CloudFoundryApplicationModule appModule) {
+	protected void refreshPublishState(DockerFoundryApplicationModule appModule) {
 		isPublished = appModule != null && appModule.isDeployed();
 	}
 
@@ -345,7 +345,7 @@ public class ApplicationDetailsPart extends AbstractFormPart implements IDetails
 		resizeTableColumns();
 
 		canUpdate = false;
-		CloudFoundryApplicationModule appModule = cloudServer.getExistingCloudModule(module);
+		DockerFoundryApplicationModule appModule = cloudServer.getExistingCloudModule(module);
 
 		// Refresh the state of the editor regardless of whether there is a
 		// module or not
@@ -661,7 +661,7 @@ public class ApplicationDetailsPart extends AbstractFormPart implements IDetails
 		envVarsButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					final CloudFoundryApplicationModule appModule = getExistingApplication();
+					final DockerFoundryApplicationModule appModule = getExistingApplication();
 					if (appModule != null) {
 						UIJob uiJob = new UIJob(Messages.ApplicationDetailsPart_JOB_EDIT_ENV_VAR) {
 
@@ -1046,7 +1046,7 @@ public class ApplicationDetailsPart extends AbstractFormPart implements IDetails
 		instancesContentProvider = new AppStatsContentProvider();
 		instancesViewer.setContentProvider(instancesContentProvider);
 		instancesViewer.setLabelProvider(new AppStatsLabelProvider());
-		instancesViewer.setSorter(new CloudFoundryViewerSorter());
+		instancesViewer.setSorter(new DockerFoundryViewerSorter());
 
 //		MenuManager menuManager = new MenuManager();
 //		menuManager.setRemoveAllWhenShown(true);
@@ -1121,7 +1121,7 @@ public class ApplicationDetailsPart extends AbstractFormPart implements IDetails
 		servicesContentProvider = new TreeContentProvider();
 		servicesViewer.setContentProvider(servicesContentProvider);
 		servicesViewer.setLabelProvider(labelProvider);
-		servicesViewer.setSorter(new CloudFoundryViewerSorter());
+		servicesViewer.setSorter(new DockerFoundryViewerSorter());
 		servicesViewer.setInput(new CloudService[0]);
 
 		MenuManager menuManager = new MenuManager();
@@ -1137,7 +1137,7 @@ public class ApplicationDetailsPart extends AbstractFormPart implements IDetails
 		// editorPage.getSite().registerContextMenu(ID_MENU_SERVICES,
 		// menuManager, servicesViewer);
 
-		servicesSection.setVisible(CloudFoundryBrandingExtensionPoint.getProvideServices(editorPage.getServer()
+		servicesSection.setVisible(DockerFoundryBrandingExtensionPoint.getProvideServices(editorPage.getServer()
 				.getServerType().getId()));
 	}
 
@@ -1186,7 +1186,7 @@ public class ApplicationDetailsPart extends AbstractFormPart implements IDetails
 			return;
 
 		try {
-			CloudFoundryApplicationModule appModule = getExistingApplication();
+			DockerFoundryApplicationModule appModule = getExistingApplication();
 			manager.add(new RemoveServicesFromApplicationAction(selection, appModule, serverBehaviour, editorPage));
 		}
 		catch (CoreException ce) {
@@ -1226,8 +1226,8 @@ public class ApplicationDetailsPart extends AbstractFormPart implements IDetails
 	 * the lifecycle of the editor.
 	 * @throws CoreException if application module was not resolved.
 	 */
-	protected CloudFoundryApplicationModule getExistingApplication() throws CoreException {
-		CloudFoundryApplicationModule appModule = cloudServer.getExistingCloudModule(module);
+	protected DockerFoundryApplicationModule getExistingApplication() throws CoreException {
+		DockerFoundryApplicationModule appModule = cloudServer.getExistingCloudModule(module);
 
 		if (appModule == null) {
 			String errorMessage = module != null ? NLS.bind(Messages.ApplicationDetailsPart_ERROR_NO_CF_APP_MODULE_FOR,
@@ -1270,7 +1270,7 @@ public class ApplicationDetailsPart extends AbstractFormPart implements IDetails
 
 	private void startStopApplication(ApplicationAction action) {
 		try {
-			CloudFoundryApplicationModule appModule = getExistingApplication();
+			DockerFoundryApplicationModule appModule = getExistingApplication();
 			new StartStopApplicationAction(editorPage, action, appModule, serverBehaviour).run();
 		}
 		catch (CoreException ce) {

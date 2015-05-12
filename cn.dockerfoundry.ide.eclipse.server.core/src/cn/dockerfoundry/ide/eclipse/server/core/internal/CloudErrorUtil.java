@@ -99,8 +99,8 @@ public class CloudErrorUtil {
 			else {
 				// Log other IO errors.
 				String errorMessage = NLS.bind(Messages.ERROR_UNABLE_TO_COMMUNICATE_SERVER, e.getMessage());
-				CloudFoundryPlugin.logError(errorMessage, e);
-				return new CoreException(new Status(IStatus.ERROR, CloudFoundryPlugin.PLUGIN_ID, errorMessage));
+				DockerFoundryPlugin.logError(errorMessage, e);
+				return new CoreException(new Status(IStatus.ERROR, DockerFoundryPlugin.PLUGIN_ID, errorMessage));
 			}
 		}
 		else {
@@ -154,7 +154,7 @@ public class CloudErrorUtil {
 //						((CloudFoundryException) e).getDescription(), e.getMessage()), e));
 //			}
 //		}
-		return new CoreException(new Status(IStatus.ERROR, CloudFoundryPlugin.PLUGIN_ID, NLS.bind(
+		return new CoreException(new Status(IStatus.ERROR, DockerFoundryPlugin.PLUGIN_ID, NLS.bind(
 				Messages.ERROR_PERFORMING_CLOUD_FOUNDRY_OPERATION, e.getMessage()), e));
 	}
 
@@ -185,10 +185,10 @@ public class CloudErrorUtil {
 			if (error.getMessage() != null) {
 				message += " - " + error.getMessage(); //$NON-NLS-1$
 			}
-			return new CoreException(CloudFoundryPlugin.getErrorStatus(message, error));
+			return new CoreException(DockerFoundryPlugin.getErrorStatus(message, error));
 		}
 		else {
-			return new CoreException(CloudFoundryPlugin.getErrorStatus(message));
+			return new CoreException(DockerFoundryPlugin.getErrorStatus(message));
 		}
 	}
 
@@ -222,7 +222,7 @@ public class CloudErrorUtil {
 
 			IStatus newStatus = null;
 			if (oldStatus == null) {
-				newStatus = CloudFoundryPlugin.getErrorStatus(message, error);
+				newStatus = DockerFoundryPlugin.getErrorStatus(message, error);
 			}
 			else {
 				String enhancedMessage = replaceMessage ? message : message + " - " + oldStatus.getMessage(); //$NON-NLS-1$
@@ -237,7 +237,7 @@ public class CloudErrorUtil {
 				return (CoreException) error;
 			}
 			else {
-				return new CoreException(CloudFoundryPlugin.getErrorStatus(error));
+				return new CoreException(DockerFoundryPlugin.getErrorStatus(error));
 			}
 		}
 	}

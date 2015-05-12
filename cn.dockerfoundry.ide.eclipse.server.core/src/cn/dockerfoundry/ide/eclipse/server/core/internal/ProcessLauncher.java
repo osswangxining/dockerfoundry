@@ -142,7 +142,7 @@ public abstract class ProcessLauncher {
 
 	protected IStatus getErrorStatus(String body, Exception e) {
 		String errorMessage = "Failure when launching " + getLaunchName() + " due to: " + body; //$NON-NLS-1$ //$NON-NLS-2$
-		return e != null ? CloudFoundryPlugin.getErrorStatus(errorMessage, e) : CloudFoundryPlugin
+		return e != null ? DockerFoundryPlugin.getErrorStatus(errorMessage, e) : DockerFoundryPlugin
 				.getErrorStatus(errorMessage);
 	}
 
@@ -179,7 +179,7 @@ public abstract class ProcessLauncher {
 				}
 			}
 			catch (IOException e) {
-				CloudFoundryPlugin.logError("Error while reading input from process for: " + processName, e); //$NON-NLS-1$
+				DockerFoundryPlugin.logError("Error while reading input from process for: " + processName, e); //$NON-NLS-1$
 			}
 			finally {
 				if (processInput != null) {

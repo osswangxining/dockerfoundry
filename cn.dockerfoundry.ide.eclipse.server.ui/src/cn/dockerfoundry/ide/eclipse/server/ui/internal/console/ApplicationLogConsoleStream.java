@@ -33,8 +33,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.ui.console.IOConsoleOutputStream;
 
 import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudErrorUtil;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryServerBehaviour;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryServerBehaviour;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.log.CloudLog;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.log.LogContentType;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.Messages;
@@ -47,7 +47,7 @@ import cn.dockerfoundry.ide.eclipse.server.ui.internal.Messages;
  * and managed by one single loggregator token. This is why there aren't
  * separate {@link ConsoleStream} for each loggregator content type, as all
  * loggregator content are received through the same callback registered in the
- * {@link CloudFoundryServerBehaviour}
+ * {@link DockerFoundryServerBehaviour}
  * 
  * 
  * <p/>
@@ -100,7 +100,7 @@ public class ApplicationLogConsoleStream extends ConsoleStream {
 
 		if (loggregatorToken == null) {
 
-			CloudFoundryServerBehaviour behaviour = consoleDescriptor.getCloudServer().getBehaviour();
+			DockerFoundryServerBehaviour behaviour = consoleDescriptor.getCloudServer().getBehaviour();
 
 			// This token represents the loggregator connection.
 //			loggregatorToken = behaviour.addApplicationLogListener(consoleDescriptor.getCloudApplicationModule()
@@ -167,7 +167,7 @@ public class ApplicationLogConsoleStream extends ConsoleStream {
 					logStreams.put(type, stream);
 				}
 				catch (CoreException e) {
-					CloudFoundryPlugin.logError(e);
+					DockerFoundryPlugin.logError(e);
 				}
 			}
 		}

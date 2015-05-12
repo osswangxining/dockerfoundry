@@ -32,10 +32,10 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.wst.server.core.IModule;
 
 import cn.dockerfoundry.ide.eclipse.server.core.AbstractApplicationDelegate;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.application.ApplicationRegistry;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DeploymentInfoWorkingCopy;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.Messages;
 
@@ -48,15 +48,15 @@ public class MappedURLsWizard extends Wizard {
 
 	private final String appName;
 
-	private final CloudFoundryServer cloudServer;
+	private final DockerFoundryServer cloudServer;
 
 	private List<String> existingURIs;
 
-	private CloudFoundryApplicationModule applicationModule;
+	private DockerFoundryApplicationModule applicationModule;
 
 	private MappedURLsWizardPage page;
 
-	public MappedURLsWizard(CloudFoundryServer cloudServer, CloudFoundryApplicationModule applicationModule,
+	public MappedURLsWizard(DockerFoundryServer cloudServer, DockerFoundryApplicationModule applicationModule,
 			List<String> existingURIs) {
 		Assert.isNotNull(applicationModule);
 		this.cloudServer = cloudServer;
@@ -134,10 +134,10 @@ public class MappedURLsWizard extends Wizard {
 			getContainer().run(true, true, runnable);
 		}
 		catch (InvocationTargetException e) {
-			result[0] = CloudFoundryPlugin.getErrorStatus(e);
+			result[0] = DockerFoundryPlugin.getErrorStatus(e);
 		}
 		catch (InterruptedException e) {
-			result[0] = CloudFoundryPlugin.getErrorStatus(e);
+			result[0] = DockerFoundryPlugin.getErrorStatus(e);
 		}
 
 		if (result[0] != null && !result[0].isOK()) {

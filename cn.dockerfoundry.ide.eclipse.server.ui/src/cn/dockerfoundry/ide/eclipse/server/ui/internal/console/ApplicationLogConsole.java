@@ -24,7 +24,7 @@ import java.util.List;
 import org.cloudfoundry.client.lib.domain.ApplicationLog;
 import org.eclipse.core.runtime.CoreException;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.log.CloudLog;
 
 /**
@@ -37,7 +37,7 @@ import cn.dockerfoundry.ide.eclipse.server.core.internal.log.CloudLog;
  * @author Christian Dupuis
  * @author Nieraj Singh
  */
-class ApplicationLogConsole extends CloudFoundryConsole {
+class ApplicationLogConsole extends DockerFoundryConsole {
 
 	public ApplicationLogConsole(ConsoleConfig config) {
 		super(config);
@@ -73,7 +73,7 @@ class ApplicationLogConsole extends CloudFoundryConsole {
 			}
 		}
 		catch (CoreException e) {
-			CloudFoundryPlugin.logError(e);
+			DockerFoundryPlugin.logError(e);
 		}
 
 	}

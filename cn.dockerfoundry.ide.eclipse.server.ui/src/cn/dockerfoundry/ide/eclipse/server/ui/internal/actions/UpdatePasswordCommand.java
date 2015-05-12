@@ -28,8 +28,8 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.wst.server.core.IServerWorkingCopy;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.CloudUiUtil;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.Messages;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.UpdatePasswordDialog;
@@ -39,7 +39,7 @@ public class UpdatePasswordCommand extends BaseCommandHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		initializeSelection(event);
 		IServerWorkingCopy wc = selectedServer.createWorkingCopy();
-		final CloudFoundryServer cloudServer = (CloudFoundryServer) wc.loadAdapter(CloudFoundryServer.class, null);
+		final DockerFoundryServer cloudServer = (DockerFoundryServer) wc.loadAdapter(DockerFoundryServer.class, null);
 //		final UpdatePasswordDialog dialog = new UpdatePasswordDialog(Display.getDefault().getActiveShell(), cfServer.getUsername());
 //		
 //		if (dialog.open() == IDialogConstants.OK_ID) {

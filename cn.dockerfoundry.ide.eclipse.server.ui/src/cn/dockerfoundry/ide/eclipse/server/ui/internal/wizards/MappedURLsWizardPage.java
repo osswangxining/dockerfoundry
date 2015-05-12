@@ -44,9 +44,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 
-import cn.dockerfoundry.ide.eclipse.server.core.ICloudFoundryApplicationModule;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
-import cn.dockerfoundry.ide.eclipse.server.ui.internal.CloudFoundryImages;
+import cn.dockerfoundry.ide.eclipse.server.core.IDockerFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.ui.internal.DockerFoundryImages;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.Messages;
 
 /**
@@ -66,10 +66,10 @@ public class MappedURLsWizardPage extends WizardPage {
 
 	private TableViewer viewer;
 
-	private final CloudFoundryServer cloudServer;
+	private final DockerFoundryServer cloudServer;
 
-	public MappedURLsWizardPage(CloudFoundryServer cloudServer, List<String> existingURIs,
-			ICloudFoundryApplicationModule appModule) {
+	public MappedURLsWizardPage(DockerFoundryServer cloudServer, List<String> existingURIs,
+			IDockerFoundryApplicationModule appModule) {
 		super(Messages.MappedURLsWizardPage_TEXT_MAPPED_URI);
 
 		urls = new ArrayList<String>();
@@ -81,7 +81,7 @@ public class MappedURLsWizardPage extends WizardPage {
 
 		setTitle(Messages.MappedURLsWizardPage_TITLE_MAPPED_URI_CONFIG);
 		setDescription(Messages.MappedURLsWizardPage_TEST_FINISH);
-		ImageDescriptor banner = CloudFoundryImages.getWizardBanner(cloudServer.getServer().getServerType().getId());
+		ImageDescriptor banner = DockerFoundryImages.getWizardBanner(cloudServer.getServer().getServerType().getId());
 		if (banner != null) {
 			setImageDescriptor(banner);
 		}

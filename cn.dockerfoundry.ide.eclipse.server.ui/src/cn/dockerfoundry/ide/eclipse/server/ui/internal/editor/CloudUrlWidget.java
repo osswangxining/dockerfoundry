@@ -32,8 +32,8 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryBrandingExtensionPoint.CloudServerURL;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryBrandingExtensionPoint.CloudServerURL;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.CloudUiUtil;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.Messages;
 
@@ -46,11 +46,11 @@ public class CloudUrlWidget {
 
 	private final String serverTypeId;
 
-	private final CloudFoundryServer cfServer;
+	private final DockerFoundryServer cfServer;
 
 	private int comboIndex;
 
-	public CloudUrlWidget(CloudFoundryServer cfServer) {
+	public CloudUrlWidget(DockerFoundryServer cfServer) {
 		this.cfServer = cfServer;
 		this.serverTypeId = cfServer.getServer().getServerType().getId();
 	}

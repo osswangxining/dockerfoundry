@@ -29,9 +29,9 @@ import org.eclipse.debug.core.ILaunchManager;
 import org.eclipse.debug.ui.DebugUITools;
 import org.eclipse.debug.ui.IDebugUIConstants;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryServer;
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryApplicationModule;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryServer;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryApplicationModule;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.debug.DebugLaunch;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.debug.DebugOperations;
 import cn.dockerfoundry.ide.eclipse.server.core.internal.debug.DebugProvider;
@@ -73,7 +73,7 @@ public class DebugCommand {
 		}
 		catch (Throwable t) {
 			// Catch other issues with debug launching
-			IStatus status = CloudFoundryPlugin.getErrorStatus(t);
+			IStatus status = DockerFoundryPlugin.getErrorStatus(t);
 			DebugOperations.fireDebugChanged(launch.getCloudFoundryServer(), launch.getApplicationModule(), status);
 
 			// Propagate any other error to allow Eclipse debug
@@ -97,7 +97,7 @@ public class DebugCommand {
 	 * Helper method that launches the given application running on the target
 	 * Cloud server in debug mode asynchronously.
 	 */
-	public static void debug(CloudFoundryServer cloudServer, CloudFoundryApplicationModule appModule) {
+	public static void debug(DockerFoundryServer cloudServer, DockerFoundryApplicationModule appModule) {
 
 		final DebugCommand command = getCommand(cloudServer, appModule);
 
@@ -118,7 +118,7 @@ public class DebugCommand {
 		}
 	}
 
-	public static DebugCommand getCommand(CloudFoundryServer cloudServer, CloudFoundryApplicationModule appModule) {
+	public static DebugCommand getCommand(DockerFoundryServer cloudServer, DockerFoundryApplicationModule appModule) {
 		DebugProvider provider = DebugProvider.getCurrent(appModule, cloudServer);
 
 		if (provider != null) {

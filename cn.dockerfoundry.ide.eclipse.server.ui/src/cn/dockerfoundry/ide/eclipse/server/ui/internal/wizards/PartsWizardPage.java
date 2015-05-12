@@ -34,7 +34,7 @@ import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.progress.UIJob;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.CloudFoundryPlugin;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.DockerFoundryPlugin;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.CloudUiUtil;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.ICoreRunnable;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.IEventSource;
@@ -215,7 +215,7 @@ public abstract class PartsWizardPage extends WizardPage implements IPartChangeL
 				// Do not update the wizard with an error, as users can still
 				// complete the wizard with manual values.
 				if (cex != null) {
-					CloudFoundryPlugin.logError(cex);
+					DockerFoundryPlugin.logError(cex);
 				}
 
 				return Status.OK_STATUS;

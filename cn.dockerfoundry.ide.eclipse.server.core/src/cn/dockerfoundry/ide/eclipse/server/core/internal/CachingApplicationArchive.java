@@ -147,15 +147,15 @@ public class CachingApplicationArchive extends AbstractModuleResourceArchive {
 		}
 		catch (CoreException e) {
 			// Failed to create partial war
-			CloudFoundryPlugin.log(e);
+			DockerFoundryPlugin.log(e);
 		}
 		catch (ZipException e) {
 			// Failed to create partial war
-			CloudFoundryPlugin.logError(e);
+			DockerFoundryPlugin.logError(e);
 		}
 		catch (IOException e) {
 			// Failed to create partial war
-			CloudFoundryPlugin.logError(e);
+			DockerFoundryPlugin.logError(e);
 		}
 	}
 
@@ -256,14 +256,14 @@ public class CachingApplicationArchive extends AbstractModuleResourceArchive {
 
 		public DeployedResourceEntry getDeployedResourcesEntry() {
 
-			DeployedResourceEntry deployedResourcesEntry = CloudFoundryPlugin.getDefault().getDeployedResourcesCache()
+			DeployedResourceEntry deployedResourcesEntry = DockerFoundryPlugin.getDefault().getDeployedResourcesCache()
 					.getEntry(appName, getName());
 
 			if (canComputeResourceEntry() && (recalculate || deployedResourcesEntry == null)) {
 				byte[] sha1 = super.getSha1Digest();
 				long fileSize = super.getSize();
 				deployedResourcesEntry = new DeployedResourceEntry(sha1, fileSize, getName());
-				CloudFoundryPlugin.getDefault().getDeployedResourcesCache().add(appName, deployedResourcesEntry);
+				DockerFoundryPlugin.getDefault().getDeployedResourcesCache().add(appName, deployedResourcesEntry);
 			}
 
 			return deployedResourcesEntry;

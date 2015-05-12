@@ -22,10 +22,10 @@ package cn.dockerfoundry.ide.eclipse.server.ui.internal.actions;
 import org.eclipse.jface.action.Action;
 import org.eclipse.wst.server.core.IModule;
 
-import cn.dockerfoundry.ide.eclipse.server.core.internal.client.CloudFoundryServerBehaviour;
-import cn.dockerfoundry.ide.eclipse.server.ui.internal.CloudFoundryImages;
+import cn.dockerfoundry.ide.eclipse.server.core.internal.client.DockerFoundryServerBehaviour;
+import cn.dockerfoundry.ide.eclipse.server.ui.internal.DockerFoundryImages;
 import cn.dockerfoundry.ide.eclipse.server.ui.internal.Messages;
-import cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.CloudFoundryApplicationsEditorPage;
+import cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.DockerFoundryApplicationsEditorPage;
 
 /**
  * Refreshes a single module selected in the given editor page, as well as its
@@ -35,10 +35,10 @@ import cn.dockerfoundry.ide.eclipse.server.ui.internal.editor.CloudFoundryApplic
  */
 public class RefreshModuleEditorAction extends Action {
 
-	private final CloudFoundryApplicationsEditorPage editorPage;
+	private final DockerFoundryApplicationsEditorPage editorPage;
 
-	protected RefreshModuleEditorAction(CloudFoundryApplicationsEditorPage editorPage) {
-		setImageDescriptor(CloudFoundryImages.REFRESH);
+	protected RefreshModuleEditorAction(DockerFoundryApplicationsEditorPage editorPage) {
+		setImageDescriptor(DockerFoundryImages.REFRESH);
 		setText(Messages.RefreshApplicationEditorAction_TEXT_REFRESH);
 		this.editorPage = editorPage;
 	}
@@ -46,7 +46,7 @@ public class RefreshModuleEditorAction extends Action {
 	@Override
 	public void run() {
 		IModule selectedModule = editorPage.getMasterDetailsBlock().getCurrentModule();
-		CloudFoundryServerBehaviour behaviour = editorPage.getCloudServer().getBehaviour();
+		DockerFoundryServerBehaviour behaviour = editorPage.getCloudServer().getBehaviour();
 		behaviour.getRefreshHandler().schedulesRefreshApplication(selectedModule);
 	}
 
